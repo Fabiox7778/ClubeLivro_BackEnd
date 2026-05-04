@@ -2,7 +2,8 @@ import prisma from '../lib/services/prismaClient.js';
 
 //Importa do banco os atributos obrigatórios para a manipulação dos personagens.
 export default class SobreModel {
-    constructor({ pergunta, pergunta_en, descricao, descricao_en } = {}) {
+    constructor({ id, pergunta, pergunta_en, descricao, descricao_en } = {}) {
+        this.id = id;
         this.pergunta = pergunta;
         this.descricao = descricao;
         this.pergunta_en = pergunta_en;
@@ -13,10 +14,10 @@ export default class SobreModel {
     async criar() {
         return prisma.sobre.create({
             data: {
-                pergunta_en: this.pergunta_en,
-                descricao_en: this.descricao_en,
+                pergunta: this.pergunta,
                 descricao: this.descricao,
                 pergunta_en: this.pergunta_en,
+                descricao_en: this.descricao_en,
             },
         });
     }
@@ -24,7 +25,7 @@ export default class SobreModel {
     //Atualiza um item específico por id.
     async atualizar() {
         return prisma.sobre.update({
-            where: { pergunta: this.pergunta },
+            where: { id: this.id },
             data: {
                 descricao: this.descricao,
                 pergunta: this.pergunta,
@@ -36,12 +37,7 @@ export default class SobreModel {
 
     //Deleta um item específico por pergunta.
     async deletar() {
-        return prisma.sobre.delete(
-            { where: { pergunta: this.pergunta } },
-            { where: { descricao: this.descricao } },
-            { where: { pergunta_en: this.pergunta_en } },
-            { where: { descricao_en: this.descricao_en } },
-        );
+        return prisma.sobre.delete({ where: { id: this.id } });
     }
 
     //Busca todos os itens existentes.

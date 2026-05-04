@@ -8,8 +8,8 @@ export const criar = async (req, res) => {
 
         const { pergunta, descricao, pergunta_en, descricao_en } = req.body;
 
-        if (!nome) {
-            return res.status(400).json({ error: 'O campo "nome" é obrigatório!' });
+        if (!pergunta) {
+            return res.status(400).json({ error: 'O campo "pergunta" é obrigatório!' });
         }
 
         const sobre = new SobreModel({ pergunta, descricao, pergunta_en, descricao_en});
