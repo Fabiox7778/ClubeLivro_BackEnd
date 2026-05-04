@@ -4,9 +4,9 @@ import prisma from '../lib/services/prismaClient.js';
 export default class PersonagemModel {
     constructor({ pergunta, pergunta_en, descricao, descricao_en} = {}) {
         this.pergunta = pergunta;
+        this.descricao = descricao;
         this.pergunta_en = pergunta_en;
         this.descricao_en = descricao_en;
-        this.descricao = descricao;
     }
 
     //Cria um novo item usando os atributos obrigatórios necessários.
@@ -26,10 +26,10 @@ export default class PersonagemModel {
         return prisma.personagem.update({
             where: { pergunta: this.pergunta },
             data: {
-                pergunta_en: this.pergunta_en,
-                descricao_en: this.descricao_en,
                 descricao: this.descricao,
                 pergunta: this.pergunta,
+                pergunta_en: this.pergunta_en,
+                descricao_en: this.descricao_en,
             },
         });
     }
@@ -38,8 +38,8 @@ export default class PersonagemModel {
     async deletar() {
         return prisma.personagem.delete(
             { where: { pergunta: this.pergunta } },
-            { where: { pergunta_en: this.pergunta_en } },
             { where: { descricao: this.descricao } },
+            { where: { pergunta_en: this.pergunta_en } },
             { where: { descricao_en: this.descricao_en } },
         );
     }
@@ -47,14 +47,6 @@ export default class PersonagemModel {
     //Busca todos os itens existentes.
     static async buscarTodos(filtros = {}) {
         const where = {};
-
-        if (filtros.pergunta_en) {
-            where.pergunta_en = { contains: filtros.pergunta_en, mode: 'insensitive' };
-        }
-
-        if (filtros.descricao_en !== undefined) {
-            where.descricao_en = { contains: filtros.descricao_en, mode: 'insensitive' };
-        }
 
         if (filtros.descricao !== undefined) {
             where.descricao = { contains: filtros.descricao, mode: 'insensitive' };
@@ -64,6 +56,14 @@ export default class PersonagemModel {
             where.pergunta = { contains: filtros.pergunta, mode: 'insensitive' };
         }
 
+        if (filtros.pergunta_en) {
+            where.pergunta_en = { contains: filtros.pergunta_en, mode: 'insensitive' };
+        }
+
+        if (filtros.descricao_en !== undefined) {
+            where.descricao_en = { contains: filtros.descricao_en, mode: 'insensitive' };
+        }
+
         return prisma.personagem.findMany({ where });
     }
 
@@ -71,13 +71,13 @@ export default class PersonagemModel {
     static async buscarPorId(pergunta) {
         const data = await prisma.personagem.findUnique(
             { where: { pergunta } },
-            { where: { pergunta_en } },
             { where: { descricao } },
+            { where: { pergunta_en } },
             { where: { descricao_en } },
         );
         if (!data) {
             return null;
         }
-        return new PersonagemModel(data);
+        return new SobreModel(data);
     }
 }
