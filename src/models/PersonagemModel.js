@@ -1,11 +1,13 @@
 import prisma from '../lib/services/prismaClient.js';
 
-export default class ExemploModel {
-    constructor({ id = null, nome, estado = true, preco = null } = {}) {
+export default class PersonagemModel {
+    constructor({ id = null, nome, aparencia, descricao, resumo, importancia } = {}) {
         this.id = id;
         this.nome = nome;
-        this.estado = estado;
-        this.preco = preco;
+        this.aparencia = aparencia;
+        this.descricao = descricao;
+        this.resumo = resumo
+        this.importancia = importancia
     }
 
     async criar() {

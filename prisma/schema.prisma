@@ -1,83 +1,105 @@
-generator client {
-    provider = "prisma-client-js"
-}
+    generator client {
+        provider = "prisma-client-js"
+    }
 
-datasource db {
-    provider = "postgresql"
-}
+    datasource db {
+        provider = "postgresql"
+    }
 
-model Livro {
-    id                   Int      @id @default(autoincrement())
-    titulo               String
-    capa                 String
-    autor                String
-    anoPublicacao        Int
-    genero_pt            String
-    genero_en            String
-    resumo_pt            String   @db.Text
-    resumo_en            String   @db.Text
-    personagens          String[]
-    contextoHistorico_pt String
-    contextoHistorico_en String
-    analise_pt           String   @db.Text
-    analise_en           String   @db.Text
+    model Livro {
+        id                           Int      @id @default(autoincrement())
+        titulo                       String
+        titulo_en                    String
+        capa                         String
+        autor                        String
+        anoPublicacao                Int
+        genero                       String
+        genero_en                    String
+        resumo                       String   @db.Text
+        resumo_en                    String   @db.Text
+        contexto                     String   @db.Text
+        contexto_en                  String   @db.Text
+        estiloEscrita                String   @db.Text
+        estiloEscrita_en             String   @db.Text
+        enredo                       String   @db.Text
+        enredo_en                    String   @db.Text
+        verossimilhanca              String   @db.Text
+        verossimilhanca_en           String   @db.Text
+        personagens                  String[]
+        caracteristicasLiterarias    String   @db.Text
+        caracteristicasLiterarias_en String   @db.Text
+        conclusao                    String   @db.Text
+        conclusao_en                 String   @db.Text
 
-    conteudos Conteudos[]
-    simulados Simulados[]
+        conteudos Conteudos[]
+        simulados Simulados[]
 
-    @@map("livro")
-}
+        @@map("livro")
+    }
 
-model Equipe {
-    id           Int     @id @default(autoincrement())
-    nome         String
-    curso        String
-    descricao    String
-    descricao_en String
-    foto         String?
+    model Personagem {
+        id          Int    @id @default(autoincrement())
+        nome        String
+        aparencia   String
+        descricao   String
+        resumo      String
+        importancia String
 
-    @@map("equipe")
-}
+        @@map("personagem")
+    }
 
-model Usuario {
-    id           Int     @id @default(autoincrement())
-    nome         String
-    idade        Int
-    email        String
-    username     String
-    senha        String
-    descricao    String
-    descricao_en String
-    foto         String?
+    model Equipe {
+        id           Int     @id @default(autoincrement())
+        nome_equipe  String
+        nome         String
+        curso        String
+        descricao    String
+        descricao_en String
+        foto         String?
 
-    @@map("usuario")
-}
+        @@map("equipe")
+    }
 
-model Conteudos {
-    id               Int     @id @default(autoincrement())
-    idDoLivro        Int
-    livro            Livro   @relation(fields: [idDoLivro], references: [id])
-    dicaTitulo       String
-    dicaTitulo_en    String
-    tipo             String
-    tipo_en          String
-    descricaoDica    String
-    descricaoDica_en String
-    material         String?
+    model Usuario {
+        id           Int     @id @default(autoincrement())
+        nome         String
+        idade        Int
+        email        String
+        username     String
+        senha        String
+        descricao    String
+        descricao_en String
+        foto         String?
 
-    @@map("conteudos")
-}
+        @@map("usuario")
+    }
 
-model Simulados {
-    id                 Int    @id @default(autoincrement())
-    idLivro            Int
-    livro              Livro  @relation(fields: [idLivro], references: [id])
-    pergunta           String
-    pergunta_en        String
-    resopostaErrada    String
-    resopostaErrada_en String
-    respostaCorreta    String
-    respostaCorreta_en String
+    model Conteudos {
+        id               Int     @id @default(autoincrement())
+        idDoLivro        Int
+        livro            Livro   @relation(fields: [idDoLivro], references: [id])
+        dicaTitulo       String
+        dicaTitulo_en    String
+        tipo             String
+        tipo_en          String
+        descricaoDica    String
+        descricaoDica_en String
+        curtidasDica     Int?    @default(0)
+        material         String?
 
-    @@map("simulados")
-}
+        @@map("conteudos")
+    }
+
+    model Simulados {
+        id                 Int    @id @default(autoincrement())
+        idLivro            Int
+        livro              Livro  @relation(fields: [idLivro], references: [id])
+        pergunta           String
+        pergunta_en        String
+        resopostaErrada    String
+        resopostaErrada_en String
+        respostaCorreta    String
+        respostaCorreta_en String
+
+        @@map("simulados")
+    }
