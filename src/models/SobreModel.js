@@ -9,7 +9,7 @@ export default class PersonagemModel {
         this.descricao = descricao;
     }
 
-    //Cria um novo personagem usando os atributos obrigatórios necessários.
+    //Cria um novo item usando os atributos obrigatórios necessários.
     async criar() {
         return prisma.personagem.create({
             data: {
@@ -21,7 +21,7 @@ export default class PersonagemModel {
         });
     }
 
-    //Atualiza um personagem específico por pergunta.
+    //Atualiza um item específico por id.
     async atualizar() {
         return prisma.personagem.update({
             where: { pergunta: this.pergunta },
@@ -34,7 +34,7 @@ export default class PersonagemModel {
         });
     }
 
-    //Deleta um personagem específico por pergunta.
+    //Deleta um item específico por pergunta.
     async deletar() {
         return prisma.personagem.delete(
             { where: { pergunta: this.pergunta } },
