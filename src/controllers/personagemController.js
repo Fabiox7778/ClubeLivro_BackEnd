@@ -20,10 +20,9 @@ export const criar = async (req, res) => {
             importancia_en,
         } = req.body;
 
-        if (!nome) {
+        if (nome === undefined || nome === null) {
             return res.status(400).json({
                 error: 'O campo "nome" é obrigatório!',
-                erro: error.message,
             });
         }
         if (aparencia === undefined || aparencia === null) {
@@ -107,7 +106,7 @@ export const buscarTodos = async (req, res) => {
 
         return res.status(200).json(registros);
     } catch (error) {
-        console.error('Erro ao buscar:', error);
+        console.error('Erro ao buscar:',);
         return res.status(500).json({ error: 'Erro ao buscar registros.' });
     }
 };
