@@ -152,6 +152,10 @@ export const atualizar = async (req, res) => {
             return res.status(404).json({ error: 'Registro não encontrado para atualizar.' });
         }
 
+
+        if (req.body.nome !== undefined) {
+            personagem.nome= req.body.nome;
+        }
         if (req.body.aparencia !== undefined) {
             personagem.aparencia = req.body.aparencia;
         }
