@@ -1,5 +1,7 @@
 import PersonagemModel from '../models/PersonagemModel.js';
+//Importa do model os atributos obrigatórios para a manipulação dos personagens.
 
+  //Cria um novo personagem usando os atributos obrigatórios necessários.
 export const criar = async (req, res) => {
     try {
         if (!req.body) {
@@ -94,6 +96,7 @@ export const criar = async (req, res) => {
     }
 };
 
+//Busca todos os personagens existentes.
 export const buscarTodos = async (req, res) => {
     try {
         const registros = await PersonagemModel.buscarTodos(req.query);
@@ -109,6 +112,7 @@ export const buscarTodos = async (req, res) => {
     }
 };
 
+ //Busca um personagem específico por id.
 export const buscarPorId = async (req, res) => {
     try {
         const { id } = req.params;
@@ -130,6 +134,7 @@ export const buscarPorId = async (req, res) => {
     }
 };
 
+    //Atualiza um personagem específico por id.
 export const atualizar = async (req, res) => {
     try {
         const { id } = req.params;
@@ -179,6 +184,7 @@ export const atualizar = async (req, res) => {
     }
 };
 
+//Deleta um personagem específico por id.
 export const deletar = async (req, res) => {
     try {
         const { id } = req.params;
@@ -195,12 +201,10 @@ export const deletar = async (req, res) => {
 
         await personagem.deletar();
 
-        return res
-            .status(200)
-            .json({
-                message: `O registro "${personagem.nome}" foi deletado com sucesso!`,
-                deletado: personagem,
-            });
+        return res.status(200).json({
+            message: `O registro "${personagem.nome}" foi deletado com sucesso!`,
+            deletado: personagem,
+        });
     } catch (error) {
         console.error('Erro ao deletar:', error);
         return res.status(500).json({ error: 'Erro ao deletar registro.' });
