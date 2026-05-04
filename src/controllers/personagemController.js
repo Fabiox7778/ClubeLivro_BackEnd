@@ -1,36 +1,102 @@
 import PersonagemModel from '../models/PersonagemModel.js';
-//Importa do model os atributos obrigatórios para a manipulação dos personagens..
 
-  //Cria um novo personagem usando os atributos obrigatórios necessários.
 export const criar = async (req, res) => {
     try {
         if (!req.body) {
             return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
-        const { nome, aparencia, descricao, resumo, importancia  } = req.body;
+        const {
+            nome,
+            aparencia,
+            descricao,
+            resumo,
+            importancia,
+            aparencia_en,
+            descricao_en,
+            resumo_en,
+            importancia_en,
+        } = req.body;
 
-        if (!nome){
-            return res.status(400).json({ error: 'O campo "nome" é obrigatório!' });
+        if (!nome) {
+            return res.status(400).json({
+                error: 'O campo "nome" é obrigatório!',
+                erro: error.message,
+            });
         }
-        if (preco === undefined || preco === null) {
-            return res.status(400).json({ error: 'O campo "preco" é obrigatório!' });
+        if (aparencia === undefined || aparencia === null) {
+            return res.status(400).json({ error: 'O campo "aparencia" é obrigatório!' });
         }
 
-        const exemplo = new ExemploModel({ nome, estado, preco: parseFloat(preco) });
-        const data = await exemplo.criar();
+        if (resumo === undefined || resumo === null) {
+            return res.status(400).json({ error: 'O campo "resumo" é obrigatório!' });
+        }
 
-        return res.status(201).json({ message: 'Registro criado com sucesso!', data });
+        if (descricao === undefined || descricao === null) {
+            return res.status(400).json({ error: 'O campo "descricao" é obrigatório!' });
+        }
+
+        if (aparencia === undefined || aparencia === null) {
+            return res.status(400).json({ error: 'O campo "aparencia" é obrigatório!' });
+        }
+
+        if (importancia === undefined || importancia === null) {
+            return res.status(400).json({ error: 'O campo "importancia" é obrigatório!' });
+        }
+
+        if (resumo_en === undefined || resumo_en === null) {
+            return res
+                .status(400)
+                .json({ error: 'To create a character it must have "resumo_en" ' });
+        }
+
+        if (resumo_en === undefined || resumo_en === null) {
+            return res
+                .status(400)
+                .json({ error: 'To create a character it must have "resumo_en" ' });
+        }
+
+        if (aparencia_en === undefined || aparencia_en === null) {
+            return res
+                .status(400)
+                .json({ error: 'To create a character it must have "aparencia_en" ' });
+        }
+
+        if (descricao_en === undefined || descricao_en === null) {
+            return res
+                .status(400)
+                .json({ error: 'To create a character it must have "descricao_en" ' });
+        }
+
+        if (importancia_en === undefined || importancia_en === null) {
+            return res
+                .status(400)
+                .json({ error: 'To create a character it must have "descricao_en" ' });
+        }
+
+        const personagem = new PersonagemModel({
+            nome,
+            aparencia,
+            descricao,
+            resumo,
+            importancia,
+            aparencia_en,
+            descricao_en,
+            resumo_en,
+            importancia_en,
+        });
+        const data = await personagem.criar();
+
+        return res.status(201).json({ message: 'Personagem criado com sucesso!', data });
     } catch (error) {
         console.error('Erro ao criar:', error);
-        return res.status(500).json({ error: 'Erro interno ao salvar o registro.' });
+        return res.status(500).json({ error: 'Erro interno ao salvar a personagem.' });
     }
 };
 
- //Busca todos os personagens existentes.
 export const buscarTodos = async (req, res) => {
     try {
-        const registros = await ExemploModel.buscarTodos(req.query);
+        const registros = await PersonagemModel.buscarTodos(req.query);
 
         if (!registros || registros.length === 0) {
             return res.status(400).json({ message: 'Nenhum registro encontrado.' });
@@ -43,7 +109,6 @@ export const buscarTodos = async (req, res) => {
     }
 };
 
-//Busca um personagem específico por id.
 export const buscarPorId = async (req, res) => {
     try {
         const { id } = req.params;
@@ -52,20 +117,19 @@ export const buscarPorId = async (req, res) => {
             return res.status(400).json({ error: 'O ID enviado não é um número válido.' });
         }
 
-        const exemplo = await ExemploModel.buscarPorId(parseInt(id));
+        const personagem = await PersonagemModel.buscarPorId(parseInt(id));
 
-        if (!exemplo) {
+        if (!personagem) {
             return res.status(404).json({ error: 'Registro não encontrado.' });
         }
 
-        return res.status(200).json({ data: exemplo });
+        return res.status(200).json({ data: personagem });
     } catch (error) {
         console.error('Erro ao buscar:', error);
         return res.status(500).json({ error: 'Erro ao buscar registro.' });
     }
 };
 
- //Atualiza um personagem específico por id.
 export const atualizar = async (req, res) => {
     try {
         const { id } = req.params;
@@ -78,32 +142,43 @@ export const atualizar = async (req, res) => {
             return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
-        const exemplo = await ExemploModel.buscarPorId(parseInt(id));
+        const personagem = await PersonagemModel.buscarPorId(parseInt(id));
 
-        if (!exemplo) {
+        if (!personagem) {
             return res.status(404).json({ error: 'Registro não encontrado para atualizar.' });
         }
 
-        if (req.body.nome !== undefined) {
-            exemplo.nome = req.body.nome;
+        if (req.body.aparencia !== undefined) {
+            personagem.aparencia = req.body.aparencia;
         }
-        if (req.body.estado !== undefined) {
-            exemplo.estado = req.body.estado;
+        if (req.body.descricao !== undefined) {
+            personagem.descricao = req.body.descricao;
         }
-        if (req.body.preco !== undefined) {
-            exemplo.preco = parseFloat(req.body.preco);
+        if (req.body.importancia !== undefined) {
+            personagem.importancia = req.body.importancia;
+        }
+        if (req.body.aparencia_en !== undefined) {
+            personagem.aparencia_en = req.body.aparencia_en;
+        }
+        if (req.body.descricao_en !== undefined) {
+            personagem.descricao_en = req.body.descricao_en;
         }
 
-        const data = await exemplo.atualizar();
+        if (req.body.importancia_en !== undefined) {
+            personagem.importancia_en = req.body.importancia_en;
+        }
 
-        return res.status(200).json({ message: `O registro "${data.nome}" foi atualizado com sucesso!`, data });
+        const data = await personagem.atualizar();
+
+        return res
+            .status(200)
+            .json({ message: `O registro "${data.nome}" foi atualizado com sucesso!`, data });
     } catch (error) {
         console.error('Erro ao atualizar:', error);
         return res.status(500).json({ error: 'Erro ao atualizar registro.' });
     }
 };
 
- //Deleta um personagem específico por id.
 export const deletar = async (req, res) => {
     try {
         const { id } = req.params;
@@ -112,15 +187,20 @@ export const deletar = async (req, res) => {
             return res.status(400).json({ error: 'ID inválido.' });
         }
 
-        const exemplo = await ExemploModel.buscarPorId(parseInt(id));
+        const personagem = await PersonagemModel.buscarPorId(parseInt(id));
 
-        if (!exemplo) {
+        if (!personagem) {
             return res.status(404).json({ error: 'Registro não encontrado para deletar.' });
         }
 
-        await exemplo.deletar();
+        await personagem.deletar();
 
-        return res.status(200).json({ message: `O registro "${exemplo.nome}" foi deletado com sucesso!`, deletado: exemplo });
+        return res
+            .status(200)
+            .json({
+                message: `O registro "${personagem.nome}" foi deletado com sucesso!`,
+                deletado: personagem,
+            });
     } catch (error) {
         console.error('Erro ao deletar:', error);
         return res.status(500).json({ error: 'Erro ao deletar registro.' });
