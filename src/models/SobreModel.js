@@ -2,7 +2,7 @@ import prisma from '../lib/services/prismaClient.js';
 
 //Importa do banco os atributos obrigatórios para a manipulação dos personagens.
 export default class SobreModel {
-    constructor({ pergunta, pergunta_en, descricao, descricao_en} = {}) {
+    constructor({ pergunta, pergunta_en, descricao, descricao_en } = {}) {
         this.pergunta = pergunta;
         this.descricao = descricao;
         this.pergunta_en = pergunta_en;
@@ -68,13 +68,8 @@ export default class SobreModel {
     }
 
     //Busca algo específico por id.
-    static async buscarPorId(pergunta) {
-        const data = await prisma.sobre.findUnique(
-            { where: { pergunta } },
-            { where: { descricao } },
-            { where: { pergunta_en } },
-            { where: { descricao_en } },
-        );
+    static async buscarPorId(id) {
+        const data = await prisma.sobre.findUnique({ where: { id } });
         if (!data) {
             return null;
         }
