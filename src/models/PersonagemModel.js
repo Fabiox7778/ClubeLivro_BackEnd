@@ -1,5 +1,6 @@
 import prisma from '../lib/services/prismaClient.js';
 
+//Importa do banco os atributos obrigatórios para a manipulação dos personagens.
 export default class PersonagemModel {
     constructor({ id = null, nome, aparencia, descricao, resumo, importancia } = {}) {
         this.id = id;
@@ -10,8 +11,9 @@ export default class PersonagemModel {
         this.importancia = importancia
     }
 
+    //Cria um novo personagem usando os atributos obrigatórios necessários.
     async criar() {
-        return prisma.exemplo.create({
+        return prisma.personagem.create({
             data: {
                 nome: this.nome,
                 aparencia: this.aparencia,
@@ -22,6 +24,7 @@ export default class PersonagemModel {
         });
     }
 
+    //Atualiza um personagem específico por id.
     async atualizar() {
         return prisma.personagem.update({
             where: { id: this.id },
@@ -31,10 +34,12 @@ export default class PersonagemModel {
         });
     }
 
+    //Deleta um personagem específico por id.
     async deletar() {
         return prisma.personagem.delete({ where: { id: this.id } });
     }
 
+    //Busca todos os personagens existentes.
     static async buscarTodos(filtros = {}) {
         const where = {};
 
@@ -60,6 +65,7 @@ export default class PersonagemModel {
         return prisma.personagem.findMany({ where });
     }
 
+//Busca um personagem específico por id.
     static async buscarPorId(id) {
         const data = await prisma.personagem.findUnique({ where: { id } });
         if (!data) {
