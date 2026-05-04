@@ -40,9 +40,13 @@
         id          Int    @id @default(autoincrement())
         nome        String
         aparencia   String
+        aparencia_en String
         descricao   String
+        descricao_en String
         resumo      String
+        resumo_en   String
         importancia String
+        importancia_en String
 
         @@map("personagem")
     }
@@ -52,6 +56,8 @@
         nome_equipe  String
         nome         String
         curso        String
+        curso_en     String
+        funcao       String
         descricao    String
         descricao_en String
         foto         String?
@@ -101,4 +107,15 @@
         respostaCorreta_en String
 
         @@map("simulados")
+    }
+
+    model Sobre {
+        id              Int    @id @default(autoincrement())
+        pergunta        String
+        pergunta_en     String
+        descricao       String
+        descricao_en    String
+
+
+        @@map("sobre")
     }

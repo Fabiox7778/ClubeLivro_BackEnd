@@ -1,4 +1,4 @@
-import ExemploModel from '../models/PersonagemModel.js';
+import PersonagemModel from '../models/PersonagemModel.js';
 
 export const criar = async (req, res) => {
     try {
@@ -6,7 +6,7 @@ export const criar = async (req, res) => {
             return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
-        const { nome, estado, preco } = req.body;
+        const { nome, aparencia, descricao, resumo, importancia  } = req.body;
 
         if (!nome){
             return res.status(400).json({ error: 'O campo "nome" é obrigatório!' });
