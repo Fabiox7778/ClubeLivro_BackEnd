@@ -1,5 +1,6 @@
 import PersonagemModel from '../models/PersonagemModel.js';
 
+  //Cria um novo personagem usando os atributos obrigatórios necessários.
 export const criar = async (req, res) => {
     try {
         if (!req.body) {
@@ -25,6 +26,7 @@ export const criar = async (req, res) => {
     }
 };
 
+ //Busca todos os personagens existentes.
 export const buscarTodos = async (req, res) => {
     try {
         const registros = await ExemploModel.buscarTodos(req.query);
@@ -40,6 +42,7 @@ export const buscarTodos = async (req, res) => {
     }
 };
 
+//Busca um personagem específico por id.
 export const buscarPorId = async (req, res) => {
     try {
         const { id } = req.params;
@@ -61,6 +64,7 @@ export const buscarPorId = async (req, res) => {
     }
 };
 
+ //Atualiza um personagem específico por id.
 export const atualizar = async (req, res) => {
     try {
         const { id } = req.params;
@@ -98,6 +102,7 @@ export const atualizar = async (req, res) => {
     }
 };
 
+ //Deleta um personagem específico por id.
 export const deletar = async (req, res) => {
     try {
         const { id } = req.params;
