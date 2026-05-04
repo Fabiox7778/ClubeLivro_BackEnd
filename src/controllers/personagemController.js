@@ -1,5 +1,5 @@
 import PersonagemModel from '../models/PersonagemModel.js';
-//Importa do model os atributos obrigatórios para a manipulação dos personagens.
+//Importa do model os atributos obrigatórios para a manipulação dos personagens..
 
   //Cria um novo personagem usando os atributos obrigatórios necessários.
 export const criar = async (req, res) => {
