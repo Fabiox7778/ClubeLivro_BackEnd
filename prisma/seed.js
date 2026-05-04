@@ -11,21 +11,23 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
     console.log('🌱 Limpando o banco de dados...');
 
-    // Remove os registros respeitando a hierarquia das chaves estrangeiras
     await prisma.simulados.deleteMany();
     await prisma.conteudos.deleteMany();
     await prisma.livro.deleteMany();
-    await prisma.personagem.deleteMany(); // Adicionado para limpar a tabela Personagem
+    await prisma.personagem.deleteMany();
     await prisma.usuario.deleteMany();
     await prisma.equipe.deleteMany();
+    await prisma.sobre.deleteMany();
 
-    console.log('📦 Inserindo Equipe e Usuários...');
+    console.log('📦 Inserindo Equipe, Usuários e Sobre...');
 
     await prisma.equipe.create({
         data: {
-            nome_equipe: 'Equipe DevStone', // Adicionado pois é obrigatório no schema
+            nome_equipe: 'Equipe DevStone',
             nome: 'Desenvolvedor Master',
             curso: 'Engenharia de Software',
+            curso_en: 'Software Engineering',
+            funcao: 'Líder Técnico',
             descricao: 'Responsável pela arquitetura do projeto DevStone.',
             descricao_en: 'Responsible for the DevStone project architecture.',
             foto: 'https://exemplo.com/foto-dev.jpg',
@@ -38,10 +40,21 @@ async function main() {
             idade: 25,
             email: 'joao@exemplo.com',
             username: 'joaosilva',
-            senha: 'senha_segura_hash_aqui', // Num app real, use bcrypt/argon2
+            senha: 'senha_segura_hash_aqui',
             descricao: 'Estudante ávido por literatura brasileira.',
             descricao_en: 'Avid Brazilian literature student.',
             foto: 'https://exemplo.com/foto-joao.jpg',
+        },
+    });
+
+    await prisma.sobre.create({
+        data: {
+            pergunta: 'O que é o projeto DevStone?',
+            pergunta_en: 'What is the DevStone project?',
+            descricao:
+                'Um aplicativo educativo focado na difusão da literatura nacional através de resumos e simulados interativos.',
+            descricao_en:
+                'An educational app focused on disseminating national literature through summaries and interactive mock exams.',
         },
     });
 
@@ -50,7 +63,6 @@ async function main() {
     const livroCriado = await prisma.livro.create({
         data: {
             titulo: 'O Caminho das Pedras',
-            titulo_en: 'The Path of Stones',
             capa: 'https://exemplo.com/capa-caminho-das-pedras.jpg',
             autor: 'José Lins do Rego',
             anoPublicacao: 1936,
@@ -90,9 +102,15 @@ async function main() {
         data: {
             nome: 'Roberto',
             aparencia: 'Jovem de feições marcadas pelo cansaço e pela determinação.',
+            aparencia_en: 'Young man with features marked by fatigue and determination.',
             descricao: 'Militante idealista que busca organizar a classe operária na cidade.',
+            descricao_en:
+                'Idealistic militant who seeks to organize the working class in the city.',
             resumo: 'É o fio condutor das tensões políticas da obra, representando a nova força revolucionária.',
+            resumo_en:
+                'He is the guiding thread of the political tensions in the work, representing the new revolutionary force.',
             importancia: 'Protagonista ideológico da narrativa.',
+            importancia_en: 'Ideological protagonist of the narrative.',
         },
     });
 
@@ -107,6 +125,7 @@ async function main() {
                 'Entenda como José Lins do Rego introduziu o debate sobre o comunismo e o operariado no Nordeste.',
             descricaoDica_en:
                 'Understand how José Lins do Rego introduced the debate about communism and the working class in the Northeast.',
+            curtidasDica: 15,
             material: 'https://exemplo.com/artigo-caminho-pedras.pdf',
         },
     });
