@@ -14,8 +14,10 @@ export default class PersonagemModel {
         return prisma.exemplo.create({
             data: {
                 nome: this.nome,
-                estado: this.estado,
-                preco: this.preco,
+                aparencia: this.aparencia,
+                descricao: this.descricao,
+                resumo: this.resumo,
+                importancia: this.importancia
             },
         });
     }
