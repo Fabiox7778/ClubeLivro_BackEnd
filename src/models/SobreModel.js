@@ -1,8 +1,8 @@
 import prisma from '../lib/services/prismaClient.js';
 
 //Importa do banco os atributos obrigatórios para a manipulação dos personagens.
-export default class PersonagemModel {
-    constructor({ pergunta, pergunta_en, descricao, descricao_en} = {}) {
+export default class SobreModel {
+    constructor({ pergunta, pergunta_en, descricao, descricao_en } = {}) {
         this.pergunta = pergunta;
         this.descricao = descricao;
         this.pergunta_en = pergunta_en;
@@ -11,7 +11,7 @@ export default class PersonagemModel {
 
     //Cria um novo item usando os atributos obrigatórios necessários.
     async criar() {
-        return prisma.personagem.create({
+        return prisma.sobre.create({
             data: {
                 pergunta_en: this.pergunta_en,
                 descricao_en: this.descricao_en,
@@ -23,7 +23,7 @@ export default class PersonagemModel {
 
     //Atualiza um item específico por id.
     async atualizar() {
-        return prisma.personagem.update({
+        return prisma.sobre.update({
             where: { pergunta: this.pergunta },
             data: {
                 descricao: this.descricao,
@@ -36,7 +36,7 @@ export default class PersonagemModel {
 
     //Deleta um item específico por pergunta.
     async deletar() {
-        return prisma.personagem.delete(
+        return prisma.sobre.delete(
             { where: { pergunta: this.pergunta } },
             { where: { descricao: this.descricao } },
             { where: { pergunta_en: this.pergunta_en } },
@@ -64,17 +64,12 @@ export default class PersonagemModel {
             where.descricao_en = { contains: filtros.descricao_en, mode: 'insensitive' };
         }
 
-        return prisma.personagem.findMany({ where });
+        return prisma.sobre.findMany({ where });
     }
 
     //Busca algo específico por id.
-    static async buscarPorId(pergunta) {
-        const data = await prisma.personagem.findUnique(
-            { where: { pergunta } },
-            { where: { descricao } },
-            { where: { pergunta_en } },
-            { where: { descricao_en } },
-        );
+    static async buscarPorId(id) {
+        const data = await prisma.sobre.findUnique({ where: { id } });
         if (!data) {
             return null;
         }
