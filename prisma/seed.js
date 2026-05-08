@@ -86,7 +86,6 @@ async function main() {
                 'Alta. Retrata com precisão o clima de tensão social e a realidade política nordestina da época.',
             verossimilhanca_en:
                 'High. Accurately portrays the climate of social tension and the political reality of the Northeast at the time.',
-            personagens: ['Roberto', 'João Lourenço', 'Noêmia', 'Capitão Antônio Silvino'],
             caracteristicasLiterarias:
                 'Determinismo social, crítica política, realismo cru, abandono do espaço rural do engenho em favor da cidade.',
             caracteristicasLiterarias_en:
@@ -111,6 +110,7 @@ async function main() {
                 'He is the guiding thread of the political tensions in the work, representing the new revolutionary force.',
             importancia: 'Protagonista ideológico da narrativa.',
             importancia_en: 'Ideological protagonist of the narrative.',
+            idLivro: livroCriado.id,
         },
     });
 
@@ -137,9 +137,12 @@ async function main() {
                 'Diferente dos primeiros livros do "Ciclo da Cana-de-Açúcar", qual é o foco principal de "O Caminho das Pedras"?',
             pergunta_en:
                 'Unlike the first books in the "Sugarcane Cycle", what is the main focus of "The Path of Stones"?',
-            resopostaErrada: 'A vida dos senhores de engenho e a decadência da aristocracia rural.',
-            resopostaErrada_en:
+            respostasErradas: [
+                'A vida dos senhores de engenho e a decadência da aristocracia rural.',
+            ],
+            respostasErradas_en: [
                 'The lives of the plantation owners and the decline of the rural aristocracy.',
+            ],
             respostaCorreta:
                 'O surgimento do movimento operário, do comunismo e as tensões políticas no ambiente urbano.',
             respostaCorreta_en:
