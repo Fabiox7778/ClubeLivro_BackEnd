@@ -2,6 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import personagemRoutes from './routes/personagemRoute.js';
 import sobreRoutes from './routes/sobreRoute.js';
+import { apiKey } from './lib/middleware/apiKey.js';
 
 
 const app = express();
@@ -14,7 +15,7 @@ app.get('/', (req, res) => {
 });
 
 // Rotas
-app.use('/api/personagem', personagemRoutes);
+app.use('/api/personagem',apiKey, personagemRoutes);
 app.use('/api/sobre', sobreRoutes);
 
 app.use((req, res) => {
