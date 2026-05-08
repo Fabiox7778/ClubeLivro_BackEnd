@@ -13,8 +13,8 @@ async function main() {
 
     await prisma.simulados.deleteMany();
     await prisma.conteudos.deleteMany();
-    await prisma.livro.deleteMany();
     await prisma.personagem.deleteMany();
+    await prisma.livro.deleteMany();
     await prisma.usuario.deleteMany();
     await prisma.equipe.deleteMany();
     await prisma.sobre.deleteMany();
@@ -137,16 +137,26 @@ async function main() {
                 'Diferente dos primeiros livros do "Ciclo da Cana-de-Açúcar", qual é o foco principal de "O Caminho das Pedras"?',
             pergunta_en:
                 'Unlike the first books in the "Sugarcane Cycle", what is the main focus of "The Path of Stones"?',
-            respostasErradas: [
-                'A vida dos senhores de engenho e a decadência da aristocracia rural.',
-            ],
-            respostasErradas_en: [
-                'The lives of the plantation owners and the decline of the rural aristocracy.',
-            ],
             respostaCorreta:
                 'O surgimento do movimento operário, do comunismo e as tensões políticas no ambiente urbano.',
             respostaCorreta_en:
                 'The emergence of the labor movement, communism, and political tensions in the urban environment.',
+            respostasErradas: [
+                'A vida dos senhores de engenho e a decadência da aristocracia rural.',
+                'A fuga de retirantes da seca nordestina em direção à Floresta Amazônica.',
+                'O misticismo religioso e o cangaço como formas de salvação no sertão.',
+                'A romantização da figura do indígena como herói nacional antes da colonização.',
+            ],
+            respostasErradas_en: [
+                'The lives of the plantation owners and the decline of the rural aristocracy.',
+                'The flight of migrants from the Northeastern drought towards the Amazon Rainforest.',
+                'Religious mysticism and banditry (cangaço) as forms of salvation in the backlands.',
+                'The romanticization of the indigenous figure as a national hero before colonization.',
+            ],
+            explicacao:
+                'Em "O Caminho das Pedras", José Lins do Rego abandona temporariamente os engenhos para retratar a cidade, focando nas greves e no engajamento político e operário (comunismo) da década de 1930.',
+            explicacao_en:
+                'In "The Path of Stones", José Lins do Rego temporarily abandons the sugar mills to depict the city, focusing on strikes and the political and working-class engagement (communism) of the 1930s.',
         },
     });
 
