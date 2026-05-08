@@ -15,7 +15,7 @@ export default class EquipeModel {
     }
 
     async criar() {
-        return prisma.sobre.create({
+        return prisma.equipe.create({
             data: {
                 curso: this.curso,
                 curso_en: this.curso_en,
@@ -31,7 +31,7 @@ export default class EquipeModel {
 
 
     async atualizar() {
-        return prisma.sobre.update({
+        return prisma.equipe.update({
             where: { id: this.id },
             data: {
                 curso: this.curso,
@@ -48,7 +48,7 @@ export default class EquipeModel {
 
 
     async deletar() {
-        return prisma.sobre.delete({ where: { id: this.id } });
+        return prisma.equipe.delete({ where: { id: this.id } });
     }
 
 
@@ -97,7 +97,7 @@ export default class EquipeModel {
 
 
     static async buscarPorId(id) {
-        const data = await prisma.sobre.findUnique({ where: { id } });
+        const data = await prisma.equipe.findUnique({ where: { id } });
         if (!data) {
             return null;
         }
