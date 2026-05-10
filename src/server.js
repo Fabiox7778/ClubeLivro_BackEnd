@@ -3,6 +3,7 @@ import 'dotenv/config';
 import personagemRoutes from './routes/personagemRoute.js';
 import sobreRoutes from './routes/sobreRoute.js';
 import equipeRoutes from './routes/equipeRoute.js';
+import usuarioRoutes from './routes/usuarioRoute.js'
 import { apiKey } from './lib/middleware/apiKey.js';
 
 
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 app.use('/api/personagem',apiKey, personagemRoutes);
 app.use('/api/sobre', apiKey, sobreRoutes);
 app.use('/api/equipe', apiKey, equipeRoutes);
+app.use('/api/usuario',apiKey, usuarioRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Rota não encontrada' });
