@@ -92,7 +92,7 @@ export default class EquipeModel {
             where.foto = { contains: filtros.foto, mode: 'insensitive' };
         }
 
-        return prisma.sobre.findMany({ where });
+        return prisma.equipe.findMany({ where });
     }
 
 
