@@ -1,7 +1,7 @@
 import prisma from '../lib/services/prismaClient.js';
 
 export default class SimuladosModel {
-    constructor({id, idlivro, livro, pergunta, pergunta_en, respostasCorretas, respostasCorretas_en, respostasErradas, respostasErradas_en, explicacao, explicacao_en} = {}) {
+    constructor({id, idlivro, livro, pergunta, pergunta_en, respostasCorretas, respostasCorretas_en, respostasErradas, respostasErradas_en, explicacao, explicacao_en, geradoPorIA} = {}) {
         this.id = id;
         this.idlivro = idlivro;
         this.livro = livro;
@@ -13,6 +13,7 @@ export default class SimuladosModel {
         this.respostasErradas_en = respostasErradas_en;
         this.explicacao = explicacao;
         this.explicacao_en = explicacao_en;
+        this.geradoPorIA = geradoPorIA;
     }
 
     async criar() {
@@ -28,6 +29,7 @@ export default class SimuladosModel {
                 respostasErradas_en: this.respostasErradas_en,
                 explicacao: this.explicacao,
                 explicacao_en: this.explicacao_en,
+                geradoPorIA: this.geradoPorIA,
             },
         });
     }
@@ -46,6 +48,7 @@ export default class SimuladosModel {
                 respostasErradas_en: this.respostasErradas_en,
                 explicacao: this.explicacao,
                 explicacao_en: this.explicacao_en,
+                geradoPorIA: this.geradoPorIA,
             },
         });
     }
@@ -63,6 +66,7 @@ export default class SimuladosModel {
                 respostasErradas_en: this.respostasErradas_en,
                 explicacao: this.explicacao,
                 explicacao_en: this.explicacao_en,
+                geradoPorIA: this.geradoPorIA,
             },
         });
     }
@@ -81,6 +85,7 @@ export default class SimuladosModel {
                 respostasErradas_en: this.respostasErradas_en,
                 explicacao: this.explicacao,
                 explicacao_en: this.explicacao_en,
+                geradoPorIA: this.geradoPorIA,
             },
         });
     }
@@ -106,6 +111,10 @@ export default class SimuladosModel {
 
         if (filtros.idlivro !== undefined) {
             where.idlivro = filtros.idlivro;
+        }
+
+        if (filtros.geradoPorIA !== undefined) {
+            where.geradoPorIA = filtros.geradoPorIA;
         }
 
         if (filtros.respostasCorretas !== undefined) {

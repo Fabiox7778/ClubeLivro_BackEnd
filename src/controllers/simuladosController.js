@@ -6,13 +6,13 @@ export const criar = async (req, res) => {
             return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
-        const { idlivro, livro, pergunta, pergunta_en, respostasCorretas, respostasCorretas_en, respostasErradas, respostasErradas_en, explicacao, explicacao_en } = req.body;
+        const { idlivro, livro, pergunta, pergunta_en, respostasCorretas, respostasCorretas_en, respostasErradas, respostasErradas_en, explicacao, explicacao_en, geradoPorIA } = req.body;
 
         if (!livro || !pergunta) {
             return res.status(400).json({ error: 'Os campos "livro" e "pergunta" são obrigatórios!' });
         }
 
-        const simulado = SimuladosModel({ idlivro, livro, pergunta, pergunta_en, respostasCorretas, respostasCorretas_en, respostasErradas, respostasErradas_en, explicacao, explicacao_en });
+        const simulado = SimuladosModel({ idlivro, livro, pergunta, pergunta_en, respostasCorretas, respostasCorretas_en, respostasErradas, respostasErradas_en, explicacao, explicacao_en, geradoPorIA });
         const data = await simulado.criar();
         return res.status(201).json({ message: 'Registro criado com sucesso!', data });
     } catch (error) {
@@ -81,6 +81,11 @@ export const atualizar = async (req, res) => {
          if (req.body.pergunta_en !== undefined) {
              simulados.pergunta_en = req.body.pergunta_en;
         }
+
+        if (req.body.geradoPorIA !== undefined) {
+            simulados.geradoPorIA = req.body.geradoPorIA;
+        }
+
          if (req.body.respostasCorretas !== undefined) {
              simulados.respostasCorretas = req.body.respostasCorretas;
         }
@@ -104,6 +109,8 @@ export const atualizar = async (req, res) => {
          if (req.body.explicacao_en !== undefined) {
              simulados.explicacao_en = req.body.explicacao_en;
         }
+
+
 
         const data = await simulados.atualizar();
 
