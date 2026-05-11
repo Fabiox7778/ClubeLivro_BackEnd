@@ -108,6 +108,7 @@ model Simulados {
     pergunta_en         String
     respostaCorreta     String
     respostaCorreta_en  String
+    geradoPorIA         Boolean  @default(false)
     respostasErradas    String[]
     respostasErradas_en String[]
     explicacao          String?  @db.Text
