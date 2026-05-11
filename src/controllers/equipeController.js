@@ -12,6 +12,10 @@ export const criar = async (req, res) => {
             return res.status(400).json({ error: 'O campo "curso" é obrigatório!' });
         }
 
+        if (!nome) {
+            return res.status(400).json({ error: 'O campo "nome" é obrigatório!' });
+        }
+
         const equipe = EquipeModel({ curso, descricao, curso_en, descricao_en, nome, nome_equipe, funcao, foto});
         const data = await equipe.criar();
 
