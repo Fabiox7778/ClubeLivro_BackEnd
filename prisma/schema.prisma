@@ -11,6 +11,8 @@ model Livro {
     titulo                       String
     capa                         String
     autor                        String
+    detalhesAutor                String
+    detalhesAutor_en             String
     anoPublicacao                Int
     genero                       String
     genero_en                    String
