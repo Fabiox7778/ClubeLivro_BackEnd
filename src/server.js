@@ -5,6 +5,7 @@ import sobreRoutes from './routes/sobreRoute.js';
 import equipeRoutes from './routes/equipeRoute.js';
 import usuarioRoutes from './routes/usuarioRoute.js';
 import arquivoRoutes from './routes/fotoRoute.js'
+import livroRoutes from './routes/livroRoute.js';
 import { apiKey } from './lib/middleware/apiKey.js';
 
 
@@ -23,6 +24,7 @@ app.use('/api/sobre', apiKey, sobreRoutes);
 app.use('/api/equipe', apiKey, equipeRoutes);
 app.use('/api/usuario', apiKey,usuarioRoutes);
 app.use('/api/usuario', apiKey, arquivoRoutes);
+app.use('/api/livro', apiKey, livroRoutes);
 
 
 app.use((req, res) => {
