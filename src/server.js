@@ -24,7 +24,7 @@ app.use('/api/personagem', apiKey, personagemRoutes);
 app.use('/api/sobre', apiKey, sobreRoutes);
 app.use('/api/equipe', apiKey, equipeRoutes);
 app.use('/api/usuario', apiKey, usuarioRoutes);
-app.use('/api/foto', apiKey, fotoRoutes);
+app.use('/api/user', apiKey, fotoRoutes);
 app.use('/api/livro', apiKey, livroRoutes);
 app.use('/api/simulados', apiKey, simuladosRoutes);
 app.use('/api/conteudos', apiKey, conteudosRoutes);
