@@ -6,13 +6,39 @@ export const criar = async (req, res) => {
             return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
-        const { idlivro, livro, pergunta, pergunta_en, respostasCorretas, respostasCorretas_en, respostasErradas, respostasErradas_en, explicacao, explicacao_en, geradoPorIA } = req.body;
+        const {
+            idlivro,
+            livro,
+            pergunta,
+            pergunta_en,
+            respostasCorretas,
+            respostasCorretas_en,
+            respostasErradas,
+            respostasErradas_en,
+            explicacao,
+            explicacao_en,
+            geradoPorIA,
+        } = req.body;
 
         if (!livro || !pergunta) {
-            return res.status(400).json({ error: 'Os campos "livro" e "pergunta" são obrigatórios!' });
+            return res
+                .status(400)
+                .json({ error: 'Os campos "livro" e "pergunta" são obrigatórios!' });
         }
 
-        const simulado = SimuladosModel({ idlivro, livro, pergunta, pergunta_en, respostasCorretas, respostasCorretas_en, respostasErradas, respostasErradas_en, explicacao, explicacao_en, geradoPorIA });
+        const simulado = new SimuladosModel({
+            idlivro,
+            livro,
+            pergunta,
+            pergunta_en,
+            respostasCorretas,
+            respostasCorretas_en,
+            respostasErradas,
+            respostasErradas_en,
+            explicacao,
+            explicacao_en,
+            geradoPorIA,
+        });
         const data = await simulado.criar();
         return res.status(201).json({ message: 'Registro criado com sucesso!', data });
     } catch (error) {
@@ -78,43 +104,42 @@ export const atualizar = async (req, res) => {
         if (req.body.pergunta !== undefined) {
             simulados.pergunta = req.body.pergunta;
         }
-         if (req.body.pergunta_en !== undefined) {
-             simulados.pergunta_en = req.body.pergunta_en;
+        if (req.body.pergunta_en !== undefined) {
+            simulados.pergunta_en = req.body.pergunta_en;
         }
 
         if (req.body.geradoPorIA !== undefined) {
             simulados.geradoPorIA = req.body.geradoPorIA;
         }
 
-         if (req.body.respostasCorretas !== undefined) {
-             simulados.respostasCorretas = req.body.respostasCorretas;
+        if (req.body.respostasCorretas !== undefined) {
+            simulados.respostasCorretas = req.body.respostasCorretas;
         }
 
-         if (req.body.respostasCorretas_en !== undefined) {
-             simulados.respostasCorretas_en = req.body.respostasCorretas_en;
+        if (req.body.respostasCorretas_en !== undefined) {
+            simulados.respostasCorretas_en = req.body.respostasCorretas_en;
         }
 
-         if (req.body.respostasErradas !== undefined) {
-             simulados.respostasErradas = req.body.respostasErradas;
+        if (req.body.respostasErradas !== undefined) {
+            simulados.respostasErradas = req.body.respostasErradas;
         }
 
-         if (req.body.respostasErradas_en !== undefined) {
-             simulados.respostasErradas_en = req.body.respostasErradas_en;
+        if (req.body.respostasErradas_en !== undefined) {
+            simulados.respostasErradas_en = req.body.respostasErradas_en;
         }
 
-         if (req.body.explicacao !== undefined) {
-             simulados.explicacao = req.body.explicacao;
+        if (req.body.explicacao !== undefined) {
+            simulados.explicacao = req.body.explicacao;
         }
 
-         if (req.body.explicacao_en !== undefined) {
-             simulados.explicacao_en = req.body.explicacao_en;
+        if (req.body.explicacao_en !== undefined) {
+            simulados.explicacao_en = req.body.explicacao_en;
         }
-
-
 
         const data = await simulados.atualizar();
 
-        return res.status(200)
+        return res
+            .status(200)
             .json({ message: `O registro "${data.pergunta}" foi atualizado com sucesso!`, data });
     } catch (error) {
         console.error('Erro ao atualizar:', error);
@@ -139,9 +164,9 @@ export const deletar = async (req, res) => {
         await simulados.deletar();
 
         return res.status(200).json({
-                message: `O registro "${simulados.pergunta}" foi deletado com sucesso!`,
-                deletado: simulados,
-            });
+            message: `O registro "${simulados.pergunta}" foi deletado com sucesso!`,
+            deletado: simulados,
+        });
     } catch (error) {
         console.error('Erro ao deletar:', error);
         return res.status(500).json({ error: 'Erro ao deletar registro.' });

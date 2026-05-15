@@ -1,7 +1,20 @@
 import prisma from '../lib/services/prismaClient.js';
 
 export default class SimuladosModel {
-    constructor({id, idlivro, livro, pergunta, pergunta_en, respostasCorretas, respostasCorretas_en, respostasErradas, respostasErradas_en, explicacao, explicacao_en, geradoPorIA} = {}) {
+    constructor({
+        id,
+        idlivro,
+        livro,
+        pergunta,
+        pergunta_en,
+        respostasCorretas,
+        respostasCorretas_en,
+        respostasErradas,
+        respostasErradas_en,
+        explicacao,
+        explicacao_en,
+        geradoPorIA,
+    } = {}) {
         this.id = id;
         this.idlivro = idlivro;
         this.livro = livro;
@@ -14,43 +27,6 @@ export default class SimuladosModel {
         this.explicacao = explicacao;
         this.explicacao_en = explicacao_en;
         this.geradoPorIA = geradoPorIA;
-    }
-
-    async criar() {
-        return prisma.simulados.create({
-            data: {
-                idlivro: this.idlivro,
-                livro: this.livro,
-                pergunta: this.pergunta,
-                pergunta_en: this.pergunta_en,
-                respostasCorretas: this.respostasCorretas,
-                respostasCorretas_en: this.respostasCorretas_en,
-                respostasErradas: this.respostasErradas,
-                respostasErradas_en: this.respostasErradas_en,
-                explicacao: this.explicacao,
-                explicacao_en: this.explicacao_en,
-                geradoPorIA: this.geradoPorIA,
-            },
-        });
-    }
-
-    async atualizar() {
-        return prisma.simulados.update({
-            where: { id: this.id },
-            data: {
-                idlivro: this.idlivro,
-                livro: this.livro,
-                pergunta: this.pergunta,
-                pergunta_en: this.pergunta_en,
-                respostasCorretas: this.respostasCorretas,
-                respostasCorretas_en: this.respostasCorretas_en,
-                respostasErradas: this.respostasErradas,
-                respostasErradas_en: this.respostasErradas_en,
-                explicacao: this.explicacao,
-                explicacao_en: this.explicacao_en,
-                geradoPorIA: this.geradoPorIA,
-            },
-        });
     }
 
     async criar() {
@@ -122,7 +98,10 @@ export default class SimuladosModel {
         }
 
         if (filtros.respostasCorretas_en !== undefined) {
-            where.respostasCorretas_en = { contains: filtros.respostasCorretas_en, mode: 'insensitive' };
+            where.respostasCorretas_en = {
+                contains: filtros.respostasCorretas_en,
+                mode: 'insensitive',
+            };
         }
 
         if (filtros.respostasErradas !== undefined) {
@@ -130,7 +109,10 @@ export default class SimuladosModel {
         }
 
         if (filtros.respostasErradas_en !== undefined) {
-            where.respostasErradas_en = { contains: filtros.respostasErradas_en, mode: 'insensitive' };
+            where.respostasErradas_en = {
+                contains: filtros.respostasErradas_en,
+                mode: 'insensitive',
+            };
         }
 
         if (filtros.explicacao !== undefined) {

@@ -12,7 +12,7 @@ export default class UsuarioModel {
         this.descricao_en = descricao_en;
         this.foto = foto;
     }
-     async criar() {
+    async criar() {
         return prisma.usuario.create({
             data: {
                 nome: this.nome,
@@ -42,7 +42,7 @@ export default class UsuarioModel {
         });
     }
     async deletar() {
-        return prisma.sobre.delete({ where: { id: this.id } });
+        return prisma.usuario.delete({ where: { id: this.id } });
     }
 
     static async buscarTodos(filtros = {}) {
@@ -53,7 +53,10 @@ export default class UsuarioModel {
         }
 
         if (filtros.idade !== undefined) {
-            where.idade = { contains: filtros.idade };
+            const idadeNum = Number(filtros.idade);
+            if (!Number.isNaN(idadeNum)) {
+                where.idade = idadeNum;
+            }
         }
 
         if (filtros.email) {
