@@ -4,12 +4,11 @@ import personagemRoutes from './routes/personagemRoute.js';
 import sobreRoutes from './routes/sobreRoute.js';
 import equipeRoutes from './routes/equipeRoute.js';
 import usuarioRoutes from './routes/usuarioRoute.js';
-import arquivoRoutes from './routes/fotoRoute.js'
+import fotoRoutes from './routes/fotoRoute.js';
 import livroRoutes from './routes/livroRoute.js';
 import simuladosRoutes from './routes/simuladosRoute.js';
-import conteudosRoutes from './routes/conteudosRoute.js'
+import conteudosRoutes from './routes/conteudosRoute.js';
 import { apiKey } from './lib/middleware/apiKey.js';
-
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -21,11 +20,11 @@ app.get('/', (req, res) => {
 });
 
 // Rotas
-app.use('/api/personagem',apiKey, personagemRoutes);
+app.use('/api/personagem', apiKey, personagemRoutes);
 app.use('/api/sobre', apiKey, sobreRoutes);
 app.use('/api/equipe', apiKey, equipeRoutes);
-app.use('/api/usuario', apiKey,usuarioRoutes);
-app.use('/api/usuario', apiKey, arquivoRoutes);
+app.use('/api/usuario', apiKey, usuarioRoutes);
+app.use('/api/foto', apiKey, fotoRoutes);
 app.use('/api/livro', apiKey, livroRoutes);
 app.use('/api/simulados', apiKey, simuladosRoutes);
 app.use('/api/conteudos', apiKey, conteudosRoutes);
