@@ -5,3 +5,6 @@ build/
 *.log
 .DS_Store
 prisma/migrations/
+
+# Pasta de dados do n8n (Contém senhas e configs locais)
+n8n_data/
