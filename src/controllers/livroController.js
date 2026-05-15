@@ -1,4 +1,3 @@
-import { json } from 'express';
 import LivroModel from '../models/LivroModel.js';
 
 export const criar = async (req, res) => {
