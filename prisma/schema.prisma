@@ -79,7 +79,6 @@ model Usuario {
     senha        String
     descricao    String
     descricao_en String
-    foto         String?
 
     @@map("usuario")
 }
