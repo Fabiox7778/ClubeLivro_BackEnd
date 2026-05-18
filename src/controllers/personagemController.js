@@ -8,6 +8,7 @@ export const criar = async (req, res) => {
             return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
+        // 1. ADICIONADO: idLivro incluído na desestruturação
         const {
             nome,
             aparencia,
@@ -18,6 +19,7 @@ export const criar = async (req, res) => {
             descricao_en,
             resumo_en,
             importancia_en,
+            idLivro,
         } = req.body;
 
         if (nome === undefined || nome === null) {
@@ -65,6 +67,14 @@ export const criar = async (req, res) => {
                 .json({ error: 'To create a character it must have "importancia_en" ' });
         }
 
+        // 2. ADICIONADO: Validação para garantir que o ID do livro foi enviado
+        if (idLivro === undefined || idLivro === null) {
+            return res
+                .status(400)
+                .json({ error: 'O campo "idLivro" é obrigatório para vincular ao personagem!' });
+        }
+
+        // 3. ADICIONADO: Convertendo idLivro para número e injetando no Model
         const personagem = new PersonagemModel({
             nome,
             aparencia,
@@ -75,13 +85,18 @@ export const criar = async (req, res) => {
             descricao_en,
             resumo_en,
             importancia_en,
+            idLivro: Number(idLivro), // Garante o envio correto do ID
         });
+
         const data = await personagem.criar();
 
         return res.status(201).json({ message: 'Personagem criado com sucesso!', data });
     } catch (error) {
         console.error('Erro ao criar:', error);
-        return res.status(500).json({ error: 'Erro interno ao salvar a personagem.' });
+        return res.status(500).json({
+            error: 'Erro interno ao salvar a personagem.',
+            details: error.message,
+        });
     }
 };
 
