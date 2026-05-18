@@ -1,8 +1,31 @@
 import prisma from '../lib/services/prismaClient.js';
 
-
 export default class LivroModel {
-    constructor({ id, titulo, capa, autor, detalhesAutor, detalhesAutor_en, anoPublicacao, genero, genero_en, resumo, resumo_en, contexto, contexto_en, estiloEscrita, estiloEscrita_en, enredo, enredo_en, verossimilhanca, verossimilhanca_en, caracteristicasLiterarias, caracteristicasLiterarias_en, conclusao, conclusao_en} = {}) {
+    constructor({
+        id,
+        titulo,
+        capa,
+        autor,
+        detalhesAutor,
+        detalhesAutor_en,
+        anoPublicacao,
+        genero,
+        genero_en,
+        resumo,
+        resumo_en,
+        contexto,
+        contexto_en,
+        estiloEscrita,
+        estiloEscrita_en,
+        enredo,
+        enredo_en,
+        verossimilhanca,
+        verossimilhanca_en,
+        caracteristicasLiterarias,
+        caracteristicasLiterarias_en,
+        conclusao,
+        conclusao_en,
+    } = {}) {
         this.id = id;
         this.titulo = titulo;
         this.capa = capa;
@@ -27,7 +50,6 @@ export default class LivroModel {
         this.conclusao = conclusao;
         this.conclusao_en = conclusao_en;
     }
-
 
     async criar() {
         return prisma.livro.create({
@@ -164,15 +186,24 @@ export default class LivroModel {
         }
 
         if (filtros.verossimilhanca_en !== undefined) {
-            where.verossimilhanca_en = { contains: filtros.verossimilhanca_en, mode: 'insensitive' };
+            where.verossimilhanca_en = {
+                contains: filtros.verossimilhanca_en,
+                mode: 'insensitive',
+            };
         }
 
         if (filtros.caracteristicasLiterarias !== undefined) {
-            where.caracteristicasLiterarias = { contains: filtros.caracteristicasLiterarias, mode: 'insensitive' };
+            where.caracteristicasLiterarias = {
+                contains: filtros.caracteristicasLiterarias,
+                mode: 'insensitive',
+            };
         }
 
         if (filtros.caracteristicasLiterarias_en !== undefined) {
-            where.caracteristicasLiterarias_en = { contains: filtros.caracteristicasLiterarias_en, mode: 'insensitive' };
+            where.caracteristicasLiterarias_en = {
+                contains: filtros.caracteristicasLiterarias_en,
+                mode: 'insensitive',
+            };
         }
 
         if (filtros.conclusao !== undefined) {
@@ -186,13 +217,11 @@ export default class LivroModel {
         return prisma.livro.findMany({ where });
     }
 
-
     static async buscarPorId(id) {
         const data = await prisma.livro.findUnique({ where: { id } });
         if (!data) {
             return null;
         }
-        return new LivroModel
-    (data);
+        return new LivroModel(data);
     }
 }
