@@ -40,7 +40,10 @@ export const criar = async (req, res) => {
         return res.status(201).json({ message: 'Registro criado com sucesso!', data });
     } catch (error) {
         console.error('Erro ao criar:', error);
-        return res.status(500).json({ error: 'Erro interno ao salvar o registro.' });
+        return res.status(500).json({
+            error: 'Erro interno ao salvar o registro.',
+            details: error.message
+         });
     }
 };
 
@@ -55,7 +58,10 @@ export const buscarTodos = async (req, res) => {
         return res.status(200).json(registros);
     } catch (error) {
         console.error('Erro ao buscar:', error);
-        return res.status(500).json({ error: 'Erro ao buscar registros.' });
+        return res.status(500).json({
+            error: 'Erro ao buscar registros.',
+            details: error.message,
+        });
     }
 };
 
@@ -76,7 +82,10 @@ export const buscarPorId = async (req, res) => {
         return res.status(200).json({ data: conteudos });
     } catch (error) {
         console.error('Erro ao buscar:', error);
-        return res.status(500).json({ error: 'Erro ao buscar registro.' });
+        return res.status(500).json({
+            error: 'Erro ao buscar registro.',
+            details: error.message,
+        });
     }
 };
 
@@ -143,7 +152,10 @@ export const atualizar = async (req, res) => {
             .json({ message: `O registro "${data.tipo}" foi atualizado com sucesso!`, data });
     } catch (error) {
         console.error('Erro ao atualizar:', error);
-        return res.status(500).json({ error: 'Erro ao atualizar registro.' });
+        return res.status(500).json({
+            error: 'Erro ao atualizar registro.',
+            details: error.message
+        });
     }
 };
 
@@ -169,6 +181,9 @@ export const deletar = async (req, res) => {
         });
     } catch (error) {
         console.error('Erro ao deletar:', error);
-        return res.status(500).json({ error: 'Erro ao deletar registro.' });
+        return res.status(500).json({
+            error: 'Erro ao deletar registro.',
+            details: error.message,
+        });
     }
 };
