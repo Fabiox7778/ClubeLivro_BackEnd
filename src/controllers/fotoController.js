@@ -21,7 +21,8 @@ const uploadArquivo = (tipo) => async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             error: `Erro ao fazer upload do ${tipo}.`,
-        error: error.message,});
+            details: error.message,
+        });
     }
 };
 
