@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import 'dotenv/config';
 import personagemRoutes from './routes/personagemRoute.js';
 import sobreRoutes from './routes/sobreRoute.js';
@@ -12,6 +13,8 @@ import { apiKey } from './lib/middleware/apiKey.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(cors()); 
 
 app.use(express.json());
 
