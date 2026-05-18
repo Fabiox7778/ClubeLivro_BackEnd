@@ -1,7 +1,7 @@
 import prisma from '../lib/services/prismaClient.js';
 
 export default class UsuarioModel {
-    constructor({ id, nome, idade, email, username, senha, descricao, descricao_en, foto } = {}) {
+    constructor({ id, nome, idade, email, username, senha, descricao, descricao_en } = {}) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
@@ -10,7 +10,6 @@ export default class UsuarioModel {
         this.senha = senha;
         this.descricao = descricao;
         this.descricao_en = descricao_en;
-        this.foto = foto;
     }
     async criar() {
         return prisma.usuario.create({
@@ -22,7 +21,6 @@ export default class UsuarioModel {
                 senha: this.senha,
                 descricao: this.descricao,
                 descricao_en: this.descricao_en,
-                foto: this.foto,
             },
         });
     }
@@ -37,7 +35,6 @@ export default class UsuarioModel {
                 senha: this.senha,
                 descricao: this.descricao,
                 descricao_en: this.descricao_en,
-                foto: this.foto,
             },
         });
     }

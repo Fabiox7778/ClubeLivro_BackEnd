@@ -20,7 +20,6 @@ export const criar = async (req, res) => {
             senha,
             descricao,
             descricao_en,
-            foto,
         });
         const data = await usuario.criar();
 
@@ -105,9 +104,6 @@ export const atualizar = async (req, res) => {
         }
         if (req.body.descricao_en !== undefined) {
             user.descricao_en = req.body.descricao_en;
-        }
-        if (req.body.foto !== undefined) {
-            user.foto = req.body.foto;
         }
 
         const data = await user.atualizar();
