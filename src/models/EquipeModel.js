@@ -1,8 +1,17 @@
 import prisma from '../lib/services/prismaClient.js';
 
-
 export default class EquipeModel {
-    constructor({ id, nome, nome_equipe, curso, curso_en, funcao, foto, descricao, descricao_en} = {}) {
+    constructor({
+        id,
+        nome,
+        nome_equipe,
+        curso,
+        curso_en,
+        funcao,
+        foto,
+        descricao,
+        descricao_en,
+    } = {}) {
         this.id = id;
         this.curso = curso;
         this.curso_en = curso_en;
@@ -29,7 +38,6 @@ export default class EquipeModel {
         });
     }
 
-
     async atualizar() {
         return prisma.equipe.update({
             where: { id: this.id },
@@ -46,11 +54,9 @@ export default class EquipeModel {
         });
     }
 
-
     async deletar() {
         return prisma.equipe.delete({ where: { id: this.id } });
     }
-
 
     static async buscarTodos(filtros = {}) {
         const where = {};
@@ -58,7 +64,6 @@ export default class EquipeModel {
         if (filtros.descricao !== undefined) {
             where.descricao = { contains: filtros.descricao, mode: 'insensitive' };
         }
-
 
         if (filtros.descricao_en !== undefined) {
             where.descricao_en = { contains: filtros.descricao_en, mode: 'insensitive' };
@@ -72,29 +77,24 @@ export default class EquipeModel {
             where.curso_en = { contains: filtros.curso_en, mode: 'insensitive' };
         }
 
-
         if (filtros.nome !== undefined) {
             where.nome = { contains: filtros.nome, mode: 'insensitive' };
         }
-
 
         if (filtros.nome_equipe !== undefined) {
             where.nome_equipe = { contains: filtros.nome_equipe, mode: 'insensitive' };
         }
 
-
         if (filtros.funcao !== undefined) {
             where.funcao = { contains: filtros.funcao, mode: 'insensitive' };
         }
-
 
         if (filtros.foto !== undefined) {
             where.foto = { contains: filtros.foto, mode: 'insensitive' };
         }
 
-        return prisma.sobre.findMany({ where });
+        return prisma.equipe.findMany({ where });
     }
-
 
     static async buscarPorId(id) {
         const data = await prisma.equipe.findUnique({ where: { id } });

@@ -1,7 +1,7 @@
 import PersonagemModel from '../models/PersonagemModel.js';
 //Importa do model os atributos obrigatórios para a manipulação dos personagens.
 
-  //Cria um novo personagem usando os atributos obrigatórios necessários.
+//Cria um novo personagem usando os atributos obrigatórios necessários.
 export const criar = async (req, res) => {
     try {
         if (!req.body) {
@@ -37,18 +37,8 @@ export const criar = async (req, res) => {
             return res.status(400).json({ error: 'O campo "descricao" é obrigatório!' });
         }
 
-        if (aparencia === undefined || aparencia === null) {
-            return res.status(400).json({ error: 'O campo "aparencia" é obrigatório!' });
-        }
-
         if (importancia === undefined || importancia === null) {
             return res.status(400).json({ error: 'O campo "importancia" é obrigatório!' });
-        }
-
-        if (resumo_en === undefined || resumo_en === null) {
-            return res
-                .status(400)
-                .json({ error: 'To create a character it must have "resumo_en" ' });
         }
 
         if (resumo_en === undefined || resumo_en === null) {
@@ -106,12 +96,12 @@ export const buscarTodos = async (req, res) => {
 
         return res.status(200).json(registros);
     } catch (error) {
-        console.error('Erro ao buscar:',);
+        console.error('Erro ao buscar:', error);
         return res.status(500).json({ error: 'Erro ao buscar registros.' });
     }
 };
 
- //Busca um personagem específico por id.
+//Busca um personagem específico por id.
 export const buscarPorId = async (req, res) => {
     try {
         const { id } = req.params;
@@ -133,7 +123,7 @@ export const buscarPorId = async (req, res) => {
     }
 };
 
-    //Atualiza um personagem específico por id.
+//Atualiza um personagem específico por id.
 export const atualizar = async (req, res) => {
     try {
         const { id } = req.params;
@@ -152,9 +142,8 @@ export const atualizar = async (req, res) => {
             return res.status(404).json({ error: 'Registro não encontrado para atualizar.' });
         }
 
-
         if (req.body.nome !== undefined) {
-            personagem.nome= req.body.nome;
+            personagem.nome = req.body.nome;
         }
         if (req.body.aparencia !== undefined) {
             personagem.aparencia = req.body.aparencia;

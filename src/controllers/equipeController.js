@@ -6,13 +6,23 @@ export const criar = async (req, res) => {
             return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
-        const { curso, descricao, curso_en, descricao_en, nome, nome_equipe, funcao, foto} = req.body;
+        const { curso, descricao, curso_en, descricao_en, nome, nome_equipe, funcao, foto } =
+            req.body;
 
         if (!curso) {
             return res.status(400).json({ error: 'O campo "curso" é obrigatório!' });
         }
 
-        const equipe = EquipeModel({ curso, descricao, curso_en, descricao_en, nome, nome_equipe, funcao, foto});
+        const equipe = new EquipeModel({
+            curso,
+            descricao,
+            curso_en,
+            descricao_en,
+            nome,
+            nome_equipe,
+            funcao,
+            foto,
+        });
         const data = await equipe.criar();
 
         return res.status(201).json({ message: 'Registro criado com sucesso!', data });
@@ -79,36 +89,37 @@ export const atualizar = async (req, res) => {
         if (req.body.curso !== undefined) {
             equipe.curso = req.body.curso;
         }
-         if (req.body.curso_en !== undefined) {
-             equipe.curso_en = req.body.curso_en;
+        if (req.body.curso_en !== undefined) {
+            equipe.curso_en = req.body.curso_en;
         }
-         if (req.body.descricao_en !== undefined) {
-             equipe.descricao_en = req.body.descricao_en;
-        }
-
-         if (req.body.descricao !== undefined) {
-             equipe.descricao = req.body.descricao;
+        if (req.body.descricao_en !== undefined) {
+            equipe.descricao_en = req.body.descricao_en;
         }
 
-         if (req.body.nome !== undefined) {
-             equipe.nome = req.body.nome;
+        if (req.body.descricao !== undefined) {
+            equipe.descricao = req.body.descricao;
         }
 
-         if (req.body.nome_equipe !== undefined) {
-             equipe.nome_equipe = req.body.nome_equipe;
+        if (req.body.nome !== undefined) {
+            equipe.nome = req.body.nome;
         }
 
-         if (req.body.funcao !== undefined) {
-             equipe.funcao = req.body.funcao;
+        if (req.body.nome_equipe !== undefined) {
+            equipe.nome_equipe = req.body.nome_equipe;
         }
 
-         if (req.body.foto !== undefined) {
-             equipe.foto = req.body.foto;
+        if (req.body.funcao !== undefined) {
+            equipe.funcao = req.body.funcao;
+        }
+
+        if (req.body.foto !== undefined) {
+            equipe.foto = req.body.foto;
         }
 
         const data = await equipe.atualizar();
 
-        return res.status(200)
+        return res
+            .status(200)
             .json({ message: `O registro "${data.curso}" foi atualizado com sucesso!`, data });
     } catch (error) {
         console.error('Erro ao atualizar:', error);
@@ -133,9 +144,9 @@ export const deletar = async (req, res) => {
         await equipe.deletar();
 
         return res.status(200).json({
-                message: `O registro "${equipe.curso}" foi deletado com sucesso!`,
-                deletado: equipe,
-            });
+            message: `O registro "${equipe.curso}" foi deletado com sucesso!`,
+            deletado: equipe,
+        });
     } catch (error) {
         console.error('Erro ao deletar:', error);
         return res.status(500).json({ error: 'Erro ao deletar registro.' });
