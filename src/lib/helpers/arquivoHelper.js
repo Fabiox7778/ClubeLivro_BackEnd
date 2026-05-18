@@ -4,7 +4,10 @@ import supabase from '../services/supabase.js';
 const BUCKET = 'arquivos';
 
 const prepararFoto = async (buffer) =>
-    sharp(buffer).resize({ width: 800, withoutEnlargement: true }).webp({ quality: 80 }).toBuffer();
+    sharp(buffer)
+        .resize(800, 800, { withoutEnlargement: true, fit: 'inside' })
+        .webp({ quality: 80 })
+        .toBuffer();
 
 export const upload = async (id, file) => {
     const ehFoto = file.mimetype.startsWith('image/');
