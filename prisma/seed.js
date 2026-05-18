@@ -143,7 +143,6 @@ async function main() {
                 senha: 'senha_segura_hash_aqui',
                 descricao: 'Estudante ávido por literatura brasileira.',
                 descricao_en: 'Avid Brazilian literature student.',
-                foto: 'https://exemplo.com/foto-joao.jpg',
             },
             {
                 nome: 'Maria Oliveira',
@@ -153,7 +152,6 @@ async function main() {
                 senha: 'senha_segura_hash_aqui',
                 descricao: 'Professora de literatura clássica.',
                 descricao_en: 'Classical literature teacher.',
-                foto: 'https://exemplo.com/foto-maria-user.jpg',
             },
             {
                 nome: 'Pedro Costa',
@@ -163,7 +161,7 @@ async function main() {
                 senha: 'senha_segura_hash_aqui',
                 descricao: 'Apaixonado por romances modernistas.',
                 descricao_en: 'Passionate about modernist novels.',
-                foto: 'https://exemplo.com/foto-pedro.jpg',
+
             },
         ],
     });
