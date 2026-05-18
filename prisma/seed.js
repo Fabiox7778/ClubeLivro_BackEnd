@@ -358,49 +358,6 @@ async function main() {
         ],
     });
 
-    console.log('📚 Inserindo Livro 2: A Paixão Segundo G.H...');
-
-    const livro2 = await prisma.livro.create({
-        data: {
-            titulo: 'A Paixão Segundo G.H.',
-            capa: 'https://exemplo.com/capa-paixao-gh.jpg',
-            autor: 'Clarice Lispector',
-            detalhesAutor:
-                'Clarice Lispector (1920-1977) foi uma das maiores escritoras brasileiras, conhecida por suas narrativas introspectivas e inovadoras.',
-            detalhesAutor_en:
-                "Clarice Lispector (1920-1977) was one of Brazil's greatest writers, known for her introspective and innovative narratives.",
-            anoPublicacao: 1964,
-            genero: 'Romance Experimental',
-            genero_en: 'Experimental Novel',
-            resumo: 'G.H., uma mulher burguesa, entra em um quarto de sua empregada e vivencia uma experiência mística e transformadora ao confrontar um barrato (barata).',
-            resumo_en:
-                "G.H., a bourgeois woman, enters her maid's room and experiences a mystical and transformative experience when confronting a cockroach.",
-            contexto:
-                'Escrito durante a modernidade líquida brasileira, o romance questiona identidades e valores burgueses.',
-            contexto_en:
-                'Written during Brazilian liquid modernity, the novel questions identities and bourgeois values.',
-            estiloEscrita:
-                'Narrativa introspectiva, fluxo de consciência, filosofia existencial entrelaçada com a prosa poética.',
-            estiloEscrita_en:
-                'Introspective narrative, stream of consciousness, existential philosophy intertwined with poetic prose.',
-            enredo: 'A protagonista vivencia uma crise existencial ao confrontar o diferente (o barrato), levando-a a questionar sua vida e seus valores burgueses.',
-            enredo_en:
-                'The protagonist experiences an existential crisis when confronting the different (the cockroach), leading her to question her life and bourgeois values.',
-            verossimilhanca:
-                'Moderada. A obra mistura realismo psicológico com elementos místicos e filosóficos.',
-            verossimilhanca_en:
-                'Moderate. The work mixes psychological realism with mystical and philosophical elements.',
-            caracteristicasLiterarias:
-                'Exploração do inconsciente, questionamento ontológico, ruptura com a narrativa tradicional.',
-            caracteristicasLiterarias_en:
-                'Exploration of the unconscious, ontological questioning, rupture with traditional narrative.',
-            conclusao:
-                'Uma obra que transcende a literatura convencional, oferecendo uma experiência quase mística de leitura.',
-            conclusao_en:
-                'A work that transcends conventional literature, offering an almost mystical reading experience.',
-        },
-    });
-
     await prisma.personagem.create({
         data: {
             nome: 'G.H.',
