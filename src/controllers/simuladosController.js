@@ -187,3 +187,48 @@ export const deletar = async (req, res) => {
         });
     }
 };
+
+// NOVA ROTA PARA O N8N
+export const gerarComIA = async (req, res) => {
+    try {
+        const { idlivro, livro, quantidade } = req.body;
+
+        if (!idlivro || !livro) {
+            return res.status(400).json({ error: 'Os campos "idlivro" e "livro" são obrigatórios!' });
+        }
+
+        // URL do webhook gerado pelo seu fluxo no n8n
+        const URL_WEBHOOK_N8N = 'http://localhost:5678/webhook/gerar-quiz'; 
+
+        // Faz o disparo para o n8n repassando os parâmetros
+        const respostaN8n = await fetch(URL_WEBHOOK_N8N, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                idlivro,
+                livro,
+                quantidade: quantidade || 5
+            })
+        });
+
+        if (!respostaN8n.ok) {
+            throw new Error(`O n8n respondeu com status: ${respostaN8n.status}`);
+        }
+
+        const dadosSalvos = await respostaN8n.json();
+
+        return res.status(201).json({ 
+            message: "Solicitação enviada! O fluxo do n8n gerou o simulado com sucesso.", 
+            data: dadosSalvos 
+        });
+
+    } catch (error) {
+        console.error('Erro ao disparar fluxo no n8n:', error);
+        return res.status(500).json({
+            error: 'Erro interno ao acionar o n8n.',
+            details: error.message,
+        });
+    }
+};
