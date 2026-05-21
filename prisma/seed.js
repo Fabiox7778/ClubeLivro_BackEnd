@@ -358,62 +358,6 @@ async function main() {
         ],
     });
 
-    await prisma.personagem.create({
-        data: {
-            nome: 'G.H.',
-            aparencia: 'Mulher burguesa, sofisticada, mas internamente vazia.',
-            aparencia_en: 'Bourgeois woman, sophisticated, but internally empty.',
-            descricao: 'Protagonista que passa por uma transformação existencial.',
-            descricao_en: 'Protagonist who undergoes an existential transformation.',
-            resumo: 'Sua jornada é uma descida ao interior de si mesma através do confronto com o "outro".',
-            resumo_en:
-                'Her journey is a descent into her inner self through confrontation with the "other".',
-            importancia: 'Protagonista absoluta da narrativa.',
-            importancia_en: 'Absolute protagonist of the narrative.',
-            idLivro: livro2.id,
-        },
-    });
-
-    await prisma.conteudos.create({
-        data: {
-            idDoLivro: livro2.id,
-            dicaTitulo: 'Filosofia e Misticismo em Clarice',
-            dicaTitulo_en: 'Philosophy and Mysticism in Clarice',
-            tipo: 'Guia de Leitura',
-            tipo_en: 'Reading Guide',
-            descricaoDica: 'Explore os conceitos filosóficos por trás desta obra transformadora.',
-            descricaoDica_en: 'Explore the philosophical concepts behind this transformative work.',
-            curtidasDica: 22,
-            material: 'https://exemplo.com/guia-paixao.pdf',
-        },
-    });
-
-    await prisma.simulados.create({
-        data: {
-            idLivro: livro2.id,
-            pergunta:
-                'Qual é o evento desencadeador que leva G.H. à sua transformação existencial?',
-            pergunta_en:
-                'What is the triggering event that leads G.H. to her existential transformation?',
-            respostaCorreta: 'O confronto com um barrato (barata) no quarto de sua empregada.',
-            respostaCorreta_en: "The confrontation with a cockroach in her maid's room.",
-            respostasErradas: [
-                'Uma conversa profunda com sua psicoterapeuta.',
-                'A leitura de um livro de filosofia oriental.',
-                'Uma viagem inesperada ao interior do Brasil.',
-            ],
-            respostasErradas_en: [
-                'A deep conversation with her psychotherapist.',
-                'Reading an Eastern philosophy book.',
-                'An unexpected trip to the interior of Brazil.',
-            ],
-            explicacao:
-                'Em "A Paixão Segundo G.H.", a barata é o elemento catalisador que provoca em G.H. uma reflexão profunda sobre sua existência, valores e identidade burguesa.',
-            explicacao_en:
-                'In "The Passion According to G.H.", the cockroach is the catalytic element that provokes in G.H. a deep reflection on her existence, values, and bourgeois identity.',
-        },
-    });
-
     console.log('✅ Seed concluído com sucesso!');
 }
 
