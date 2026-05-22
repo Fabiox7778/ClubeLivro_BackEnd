@@ -13,6 +13,7 @@ async function main() {
 
     await prisma.simulados.deleteMany();
     await prisma.conteudos.deleteMany();
+    await prisma.comunidade.deleteMany();
     await prisma.personagem.deleteMany();
     await prisma.livro.deleteMany();
     await prisma.usuario.deleteMany();

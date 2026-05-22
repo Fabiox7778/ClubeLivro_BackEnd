@@ -9,6 +9,7 @@ import fotoRoutes from './routes/fotoRoute.js';
 import livroRoutes from './routes/livroRoute.js';
 import simuladosRoutes from './routes/simuladosRoute.js';
 import conteudosRoutes from './routes/conteudosRoute.js';
+import comunidadeRoutes from './routes/comunidadeRoute.js';
 import { apiKey } from './lib/middleware/apiKey.js';
 
 const app = express();
@@ -31,6 +32,7 @@ app.use('/api/user', apiKey, fotoRoutes);
 app.use('/api/livro', apiKey, livroRoutes);
 app.use('/api/simulados', apiKey, simuladosRoutes);
 app.use('/api/conteudos', apiKey, conteudosRoutes);
+app.use('/api/comunidade', apiKey, comunidadeRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Rota não encontrada' });

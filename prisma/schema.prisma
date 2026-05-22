@@ -80,7 +80,24 @@ model Usuario {
     descricao    String
     descricao_en String
 
+    publicacoes  Comunidade[]
+
     @@map("usuario")
+}
+
+model Comunidade {
+    id          Int      @id @default(autoincrement())
+    titulo      String
+    conteudo    String   @db.Text
+    autor       String
+    categoria   String?
+    curtidas    Int?     @default(0)
+    idUsuario   Int?
+    usuario     Usuario? @relation(fields: [idUsuario], references: [id], onDelete: SetNull)
+    criadoEm    DateTime @default(now())
+    atualizadoEm DateTime @updatedAt
+
+    @@map("comunidade")
 }
 
 model Conteudos {
