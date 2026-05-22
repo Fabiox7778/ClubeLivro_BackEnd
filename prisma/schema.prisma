@@ -86,16 +86,16 @@ model Usuario {
 }
 
 model Comunidade {
-    id          Int      @id @default(autoincrement())
-    titulo      String
-    conteudo    String   @db.Text
-    autor       String
-    categoria   String?
-    curtidas    Int?     @default(0)
-    idUsuario   Int?
-    usuario     Usuario? @relation(fields: [idUsuario], references: [id], onDelete: SetNull)
-    criadoEm    DateTime @default(now())
-    atualizadoEm DateTime @updatedAt
+    id           Int      @id @default(autoincrement())
+    titulo       String
+    conteudo     String   @db.Text
+    autor        String
+    categoria    String?
+    curtidas     Int?     @default(0)
+    idUsuario    Int?
+    usuario      Usuario? @relation(fields: [idUsuario], references: [id], onDelete: SetNull)
+    criadoEm     DateTime @default(now()) @db.Timestamp(6)
+    atualizadoEm DateTime @updatedAt @db.Timestamp(6)
 
     @@map("comunidade")
 }
