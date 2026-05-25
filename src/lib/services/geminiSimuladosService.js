@@ -1,6 +1,5 @@
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
-const FALLBACK_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash'];
+const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
+const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
 const extrairJson = (texto) => {
     const conteudo = texto.trim();
@@ -14,12 +13,12 @@ const extrairJson = (texto) => {
 
 const validarQuestoes = (payload, quantidadeEsperada) => {
     if (!payload || !Array.isArray(payload.questoes)) {
-        throw new Error('A resposta do Gemini não trouxe o array "questoes".');
+        throw new Error('A resposta da OpenAI não trouxe o array "questoes".');
     }
 
     if (payload.questoes.length !== quantidadeEsperada) {
         throw new Error(
-            `O Gemini retornou ${payload.questoes.length} questões, mas eram esperadas ${quantidadeEsperada}.`,
+            `A OpenAI retornou ${payload.questoes.length} questões, mas eram esperadas ${quantidadeEsperada}.`,
         );
     }
 
@@ -64,16 +63,17 @@ const validarQuestoes = (payload, quantidadeEsperada) => {
     });
 };
 
-const montarPrompt = (quantidade) => `
-Gere exatamente ${quantidade} questões de múltipla escolha, em nível de vestibular, sobre a obra "Dom Casmurro", de Machado de Assis.
+const montarPrompt = (tema, quantidade) => `
+Gere exatamente ${quantidade} questões de múltipla escolha, em nível de vestibular, sobre "${tema}".
 
 Regras:
 - Escreva em português do Brasil.
-- Inclua também a tradução em inglês dos campos textuais.
+- Inclua a tradução em inglês dos campos textuais.
 - Cada questão deve ter 1 resposta correta e 3 respostas erradas plausíveis.
 - As respostas erradas não podem repetir a correta.
-- A explicação deve justificar de forma objetiva por que a resposta correta está certa.
-- O tema deve abordar enredo, personagens, narrador, ciúme, memória, ironia machadiana e contexto literário quando fizer sentido.
+- A explicação deve ser curta, objetiva e ter no máximo 220 caracteres.
+- Priorize respostas curtas.
+- Aborde enredo, personagens, narrador, ciúme, memória, ironia machadiana e contexto literário quando fizer sentido.
 - Retorne somente JSON válido, sem markdown, sem comentários e sem texto adicional.
 
 Formato obrigatório:
@@ -94,22 +94,33 @@ Formato obrigatório:
 }
 `.trim();
 
-const gerarViaHttp = async (nomeModelo, prompt, apiKey) => {
-    const response = await fetch(`${GEMINI_API_URL}/${nomeModelo}:generateContent`, {
+export const gerarQuestoesPorTema = async (tema, quantidade) => {
+    if (!process.env.OPENAI_API_KEY) {
+        throw new Error('A variável OPENAI_API_KEY não foi configurada no arquivo .env.');
+    }
+
+    const response = await fetch(OPENAI_API_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'x-goog-api-key': apiKey,
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
-            contents: [
+            model: OPENAI_MODEL,
+            response_format: { type: 'json_object' },
+            temperature: 0.4,
+            max_completion_tokens: Math.max(700, quantidade * 220),
+            messages: [
                 {
-                    parts: [{ text: prompt }],
+                    role: 'system',
+                    content:
+                        'Responda apenas com JSON válido. Seja conciso.',
+                },
+                {
+                    role: 'user',
+                    content: montarPrompt(tema, quantidade),
                 },
             ],
-            generationConfig: {
-                responseMimeType: 'application/json',
-            },
         }),
     });
 
@@ -119,43 +130,19 @@ const gerarViaHttp = async (nomeModelo, prompt, apiKey) => {
     }
 
     const data = await response.json();
-    const texto = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    const texto = data.choices?.[0]?.message?.content;
 
     if (!texto) {
-        throw new Error('O Gemini não retornou texto em candidates[0].content.parts[0].text.');
+        throw new Error('A OpenAI não retornou conteúdo em choices[0].message.content.');
     }
 
     const payload = extrairJson(texto);
-    return payload;
-};
+    const questoes = validarQuestoes(payload, quantidade);
 
-export const gerarQuestoesDomCasmurro = async (quantidade) => {
-    if (!process.env.GEMINI_API_KEY) {
-        throw new Error('A variável GEMINI_API_KEY não foi configurada no arquivo .env.');
-    }
-
-    const prompt = montarPrompt(quantidade);
-    const apiKey = process.env.GEMINI_API_KEY;
-    const modelosParaTestar = [...new Set([GEMINI_MODEL, ...FALLBACK_MODELS])];
-    let ultimoErro;
-
-    for (const nomeModelo of modelosParaTestar) {
-        try {
-            const payload = await gerarViaHttp(nomeModelo, prompt, apiKey);
-            const questoes = validarQuestoes(payload, quantidade);
-
-            return {
-                tema: 'Dom Casmurro',
-                quantidade,
-                modelo: nomeModelo,
-                questoes,
-            };
-        } catch (error) {
-            ultimoErro = error;
-        }
-    }
-
-    throw new Error(
-        `Nenhum modelo Gemini configurado respondeu com sucesso. Último erro: ${ultimoErro?.message || 'erro desconhecido'}`,
-    );
+    return {
+        tema,
+        quantidade,
+        modelo: OPENAI_MODEL,
+        questoes,
+    };
 };

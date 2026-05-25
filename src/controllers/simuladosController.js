@@ -1,59 +1,74 @@
 import SimuladosModel from '../models/SimuladosModel.js';
 import LivroModel from '../models/LivroModel.js';
-import { gerarQuestoesDomCasmurro } from '../lib/services/geminiSimuladosService.js';
+import { gerarQuestoesPorTema } from '../lib/services/geminiSimuladosService.js';
 
-const DADOS_DOM_CASMURRO = {
-    titulo: 'Dom Casmurro',
-    capa: 'https://upload.wikimedia.org/wikipedia/commons/6/67/Dom_Casmurro_%281899%29.jpg',
-    autor: 'Machado de Assis',
-    detalhesAutor:
-        'Machado de Assis foi um dos maiores escritores da literatura brasileira e principal nome do Realismo no Brasil.',
-    detalhesAutor_en:
-        'Machado de Assis was one of the greatest writers in Brazilian literature and the leading name of Realism in Brazil.',
-    anoPublicacao: 1899,
-    genero: 'Romance realista',
-    genero_en: 'Realist novel',
-    resumo:
-        'Narrado por Bentinho, o romance revisita sua juventude, o relacionamento com Capitu e a dúvida permanente sobre uma possível traição.',
-    resumo_en:
-        'Narrated by Bentinho, the novel revisits his youth, his relationship with Capitu, and the lasting doubt about a possible betrayal.',
-    contexto:
-        'A obra integra o Realismo brasileiro e explora memória, subjetividade, ciúme, ambiguidade narrativa e crítica social.',
-    contexto_en:
-        'The work belongs to Brazilian Realism and explores memory, subjectivity, jealousy, narrative ambiguity, and social critique.',
-    estiloEscrita:
-        'Linguagem irônica, capítulos curtos, narrador subjetivo e forte ambiguidade interpretativa.',
-    estiloEscrita_en:
-        'Ironic language, short chapters, a subjective narrator, and strong interpretive ambiguity.',
-    enredo:
-        'Bentinho reconstrói sua história com Capitu e Escobar, tentando convencer o leitor de que foi traído.',
-    enredo_en:
-        'Bentinho reconstructs his story with Capitu and Escobar, trying to convince the reader that he was betrayed.',
-    verossimilhanca:
-        'Alta, embora a narrativa seja enviesada pelo ponto de vista do narrador.',
-    verossimilhanca_en:
-        'High, although the narrative is biased by the narrator’s point of view.',
-    caracteristicasLiterarias:
-        'Narrador não confiável, análise psicológica, ironia, metalinguagem e crítica às convenções sociais.',
-    caracteristicasLiterarias_en:
-        'Unreliable narrator, psychological analysis, irony, metafiction, and critique of social conventions.',
-    conclusao:
-        'Dom Casmurro permanece central no vestibular por exigir leitura crítica da ambiguidade e do narrador.',
-    conclusao_en:
-        'Dom Casmurro remains central in entrance exams because it demands critical reading of ambiguity and the narrator.',
+const montarDadosBaseDoTema = (tema) => {
+    const titulo = tema.trim();
+
+    return {
+        titulo,
+        capa: 'https://placehold.co/600x900?text=Tema+Literario',
+        autor: 'Tema gerado por IA',
+        detalhesAutor: `Registro base criado automaticamente para o tema "${titulo}".`,
+        detalhesAutor_en: `Base record automatically created for the topic "${titulo}".`,
+        anoPublicacao: new Date().getFullYear(),
+        genero: 'Tema de vestibular',
+        genero_en: 'Entrance exam topic',
+        resumo: `Conteudo de apoio para o tema "${titulo}".`,
+        resumo_en: `Support content for the topic "${titulo}".`,
+        contexto: `Tema utilizado para gerar simulados com IA sobre "${titulo}".`,
+        contexto_en: `Topic used to generate AI mock exams about "${titulo}".`,
+        estiloEscrita: `Conteudo dinâmico associado ao tema "${titulo}".`,
+        estiloEscrita_en: `Dynamic content associated with the topic "${titulo}".`,
+        enredo: `Tema de estudo configurado pelo front-end: "${titulo}".`,
+        enredo_en: `Study topic configured by the front-end: "${titulo}".`,
+        verossimilhanca: 'Conteúdo complementar gerado sob demanda.',
+        verossimilhanca_en: 'Complementary content generated on demand.',
+        caracteristicasLiterarias: `Base de simulados e estudos para "${titulo}".`,
+        caracteristicasLiterarias_en: `Mock exam and study base for "${titulo}".`,
+        conclusao: `Tema preparado para geração de questões de vestibular.`,
+        conclusao_en: `Topic prepared for entrance exam question generation.`,
+    };
 };
 
-const obterOuCriarLivroDomCasmurro = async () => {
-    const livroExistente = await LivroModel.buscarPorTitulo(DADOS_DOM_CASMURRO.titulo);
+const obterOuCriarLivroPorTema = async (tema) => {
+    const dadosBaseDoTema = montarDadosBaseDoTema(tema);
+    const livroExistente = await LivroModel.buscarPorTitulo(dadosBaseDoTema.titulo);
 
     if (livroExistente) {
         return livroExistente;
     }
 
-    const livro = new LivroModel(DADOS_DOM_CASMURRO);
+    const livro = new LivroModel(dadosBaseDoTema);
     const criado = await livro.criar();
 
     return new LivroModel(criado);
+};
+
+const embaralhar = (itens) => {
+    const copia = [...itens];
+
+    for (let i = copia.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+
+    return copia;
+};
+
+const montarPayloadParaSalvar = (questoes, idLivro) => {
+    return questoes.map((questao) => ({
+        idLivro,
+        pergunta: questao.pergunta,
+        pergunta_en: questao.pergunta_en,
+        respostaCorreta: questao.respostaCorreta,
+        respostaCorreta_en: questao.respostaCorreta_en,
+        respostasErradas: questao.respostasErradas,
+        respostasErradas_en: questao.respostasErradas_en,
+        explicacao: questao.explicacao,
+        explicacao_en: questao.explicacao_en,
+        geradoPorIA: true,
+    }));
 };
 
 export const criar = async (req, res) => {
@@ -250,8 +265,10 @@ export const deletar = async (req, res) => {
 
 export const gerarQuestoes = async (req, res) => {
     try {
-        const quantidadeInformada = req.params.quantidade || req.query.quantidade || req.body?.quantidade;
+        const quantidadeInformada = req.params.quantidade || req.query.quantidade;
+        const temaInformado = req.query.tema;
         const quantidade = Number(quantidadeInformada || 5);
+        const tema = typeof temaInformado === 'string' ? temaInformado.trim() : '';
 
         if (!Number.isInteger(quantidade) || quantidade < 1 || quantidade > 20) {
             return res.status(400).json({
@@ -259,26 +276,52 @@ export const gerarQuestoes = async (req, res) => {
             });
         }
 
-        const livro = await obterOuCriarLivroDomCasmurro();
-        const objetoGerado = await gerarQuestoesDomCasmurro(quantidade);
+        if (!tema) {
+            return res.status(400).json({
+                error: 'O parâmetro "tema" é obrigatório.',
+            });
+        }
 
-        const payloadParaSalvar = objetoGerado.questoes.map((questao) => ({
-            idLivro: livro.id,
-            pergunta: questao.pergunta,
-            pergunta_en: questao.pergunta_en,
-            respostaCorreta: questao.respostaCorreta,
-            respostaCorreta_en: questao.respostaCorreta_en,
-            respostasErradas: questao.respostasErradas,
-            respostasErradas_en: questao.respostasErradas_en,
-            explicacao: questao.explicacao,
-            explicacao_en: questao.explicacao_en,
-            geradoPorIA: true,
-        }));
+        const livro = await obterOuCriarLivroPorTema(tema);
+        const questoesExistentes = await SimuladosModel.buscarPorLivro(livro.id, { geradoPorIA: true });
 
-        const questoesSalvas = await SimuladosModel.criarMuitos(payloadParaSalvar);
+        if (questoesExistentes.length >= quantidade) {
+            const questoesSalvas = embaralhar(questoesExistentes).slice(0, quantidade);
 
-        return res.status(201).json({
+            return res.status(200).json({
+                message: 'Questões carregadas com sucesso.',
+                origem: 'cache',
+                tema: livro.titulo,
+                quantidade,
+                livro: {
+                    id: livro.id,
+                    titulo: livro.titulo,
+                    autor: livro.autor,
+                },
+                objetoGerado: {
+                    tema: livro.titulo,
+                    quantidade,
+                    questoes: questoesSalvas.map((questao) => ({
+                        pergunta: questao.pergunta,
+                        pergunta_en: questao.pergunta_en,
+                        respostaCorreta: questao.respostaCorreta,
+                        respostaCorreta_en: questao.respostaCorreta_en,
+                        respostasErradas: questao.respostasErradas,
+                        respostasErradas_en: questao.respostasErradas_en,
+                        explicacao: questao.explicacao,
+                        explicacao_en: questao.explicacao_en,
+                    })),
+                },
+                questoesSalvas,
+            });
+        }
+
+        const objetoGerado = await gerarQuestoesPorTema(tema, quantidade);
+        const payloadParaSalvar = montarPayloadParaSalvar(objetoGerado.questoes, livro.id);
+
+        const resposta = {
             message: 'Questões geradas e salvas com sucesso.',
+            origem: 'openai',
             tema: objetoGerado.tema,
             quantidade: objetoGerado.quantidade,
             livro: {
@@ -287,12 +330,19 @@ export const gerarQuestoes = async (req, res) => {
                 autor: livro.autor,
             },
             objetoGerado,
-            questoesSalvas,
+        };
+
+        res.status(200).json(resposta);
+
+        void SimuladosModel.criarMuitos(payloadParaSalvar).catch((error) => {
+            console.error('Erro ao salvar questões no banco após resposta:', error);
         });
+
+        return;
     } catch (error) {
-        console.error('Erro ao gerar questões com Gemini:', error);
+        console.error('Erro ao gerar questões com OpenAI:', error);
         return res.status(500).json({
-            error: 'Erro interno ao gerar questões com Gemini.',
+            error: 'Erro interno ao gerar questões com OpenAI.',
             details: error.message,
         });
     }

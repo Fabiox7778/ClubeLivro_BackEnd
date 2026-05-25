@@ -134,6 +134,18 @@ export default class SimuladosModel {
         return registros;
     }
 
+    static async buscarPorLivro(idLivro, filtros = {}) {
+        const where = {
+            idLivro,
+        };
+
+        if (filtros.geradoPorIA !== undefined) {
+            where.geradoPorIA = filtros.geradoPorIA;
+        }
+
+        return prisma.simulados.findMany({ where });
+    }
+
     static async buscarPorId(id) {
         const data = await prisma.simulados.findUnique({ where: { id } });
         if (!data) {
