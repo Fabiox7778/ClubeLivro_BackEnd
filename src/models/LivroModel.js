@@ -224,4 +224,16 @@ export default class LivroModel {
         }
         return new LivroModel(data);
     }
+
+    static async buscarPorTitulo(titulo) {
+        const data = await prisma.livro.findFirst({
+            where: { titulo: { equals: titulo, mode: 'insensitive' } },
+        });
+
+        if (!data) {
+            return null;
+        }
+
+        return new LivroModel(data);
+    }
 }

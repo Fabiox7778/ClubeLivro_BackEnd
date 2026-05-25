@@ -1,4 +1,60 @@
 import SimuladosModel from '../models/SimuladosModel.js';
+import LivroModel from '../models/LivroModel.js';
+import { gerarQuestoesDomCasmurro } from '../lib/services/geminiSimuladosService.js';
+
+const DADOS_DOM_CASMURRO = {
+    titulo: 'Dom Casmurro',
+    capa: 'https://upload.wikimedia.org/wikipedia/commons/6/67/Dom_Casmurro_%281899%29.jpg',
+    autor: 'Machado de Assis',
+    detalhesAutor:
+        'Machado de Assis foi um dos maiores escritores da literatura brasileira e principal nome do Realismo no Brasil.',
+    detalhesAutor_en:
+        'Machado de Assis was one of the greatest writers in Brazilian literature and the leading name of Realism in Brazil.',
+    anoPublicacao: 1899,
+    genero: 'Romance realista',
+    genero_en: 'Realist novel',
+    resumo:
+        'Narrado por Bentinho, o romance revisita sua juventude, o relacionamento com Capitu e a dúvida permanente sobre uma possível traição.',
+    resumo_en:
+        'Narrated by Bentinho, the novel revisits his youth, his relationship with Capitu, and the lasting doubt about a possible betrayal.',
+    contexto:
+        'A obra integra o Realismo brasileiro e explora memória, subjetividade, ciúme, ambiguidade narrativa e crítica social.',
+    contexto_en:
+        'The work belongs to Brazilian Realism and explores memory, subjectivity, jealousy, narrative ambiguity, and social critique.',
+    estiloEscrita:
+        'Linguagem irônica, capítulos curtos, narrador subjetivo e forte ambiguidade interpretativa.',
+    estiloEscrita_en:
+        'Ironic language, short chapters, a subjective narrator, and strong interpretive ambiguity.',
+    enredo:
+        'Bentinho reconstrói sua história com Capitu e Escobar, tentando convencer o leitor de que foi traído.',
+    enredo_en:
+        'Bentinho reconstructs his story with Capitu and Escobar, trying to convince the reader that he was betrayed.',
+    verossimilhanca:
+        'Alta, embora a narrativa seja enviesada pelo ponto de vista do narrador.',
+    verossimilhanca_en:
+        'High, although the narrative is biased by the narrator’s point of view.',
+    caracteristicasLiterarias:
+        'Narrador não confiável, análise psicológica, ironia, metalinguagem e crítica às convenções sociais.',
+    caracteristicasLiterarias_en:
+        'Unreliable narrator, psychological analysis, irony, metafiction, and critique of social conventions.',
+    conclusao:
+        'Dom Casmurro permanece central no vestibular por exigir leitura crítica da ambiguidade e do narrador.',
+    conclusao_en:
+        'Dom Casmurro remains central in entrance exams because it demands critical reading of ambiguity and the narrator.',
+};
+
+const obterOuCriarLivroDomCasmurro = async () => {
+    const livroExistente = await LivroModel.buscarPorTitulo(DADOS_DOM_CASMURRO.titulo);
+
+    if (livroExistente) {
+        return livroExistente;
+    }
+
+    const livro = new LivroModel(DADOS_DOM_CASMURRO);
+    const criado = await livro.criar();
+
+    return new LivroModel(criado);
+};
 
 export const criar = async (req, res) => {
     try {
@@ -7,12 +63,11 @@ export const criar = async (req, res) => {
         }
 
         const {
-            idlivro,
-            livro,
+            idLivro,
             pergunta,
             pergunta_en,
-            respostasCorretas,
-            respostasCorretas_en,
+            respostaCorreta,
+            respostaCorreta_en,
             respostasErradas,
             respostasErradas_en,
             explicacao,
@@ -20,19 +75,20 @@ export const criar = async (req, res) => {
             geradoPorIA,
         } = req.body;
 
-        if (!livro || !pergunta) {
+        if (!idLivro || !pergunta || !respostaCorreta || !Array.isArray(respostasErradas)) {
             return res
                 .status(400)
-                .json({ error: 'Os campos "livro" e "pergunta" são obrigatórios!' });
+                .json({
+                    error: 'Os campos "idLivro", "pergunta", "respostaCorreta" e "respostasErradas" são obrigatórios!',
+                });
         }
 
         const simulado = new SimuladosModel({
-            idlivro,
-            livro,
+            idLivro,
             pergunta,
             pergunta_en,
-            respostasCorretas,
-            respostasCorretas_en,
+            respostaCorreta,
+            respostaCorreta_en,
             respostasErradas,
             respostasErradas_en,
             explicacao,
@@ -121,12 +177,16 @@ export const atualizar = async (req, res) => {
             simulados.geradoPorIA = req.body.geradoPorIA;
         }
 
-        if (req.body.respostasCorretas !== undefined) {
-            simulados.respostasCorretas = req.body.respostasCorretas;
+        if (req.body.idLivro !== undefined) {
+            simulados.idLivro = req.body.idLivro;
         }
 
-        if (req.body.respostasCorretas_en !== undefined) {
-            simulados.respostasCorretas_en = req.body.respostasCorretas_en;
+        if (req.body.respostaCorreta !== undefined) {
+            simulados.respostaCorreta = req.body.respostaCorreta;
+        }
+
+        if (req.body.respostaCorreta_en !== undefined) {
+            simulados.respostaCorreta_en = req.body.respostaCorreta_en;
         }
 
         if (req.body.respostasErradas !== undefined) {
@@ -188,46 +248,51 @@ export const deletar = async (req, res) => {
     }
 };
 
-// NOVA ROTA PARA O N8N
-export const gerarComIA = async (req, res) => {
+export const gerarQuestoes = async (req, res) => {
     try {
-        const { idlivro, livro, quantidade } = req.body;
+        const quantidadeInformada = req.params.quantidade || req.query.quantidade || req.body?.quantidade;
+        const quantidade = Number(quantidadeInformada || 5);
 
-        if (!idlivro || !livro) {
-            return res.status(400).json({ error: 'Os campos "idlivro" e "livro" são obrigatórios!' });
+        if (!Number.isInteger(quantidade) || quantidade < 1 || quantidade > 20) {
+            return res.status(400).json({
+                error: 'A quantidade de questões deve ser um número inteiro entre 1 e 20.',
+            });
         }
 
-        // URL do webhook gerado pelo seu fluxo no n8n
-        const URL_WEBHOOK_N8N = 'http://localhost:5678/webhook/gerar-quiz'; 
+        const livro = await obterOuCriarLivroDomCasmurro();
+        const objetoGerado = await gerarQuestoesDomCasmurro(quantidade);
 
-        // Faz o disparo para o n8n repassando os parâmetros
-        const respostaN8n = await fetch(URL_WEBHOOK_N8N, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+        const payloadParaSalvar = objetoGerado.questoes.map((questao) => ({
+            idLivro: livro.id,
+            pergunta: questao.pergunta,
+            pergunta_en: questao.pergunta_en,
+            respostaCorreta: questao.respostaCorreta,
+            respostaCorreta_en: questao.respostaCorreta_en,
+            respostasErradas: questao.respostasErradas,
+            respostasErradas_en: questao.respostasErradas_en,
+            explicacao: questao.explicacao,
+            explicacao_en: questao.explicacao_en,
+            geradoPorIA: true,
+        }));
+
+        const questoesSalvas = await SimuladosModel.criarMuitos(payloadParaSalvar);
+
+        return res.status(201).json({
+            message: 'Questões geradas e salvas com sucesso.',
+            tema: objetoGerado.tema,
+            quantidade: objetoGerado.quantidade,
+            livro: {
+                id: livro.id,
+                titulo: livro.titulo,
+                autor: livro.autor,
             },
-            body: JSON.stringify({
-                idlivro,
-                livro,
-                quantidade: quantidade || 5
-            })
+            objetoGerado,
+            questoesSalvas,
         });
-
-        if (!respostaN8n.ok) {
-            throw new Error(`O n8n respondeu com status: ${respostaN8n.status}`);
-        }
-
-        const dadosSalvos = await respostaN8n.json();
-
-        return res.status(201).json({ 
-            message: "Solicitação enviada! O fluxo do n8n gerou o simulado com sucesso.", 
-            data: dadosSalvos 
-        });
-
     } catch (error) {
-        console.error('Erro ao disparar fluxo no n8n:', error);
+        console.error('Erro ao gerar questões com Gemini:', error);
         return res.status(500).json({
-            error: 'Erro interno ao acionar o n8n.',
+            error: 'Erro interno ao gerar questões com Gemini.',
             details: error.message,
         });
     }

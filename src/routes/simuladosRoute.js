@@ -6,8 +6,8 @@ const router = express.Router();
 router.post('/', controller.criar);
 router.get('/', controller.buscarTodos);
 
-// Rota para gera simulados com IA
-router.post('/gerar', controller.gerarComIA);
+router.post('/gerar-questoes', controller.gerarQuestoes);
+router.post('/gerar-questoes/:quantidade', controller.gerarQuestoes);
 
 router.get('/:id', controller.buscarPorId);
 router.put('/:id', controller.atualizar);

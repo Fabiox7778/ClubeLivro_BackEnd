@@ -3,12 +3,12 @@ import prisma from '../lib/services/prismaClient.js';
 export default class SimuladosModel {
     constructor({
         id,
-        idlivro,
+        idLivro,
         livro,
         pergunta,
         pergunta_en,
-        respostasCorretas,
-        respostasCorretas_en,
+        respostaCorreta,
+        respostaCorreta_en,
         respostasErradas,
         respostasErradas_en,
         explicacao,
@@ -16,12 +16,12 @@ export default class SimuladosModel {
         geradoPorIA,
     } = {}) {
         this.id = id;
-        this.idlivro = idlivro;
+        this.idLivro = idLivro;
         this.livro = livro;
         this.pergunta = pergunta;
         this.pergunta_en = pergunta_en;
-        this.respostasCorretas = respostasCorretas;
-        this.respostasCorretas_en = respostasCorretas_en;
+        this.respostaCorreta = respostaCorreta;
+        this.respostaCorreta_en = respostaCorreta_en;
         this.respostasErradas = respostasErradas;
         this.respostasErradas_en = respostasErradas_en;
         this.explicacao = explicacao;
@@ -32,12 +32,11 @@ export default class SimuladosModel {
     async criar() {
         return prisma.simulados.create({
             data: {
-                idlivro: this.idlivro,
-                livro: this.livro,
+                idLivro: this.idLivro,
                 pergunta: this.pergunta,
                 pergunta_en: this.pergunta_en,
-                respostasCorretas: this.respostasCorretas,
-                respostasCorretas_en: this.respostasCorretas_en,
+                respostaCorreta: this.respostaCorreta,
+                respostaCorreta_en: this.respostaCorreta_en,
                 respostasErradas: this.respostasErradas,
                 respostasErradas_en: this.respostasErradas_en,
                 explicacao: this.explicacao,
@@ -51,12 +50,11 @@ export default class SimuladosModel {
         return prisma.simulados.update({
             where: { id: this.id },
             data: {
-                idlivro: this.idlivro,
-                livro: this.livro,
+                idLivro: this.idLivro,
                 pergunta: this.pergunta,
                 pergunta_en: this.pergunta_en,
-                respostasCorretas: this.respostasCorretas,
-                respostasCorretas_en: this.respostasCorretas_en,
+                respostaCorreta: this.respostaCorreta,
+                respostaCorreta_en: this.respostaCorreta_en,
                 respostasErradas: this.respostasErradas,
                 respostasErradas_en: this.respostasErradas_en,
                 explicacao: this.explicacao,
@@ -82,37 +80,36 @@ export default class SimuladosModel {
         }
 
         if (filtros.livro !== undefined) {
-            where.livro = { contains: filtros.livro, mode: 'insensitive' };
+            where.livro = {
+                titulo: { contains: filtros.livro, mode: 'insensitive' },
+            };
         }
 
-        if (filtros.idlivro !== undefined) {
-            where.idlivro = filtros.idlivro;
+        if (filtros.idLivro !== undefined) {
+            where.idLivro = Number(filtros.idLivro);
         }
 
         if (filtros.geradoPorIA !== undefined) {
-            where.geradoPorIA = filtros.geradoPorIA;
+            where.geradoPorIA = filtros.geradoPorIA === 'true' || filtros.geradoPorIA === true;
         }
 
-        if (filtros.respostasCorretas !== undefined) {
-            where.respostasCorretas = { contains: filtros.respostasCorretas, mode: 'insensitive' };
+        if (filtros.respostaCorreta !== undefined) {
+            where.respostaCorreta = { contains: filtros.respostaCorreta, mode: 'insensitive' };
         }
 
-        if (filtros.respostasCorretas_en !== undefined) {
-            where.respostasCorretas_en = {
-                contains: filtros.respostasCorretas_en,
+        if (filtros.respostaCorreta_en !== undefined) {
+            where.respostaCorreta_en = {
+                contains: filtros.respostaCorreta_en,
                 mode: 'insensitive',
             };
         }
 
         if (filtros.respostasErradas !== undefined) {
-            where.respostasErradas = { contains: filtros.respostasErradas, mode: 'insensitive' };
+            where.respostasErradas = { has: filtros.respostasErradas };
         }
 
         if (filtros.respostasErradas_en !== undefined) {
-            where.respostasErradas_en = {
-                contains: filtros.respostasErradas_en,
-                mode: 'insensitive',
-            };
+            where.respostasErradas_en = { has: filtros.respostasErradas_en };
         }
 
         if (filtros.explicacao !== undefined) {
@@ -124,6 +121,17 @@ export default class SimuladosModel {
         }
 
         return prisma.simulados.findMany({ where });
+    }
+
+    static async criarMuitos(questoes = []) {
+        const registros = [];
+
+        for (const questao of questoes) {
+            const registro = await prisma.simulados.create({ data: questao });
+            registros.push(registro);
+        }
+
+        return registros;
     }
 
     static async buscarPorId(id) {
