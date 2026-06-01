@@ -32,7 +32,7 @@ async function main() {
                 funcao: 'Product Owner',
                 descricao: 'Responsável pelo desenvolvimento do projeto e documentação.',
                 descricao_en: 'Responsible for project development and documentation.',
-                foto: 'https://exemplo.com/foto-ana.jpg',
+                foto: 'https://ibb.co/fzZhHZtp',
             },
             {
                 nome_equipe: 'Equipe DevStone',
@@ -44,7 +44,7 @@ async function main() {
                     'Garante a organização do time seguindo princípios e práticas do framework scrum.',
                 descricao_en:
                     'Ensures the team is organized by following the principles and practices of the Scrum framework.',
-                foto: 'https://exemplo.com/foto-carlos.jpg',
+                foto: 'https://ibb.co/NdL5Q2JW',
             },
             {
                 nome_equipe: 'Equipe DevStone',
@@ -54,7 +54,7 @@ async function main() {
                 funcao: 'Developer',
                 descricao: 'Responsável pelo desenvolvimento do sistema Back-end',
                 descricao_en: 'Responsible for the development of back-end system.',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/chB3vvwz',
             },
             {
                 nome_equipe: 'Equipe DevStone',
@@ -75,7 +75,7 @@ async function main() {
                 funcao: 'Developer',
                 descricao: 'Responsável pelo desenvolvimento do Front-end e prototipação do Figma.',
                 descricao_en: 'Responsible for front-end development and prototyping in Figma.',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/PvhmMRpK',
             },
             {
                 nome_equipe: 'Equipe DevStone',
@@ -87,7 +87,7 @@ async function main() {
                     'Responsável pela prototipação do Figma e organização do progresso do projeto no Trello.',
                 descricao_en:
                     'Responsible for Figma prototyping and organizing project progress in Trello.',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/RTmD1Xs0',
             },
             {
                 nome_equipe: 'Equipe DevStone',
@@ -99,7 +99,7 @@ async function main() {
                     'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
                 descricao_en:
                     'Responsible for reading the book and passing on the necessary knowledge and information.',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/cXwSBkhG',
             },
             {
                 nome_equipe: 'Equipe DevStone',
@@ -123,7 +123,7 @@ async function main() {
                     'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
                 descricao_en:
                     'Responsible for reading the book and passing on the necessary knowledge and information..',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/YBgjvWj4',
             },
             {
                 nome_equipe: 'Equipe DevStone',
@@ -135,7 +135,7 @@ async function main() {
                     'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
                 descricao_en:
                     'Responsible for reading the book and passing on the necessary knowledge and information..',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/gZsDVWCD',
             },
         ],
     });
@@ -210,14 +210,14 @@ async function main() {
     const livro1 = await prisma.livro.create({
         data: {
             titulo: 'O Caminho das Pedras',
-            capa: 'https://exemplo.com/capa-caminho-das-pedras.jpg',
+            capa: 'https://ibb.co/NdL5Q2JW',
             autor: 'Rachel de Queiroz',
             detalhesAutor:
                 'Rachel de Queiroz (1910-2003) foi uma grande escritora, jornalista, tradutora e dramaturga brasileira. Ganhou diversos prêmios, dentre eles o "Prêmio Camões" aos 81 anos, sendo portanto, a primeira mulher a recebê-lo. Além disso, foi a primeira mulher a ocupar uma cadeira na Academia Brasileira de Letras, em 1977. Foi militante política e afiliada ao Partido Comunista Brasileiro. Foi casada duas vezes, seu primeiro marido foi o poeta José Auto da Cruz Oliveira, e após a separação casou-se com o médico Oyama de Macedo.',
             detalhesAutor_en:
                 'Rachel de Queiroz (1910-2003) was a great Brazilian writer, journalist, translator, and playwright. She won numerous awards, including the Camões Prize at the age of 81, becoming the first woman to receive it. Furthermore, she was the first woman to hold a seat in the Brazilian Academy of Letters, in 1977. She was a political activist and affiliated with the Brazilian Communist Party. She was married twice; her first husband was the poet José Auto da Cruz Oliveira, and after their separation, she married the physician Oyama de Macedo.',
             anoPublicacao: 1936,
-            genero: 'O livro Caminho de Pedras, publicado em 1937, é um exemplar do romance social brasileiro. Diferente de obras focadas na seca, este romance explora o ambiente urbano e a agudeza da observação psicológica em meio a dramas sociais. O gênero se manifesta na forma como a autora documenta a militância política clandestina da década de 30, expondo as tensões entre intelectuais e operários e os conflitos da condição feminina na época. Em suma, é uma narrativa de inesquecível força dramática que utiliza o realismo para humanizar temas políticos e sociais complexos',
+            genero: 'O livro Caminho das Pedras, publicado em 1937, é um exemplar do romance social brasileiro. Diferente de obras focadas na seca, este romance explora o ambiente urbano e a agudeza da observação psicológica em meio a dramas sociais. O gênero se manifesta na forma como a autora documenta a militância política clandestina da década de 30, expondo as tensões entre intelectuais e operários e os conflitos da condição feminina na época. Em suma, é uma narrativa de inesquecível força dramática que utiliza o realismo para humanizar temas políticos e sociais complexos',
             genero_en:
                 'The book Caminho de Pedras, published in 1937, is a prime example of the Brazilian social novel. Unlike works focused on the drought, this novel explores the urban environment and offers keen psychological insight amid social dramas. The genre is evident in the way the author documents the clandestine political activism of the 1930s, exposing the tensions between intellectuals and workers and the conflicts surrounding the status of women at the time. In short, it is a narrative of unforgettable dramatic force that uses realism to humanize complex political and social themes.',
             resumo: 'Caminho de Pedras narra a história de Noemi, uma mulher casada com João Jaques, mas que vive um relacionamento sem felicidade e marcado pela rotina. Sua vida começa a mudar quando ela conhece Roberto, um jornalista e militante político envolvido com movimentos socialistas e lutas trabalhistas. Com o passar do tempo, Noemi se aproxima de Roberto e acaba se apaixonando por ele. Esse relacionamento faz com que ela enfrente conflitos emocionais e morais, além do julgamento da sociedade conservadora da época, que condenava mulheres que desrespeitavam os padrões tradicionais do casamento. Enquanto desenvolve o drama amoroso da protagonista, o livro também retrata a realidade social e política do Brasil nos anos 1930, durante a Era Vargas. A narrativa mostra perseguições políticas, desigualdade social, pobreza e dificuldades enfrentadas pelos trabalhadores nordestinos. Rachel de Queiroz utiliza uma linguagem simples e realista para abordar temas como liberdade feminina, injustiça social, política e os desafios de quem tenta buscar independência em uma sociedade cheia de preconceitos e limitações.',
