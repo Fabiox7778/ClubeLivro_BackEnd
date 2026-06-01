@@ -1,148 +1,89 @@
-const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
-const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
+import SimuladosModel from '../models/SimuladosModel.js';
+// LivroModel removido!
+import { gerarQuestoesPorTema } from '../lib/services/geminiSimuladosService.js';
 
-const extrairJson = (texto) => {
-    const conteudo = texto.trim();
-    const semMarkdown = conteudo
-        .replace(/^```json\s*/i, '')
-        .replace(/^```\s*/i, '')
-        .replace(/\s*```$/i, '');
+// ... (mantenha a função embaralhar e montarPayloadParaSalvar iguais) ...
 
-    return JSON.parse(semMarkdown);
-};
+export const gerarQuestoes = async (req, res) => {
+    try {
+        const quantidadeInformada = req.params.quantidade || req.query.quantidade;
+        const temaInformado = req.query.tema;
+        const idLivroExterno = req.query.idLivro; // <-- Agora recebemos o ID da API externa
 
-const validarQuestoes = (payload, quantidadeEsperada) => {
-    if (!payload || !Array.isArray(payload.questoes)) {
-        throw new Error('A resposta da OpenAI não trouxe o array "questoes".');
-    }
+        const quantidade = Number(quantidadeInformada || 5);
+        const tema = typeof temaInformado === 'string' ? temaInformado.trim() : '';
 
-    if (payload.questoes.length !== quantidadeEsperada) {
-        throw new Error(
-            `A OpenAI retornou ${payload.questoes.length} questões, mas eram esperadas ${quantidadeEsperada}.`,
-        );
-    }
-
-    return payload.questoes.map((questao, index) => {
-        const numero = index + 1;
-        const camposObrigatorios = [
-            'pergunta',
-            'pergunta_en',
-            'respostaCorreta',
-            'respostaCorreta_en',
-            'explicacao',
-            'explicacao_en',
-        ];
-
-        for (const campo of camposObrigatorios) {
-            if (!questao[campo] || typeof questao[campo] !== 'string') {
-                throw new Error(`A questão ${numero} veio sem o campo obrigatório "${campo}".`);
-            }
+        if (!Number.isInteger(quantidade) || quantidade < 1 || quantidade > 20) {
+            return res.status(400).json({
+                error: 'A quantidade de questões deve ser um número inteiro entre 1 e 20.',
+            });
         }
 
-        if (!Array.isArray(questao.respostasErradas) || questao.respostasErradas.length !== 3) {
-            throw new Error(`A questão ${numero} precisa conter exatamente 3 respostasErradas.`);
+        if (!tema || !idLivroExterno) {
+            return res.status(400).json({
+                error: 'Os parâmetros "tema" e "idLivro" são obrigatórios.',
+            });
         }
 
-        if (
-            !Array.isArray(questao.respostasErradas_en) ||
-            questao.respostasErradas_en.length !== 3
-        ) {
-            throw new Error(`A questão ${numero} precisa conter exatamente 3 respostasErradas_en.`);
+        // Busca no cache usando o ID da API externa
+        const questoesExistentes = await SimuladosModel.buscarPorLivro(idLivroExterno, {
+            geradoPorIA: true,
+        });
+
+        if (questoesExistentes.length >= quantidade) {
+            const questoesSalvas = embaralhar(questoesExistentes).slice(0, quantidade);
+
+            return res.status(200).json({
+                message: 'Questões carregadas com sucesso.',
+                origem: 'cache',
+                tema: tema,
+                quantidade,
+                idLivro: idLivroExterno, // Retornamos o ID externo
+                objetoGerado: {
+                    tema: tema,
+                    quantidade,
+                    questoes: questoesSalvas.map((questao) => ({
+                        pergunta: questao.pergunta,
+                        pergunta_en: questao.pergunta_en,
+                        respostaCorreta: questao.respostaCorreta,
+                        respostaCorreta_en: questao.respostaCorreta_en,
+                        respostasErradas: questao.respostasErradas,
+                        respostasErradas_en: questao.respostasErradas_en,
+                        explicacao: questao.explicacao,
+                        explicacao_en: questao.explicacao_en,
+                    })),
+                },
+                questoesSalvas,
+            });
         }
 
-        return {
-            pergunta: questao.pergunta.trim(),
-            pergunta_en: questao.pergunta_en.trim(),
-            respostaCorreta: questao.respostaCorreta.trim(),
-            respostaCorreta_en: questao.respostaCorreta_en.trim(),
-            respostasErradas: questao.respostasErradas.map((item) => String(item).trim()),
-            respostasErradas_en: questao.respostasErradas_en.map((item) => String(item).trim()),
-            explicacao: questao.explicacao.trim(),
-            explicacao_en: questao.explicacao_en.trim(),
+        // Chama a IA se não tiver cache
+        const objetoGerado = await gerarQuestoesPorTema(tema, quantidade);
+
+        // Salva usando o ID que veio da API externa
+        const payloadParaSalvar = montarPayloadParaSalvar(objetoGerado.questoes, idLivroExterno);
+
+        const resposta = {
+            message: 'Questões geradas e salvas com sucesso.',
+            origem: 'ia',
+            tema: objetoGerado.tema,
+            quantidade: objetoGerado.quantidade,
+            idLivro: idLivroExterno,
+            objetoGerado,
         };
-    });
-};
 
-const montarPrompt = (tema, quantidade) => `
-Gere exatamente ${quantidade} questões de múltipla escolha, em nível de vestibular, sobre "${tema}".
+        res.status(200).json(resposta);
 
-Regras:
-- Escreva em português do Brasil.
-- Inclua a tradução em inglês dos campos textuais.
-- Cada questão deve ter 1 resposta correta e 3 respostas erradas plausíveis.
-- As respostas erradas não podem repetir a correta.
-- A explicação deve ser curta, objetiva e ter no máximo 220 caracteres.
-- Priorize respostas curtas.
-- Aborde enredo, personagens, narrador, ciúme, memória, ironia machadiana e contexto literário quando fizer sentido.
-- Retorne somente JSON válido, sem markdown, sem comentários e sem texto adicional.
+        void SimuladosModel.criarMuitos(payloadParaSalvar).catch((error) => {
+            console.error('Erro ao salvar questões no banco após resposta:', error);
+        });
 
-Formato obrigatório:
-{
-  "tema": "Dom Casmurro",
-  "questoes": [
-    {
-      "pergunta": "string",
-      "pergunta_en": "string",
-      "respostaCorreta": "string",
-      "respostaCorreta_en": "string",
-      "respostasErradas": ["string", "string", "string"],
-      "respostasErradas_en": ["string", "string", "string"],
-      "explicacao": "string",
-      "explicacao_en": "string"
+        return;
+    } catch (error) {
+        console.error('Erro ao gerar questões com a IA:', error);
+        return res.status(500).json({
+            error: 'Erro interno ao gerar questões com a IA.',
+            details: error.message,
+        });
     }
-  ]
-}
-`.trim();
-
-export const gerarQuestoesPorTema = async (tema, quantidade) => {
-    if (!process.env.OPENAI_API_KEY) {
-        throw new Error('A variável OPENAI_API_KEY não foi configurada no arquivo .env.');
-    }
-
-    const response = await fetch(OPENAI_API_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
-            model: OPENAI_MODEL,
-            response_format: { type: 'json_object' },
-            temperature: 0.4,
-            max_completion_tokens: Math.max(700, quantidade * 220),
-            messages: [
-                {
-                    role: 'system',
-                    content:
-                        'Responda apenas com JSON válido. Seja conciso.',
-                },
-                {
-                    role: 'user',
-                    content: montarPrompt(tema, quantidade),
-                },
-            ],
-        }),
-    });
-
-    if (!response.ok) {
-        const body = await response.text();
-        throw new Error(`${response.status} ${response.statusText} - ${body}`);
-    }
-
-    const data = await response.json();
-    const texto = data.choices?.[0]?.message?.content;
-
-    if (!texto) {
-        throw new Error('A OpenAI não retornou conteúdo em choices[0].message.content.');
-    }
-
-    const payload = extrairJson(texto);
-    const questoes = validarQuestoes(payload, quantidade);
-
-    return {
-        tema,
-        quantidade,
-        modelo: OPENAI_MODEL,
-        questoes,
-    };
 };
