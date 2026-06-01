@@ -21,43 +21,123 @@ const validarQuantidade = (quantidade) => {
 };
 
 const criarPrompt = (tema, quantidade) => {
-    return (
-        `Você é um assistente especialista em conteúdos literários e questões de vestibular. Gere exatamente ${quantidade} questões de múltipla escolha sobre o tema "${tema}". Para cada questão, devolva um objeto JSON com as chaves:\n` +
-        `- pergunta\n` +
-        `- pergunta_en\n` +
-        `- respostaCorreta\n` +
-        `- respostaCorreta_en\n` +
-        `- respostasErradas (array de 3 itens)\n` +
-        `- respostasErradas_en (array de 3 itens)\n` +
-        `- explicacao\n` +
-        `- explicacao_en\n` +
-        `Retorne uma única resposta JSON válida no formato:\n` +
-        `{"questoes": [ { ... }, { ... } ] }\n` +
-        `Não inclua texto adicional fora do JSON. As perguntas devem ser claras, relevantes e próprias para revisão literária ou vestibular.`
-    );
+    return `Você é um especialista em conteúdos literários e questões de vestibular. Gere exatamente ${quantidade} questões de múltipla escolha sobre "${tema}".
+
+IMPORTANTE: Retorne APENAS um JSON válido sem nenhum texto adicional antes ou depois.
+
+Formato obrigatório:
+\`\`\`json
+{
+  "questoes": [
+    {
+      "pergunta": "Pergunta clara em português",
+      "pergunta_en": "Clear question in English",
+      "respostaCorreta": "A resposta certa completa",
+      "respostaCorreta_en": "The complete correct answer",
+      "respostasErradas": [
+        "Distrator realista 1",
+        "Distrator realista 2",
+        "Distrator realista 3"
+      ],
+      "respostasErradas_en": [
+        "Realistic distractor 1",
+        "Realistic distractor 2",
+        "Realistic distractor 3"
+      ],
+      "explicacao": "Explicação detalhada do conceito",
+      "explicacao_en": "Detailed explanation of the concept"
+    }
+  ]
+}
+\`\`\`
+
+Requisitos:
+- Perguntas devem ser específicas sobre "${tema}"
+- Respostas devem ser realistas e educacionais
+- Respostas erradas devem ser distractores plausíveis, não óbvios
+- Explicações devem ajudar na aprendizagem
+- Sem texto antes ou depois do JSON!`;
 };
 
 const gerarQuestoesMock = (tema, quantidade) => {
-    const temaLimpo = typeof tema === 'string' ? tema.trim() : '';
+    const temaLimpo = typeof tema === 'string' ? tema.trim() : 'conteúdo literário';
 
-    return Array.from({ length: quantidade }, (_, index) => ({
-        pergunta: `Questão ${index + 1} sobre ${temaLimpo}.`,
-        pergunta_en: `Question ${index + 1} about ${temaLimpo}.`,
-        respostaCorreta: `Resposta correta para a questão ${index + 1}.`,
-        respostaCorreta_en: `Correct answer for question ${index + 1}.`,
-        respostasErradas: [
-            `Resposta errada A para a questão ${index + 1}.`,
-            `Resposta errada B para a questão ${index + 1}.`,
-            `Resposta errada C para a questão ${index + 1}.`,
+    // Questões específicas por tema
+    const questoesPorTema = {
+        'os sertões': [
+            {
+                pergunta: 'Qual é o principal foco temático de "Os Sertões"?',
+                pergunta_en: 'What is the main thematic focus of "Os Sertões"?',
+                respostaCorreta: 'A luta pela sobrevivência no sertão nordestino',
+                respostaCorreta_en: 'The struggle for survival in the northeastern backlands',
+                respostasErradas: [
+                    'A vida urbana no Rio de Janeiro',
+                    'A revolução industrial no Brasil',
+                    'A colonização portugueda',
+                ],
+                respostasErradas_en: [
+                    'Urban life in Rio de Janeiro',
+                    'The industrial revolution in Brazil',
+                    'Portuguese colonization',
+                ],
+                explicacao:
+                    'Euclides da Cunha retrata as dificuldades das populações do sertão e a Guerra de Canudos.',
+                explicacao_en:
+                    'Euclides da Cunha depicts the hardships of northeastern backland populations and the Canudos War.',
+            },
         ],
-        respostasErradas_en: [
-            `Wrong answer A for question ${index + 1}.`,
-            `Wrong answer B for question ${index + 1}.`,
-            `Wrong answer C for question ${index + 1}.`,
+        peidos: [
+            {
+                pergunta: 'Em qual contexto histórico ocorrem as manifestações culturais do povo?',
+                pergunta_en:
+                    'In which historical context do cultural expressions of the people occur?',
+                respostaCorreta: 'Durante períodos de resistência e identidade cultural',
+                respostaCorreta_en: 'During periods of resistance and cultural identity',
+                respostasErradas: [
+                    'Apenas em celebrações religiosas formais',
+                    'Somente em contextos acadêmicos',
+                    'Exclusivamente em ambientes urbanos',
+                ],
+                respostasErradas_en: [
+                    'Only in formal religious celebrations',
+                    'Solely in academic contexts',
+                    'Exclusively in urban environments',
+                ],
+                explicacao:
+                    'As manifestações culturais refletem a história e os valores de um povo.',
+                explicacao_en: 'Cultural expressions reflect the history and values of a people.',
+            },
         ],
-        explicacao: `Explicação da questão ${index + 1} sobre ${temaLimpo}.`,
-        explicacao_en: `Explanation for question ${index + 1} about ${temaLimpo}.`,
-    }));
+    };
+
+    const questoesEspecificas = questoesPorTema[temaLimpo.toLowerCase()] || [];
+
+    return Array.from({ length: quantidade }, (_, index) => {
+        const questaoEspecifica = questoesEspecificas[index % questoesEspecificas.length];
+
+        if (questaoEspecifica) {
+            return questaoEspecifica;
+        }
+
+        return {
+            pergunta: `Qual aspecto é fundamental em "${temaLimpo}"?`,
+            pergunta_en: `What aspect is fundamental in "${temaLimpo}"?`,
+            respostaCorreta: `Um elemento essencial relacionado a ${temaLimpo}`,
+            respostaCorreta_en: `An essential element related to ${temaLimpo}`,
+            respostasErradas: [
+                `Um conceito não relacionado a ${temaLimpo}`,
+                `Um aspecto secundário ignorado pela crítica`,
+                `Um elemento anacrônico ao período`,
+            ],
+            respostasErradas_en: [
+                `A concept unrelated to ${temaLimpo}`,
+                `A secondary aspect ignored by critics`,
+                `An anachronistic element to the period`,
+            ],
+            explicacao: `Esta questão aborda um ponto central da obra "${temaLimpo}".`,
+            explicacao_en: `This question addresses a central point of the work "${temaLimpo}".`,
+        };
+    });
 };
 
 const extrairQuestoes = (conteudo) => {
@@ -124,25 +204,45 @@ export const gerarQuestoesPorTema = async (tema, quantidade = 5) => {
 
         if (!resposta.ok) {
             const textoErro = await resposta.text();
-            console.error('Erro ao chamar OpenAI:', resposta.status, textoErro);
+            console.error(`❌ OpenAI API Error ${resposta.status}:`, textoErro);
             return {
                 tema: temaLimpo,
                 quantidade: total,
                 questoes: gerarQuestoesMock(temaLimpo, total),
-                origem: 'mock',
+                origem: 'mock_api_error',
             };
         }
 
         const dados = await resposta.json();
         const conteudo = dados?.choices?.[0]?.message?.content || '';
 
+        if (!conteudo) {
+            console.error('❌ Resposta vazia da OpenAI');
+            return {
+                tema: temaLimpo,
+                quantidade: total,
+                questoes: gerarQuestoesMock(temaLimpo, total),
+                origem: 'mock_empty_response',
+            };
+        }
+
         let questoes;
 
         try {
-            const json = JSON.parse(conteudo);
+            // Remove markdown code blocks se existirem
+            let jsonStr = conteudo.trim();
+            if (jsonStr.startsWith('```json')) {
+                jsonStr = jsonStr.replace(/^```json\n?/, '').replace(/\n?```$/, '');
+            } else if (jsonStr.startsWith('```')) {
+                jsonStr = jsonStr.replace(/^```\n?/, '').replace(/\n?```$/, '');
+            }
+
+            const json = JSON.parse(jsonStr);
             questoes = extrairQuestoes(json);
+            console.log(`✅ Gerou ${questoes.length} questões via OpenAI`);
         } catch (error) {
-            console.error('Falha ao converter resposta da IA em JSON:', error.message);
+            console.error('❌ Falha ao converter resposta da IA em JSON:', error.message);
+            console.error('📝 Conteúdo recebido:', conteudo.substring(0, 300));
             questoes = gerarQuestoesMock(temaLimpo, total);
         }
 
@@ -153,12 +253,12 @@ export const gerarQuestoesPorTema = async (tema, quantidade = 5) => {
             origem: 'openai',
         };
     } catch (error) {
-        console.error('Erro inesperado ao gerar questões com OpenAI:', error);
+        console.error('❌ Erro inesperado ao gerar questões com OpenAI:', error.message);
         return {
             tema: temaLimpo,
             quantidade: total,
             questoes: gerarQuestoesMock(temaLimpo, total),
-            origem: 'mock',
+            origem: 'mock_exception',
         };
     }
 };
