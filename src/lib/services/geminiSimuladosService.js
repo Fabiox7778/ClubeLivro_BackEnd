@@ -93,7 +93,7 @@ export const gerarQuestoesPorTema = async (tema, quantidade = 5) => {
         throw new Error('Tema inválido para geração de questões.');
     }
 
-    if (!OPENAI_API_KEY) {
+    if (!OPENAI_API_KEY || typeof globalThis.fetch !== 'function') {
         return {
             tema: temaLimpo,
             quantidade: total,
@@ -104,26 +104,56 @@ export const gerarQuestoesPorTema = async (tema, quantidade = 5) => {
 
     const prompt = criarPrompt(temaLimpo, total);
 
-    const resposta = await fetch(OPENAI_API_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
-            model: OPENAI_MODEL,
-            messages: [
-                { role: 'system', content: 'Você é um gerador de quizzes educacionais.' },
-                { role: 'user', content: prompt },
-            ],
-            temperature: 0.7,
-            max_tokens: 1200,
-        }),
-    });
+    try {
+        const resposta = await fetch(OPENAI_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${OPENAI_API_KEY}`,
+            },
+            body: JSON.stringify({
+                model: OPENAI_MODEL,
+                messages: [
+                    { role: 'system', content: 'Você é um gerador de quizzes educacionais.' },
+                    { role: 'user', content: prompt },
+                ],
+                temperature: 0.7,
+                max_tokens: 1200,
+            }),
+        });
 
-    if (!resposta.ok) {
-        const textoErro = await resposta.text();
-        console.error('Erro ao chamar OpenAI:', resposta.status, textoErro);
+        if (!resposta.ok) {
+            const textoErro = await resposta.text();
+            console.error('Erro ao chamar OpenAI:', resposta.status, textoErro);
+            return {
+                tema: temaLimpo,
+                quantidade: total,
+                questoes: gerarQuestoesMock(temaLimpo, total),
+                origem: 'mock',
+            };
+        }
+
+        const dados = await resposta.json();
+        const conteudo = dados?.choices?.[0]?.message?.content || '';
+
+        let questoes;
+
+        try {
+            const json = JSON.parse(conteudo);
+            questoes = extrairQuestoes(json);
+        } catch (error) {
+            console.error('Falha ao converter resposta da IA em JSON:', error.message);
+            questoes = gerarQuestoesMock(temaLimpo, total);
+        }
+
+        return {
+            tema: temaLimpo,
+            quantidade: total,
+            questoes,
+            origem: 'openai',
+        };
+    } catch (error) {
+        console.error('Erro inesperado ao gerar questões com OpenAI:', error);
         return {
             tema: temaLimpo,
             quantidade: total,
@@ -131,24 +161,4 @@ export const gerarQuestoesPorTema = async (tema, quantidade = 5) => {
             origem: 'mock',
         };
     }
-
-    const dados = await resposta.json();
-    const conteudo = dados?.choices?.[0]?.message?.content || '';
-
-    let questoes;
-
-    try {
-        const json = JSON.parse(conteudo);
-        questoes = extrairQuestoes(json);
-    } catch (error) {
-        console.error('Falha ao converter resposta da IA em JSON:', error.message);
-        questoes = gerarQuestoesMock(temaLimpo, total);
-    }
-
-    return {
-        tema: temaLimpo,
-        quantidade: total,
-        questoes,
-        origem: 'openai',
-    };
 };
