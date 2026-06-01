@@ -277,7 +277,7 @@ export const gerarQuestoes = async (req, res) => {
 
         const resposta = {
             message: 'Questões geradas e salvas com sucesso.',
-            origem: 'openai',
+            origem: 'ia',
             tema: objetoGerado.tema,
             quantidade: objetoGerado.quantidade,
             idLivro: idLivroTema,
@@ -292,9 +292,9 @@ export const gerarQuestoes = async (req, res) => {
 
         return;
     } catch (error) {
-        console.error('Erro ao gerar questões com OpenAI:', error);
+        console.error('Erro ao gerar questões com IA:', error);
         return res.status(500).json({
-            error: 'Erro interno ao gerar questões com OpenAI.',
+            error: 'Erro interno ao gerar questões com IA.',
             details: error.message,
         });
     }
