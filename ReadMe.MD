@@ -15,12 +15,11 @@ microsserviços de IA (n8n).
 - [Instalação](#-instalação)
 - [Configuração](#-configuração)
 - [Como Rodar](#-como-rodar)
-- [Endpoints](#-endpoints-principais)
 - [Variáveis de Ambiente](#-variáveis-de-ambiente)
 - [Middlewares](#-middlewares)
 - [Estrutura MVC](#-estrutura-mvc)
 - [Scripts Disponíveis](#-scripts-disponíveis)
-- [Troubleshooting](#-troubleshooting)
+- [Autores](#-autores)
 
 ---
 
