@@ -241,11 +241,12 @@ export const gerarQuestoes = async (req, res) => {
         }
 
         const idLivroTema = gerarIdLivroParaTema(tema);
+        const forcarGeracao = req.query.force === 'true' || req.query.forcarGeracao === 'true';
         const questoesExistentes = await SimuladosModel.buscarPorLivro(idLivroTema, {
             geradoPorIA: true,
         });
 
-        if (questoesExistentes.length >= quantidade) {
+        if (!forcarGeracao && questoesExistentes.length >= quantidade) {
             const questoesSalvas = embaralhar(questoesExistentes).slice(0, quantidade);
 
             return res.status(200).json({
