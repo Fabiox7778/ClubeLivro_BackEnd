@@ -8,8 +8,6 @@ router.get('/', controller.buscarTodos);
 
 router.get('/gerar-questoes', controller.gerarQuestoes);
 router.get('/gerar-questoes/:quantidade', controller.gerarQuestoes);
-router.post('/gerar-questoes', controller.gerarQuestoes);
-router.post('/gerar-questoes/:quantidade', controller.gerarQuestoes);
 
 router.get('/:id', controller.buscarPorId);
 router.put('/:id', controller.atualizar);

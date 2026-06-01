@@ -32,7 +32,7 @@ export default class SimuladosModel {
     async criar() {
         return prisma.simulados.create({
             data: {
-                idLivro: this.idLivro !== undefined ? String(this.idLivro) : null,
+                idLivro: this.idLivro,
                 pergunta: this.pergunta,
                 pergunta_en: this.pergunta_en,
                 respostaCorreta: this.respostaCorreta,
@@ -50,7 +50,7 @@ export default class SimuladosModel {
         return prisma.simulados.update({
             where: { id: this.id },
             data: {
-                idLivro: this.idLivro !== undefined ? String(this.idLivro) : undefined,
+                idLivro: this.idLivro,
                 pergunta: this.pergunta,
                 pergunta_en: this.pergunta_en,
                 respostaCorreta: this.respostaCorreta,
@@ -86,7 +86,7 @@ export default class SimuladosModel {
         }
 
         if (filtros.idLivro !== undefined) {
-            where.idLivro = String(filtros.idLivro);
+            where.idLivro = Number(filtros.idLivro);
         }
 
         if (filtros.geradoPorIA !== undefined) {
@@ -127,12 +127,7 @@ export default class SimuladosModel {
         const registros = [];
 
         for (const questao of questoes) {
-            const registro = await prisma.simulados.create({
-                data: {
-                    ...questao,
-                    idLivro: questao.idLivro !== undefined ? String(questao.idLivro) : null,
-                },
-            });
+            const registro = await prisma.simulados.create({ data: questao });
             registros.push(registro);
         }
 
@@ -141,7 +136,7 @@ export default class SimuladosModel {
 
     static async buscarPorLivro(idLivro, filtros = {}) {
         const where = {
-            idLivro: String(idLivro),
+            idLivro,
         };
 
         if (filtros.geradoPorIA !== undefined) {

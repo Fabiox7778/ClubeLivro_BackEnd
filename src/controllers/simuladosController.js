@@ -1,8 +1,48 @@
-import { gerarQuestoesPorTema } from '../lib/services/geminiSimuladosService.js';
 import SimuladosModel from '../models/SimuladosModel.js';
+import LivroModel from '../models/LivroModel.js';
+import { gerarQuestoesPorTema } from '../lib/services/geminiSimuladosService.js';
 
-const gerarIdLivroParaTema = (tema) => {
-    return String(tema).trim();
+const montarDadosBaseDoTema = (tema) => {
+    const titulo = tema.trim();
+
+    return {
+        titulo,
+        capa: 'https://placehold.co/600x900?text=Tema+Literario',
+        autor: 'Tema gerado por IA',
+        detalhesAutor: `Registro base criado automaticamente para o tema "${titulo}".`,
+        detalhesAutor_en: `Base record automatically created for the topic "${titulo}".`,
+        anoPublicacao: new Date().getFullYear(),
+        genero: 'Tema de vestibular',
+        genero_en: 'Entrance exam topic',
+        resumo: `Conteudo de apoio para o tema "${titulo}".`,
+        resumo_en: `Support content for the topic "${titulo}".`,
+        contexto: `Tema utilizado para gerar simulados com IA sobre "${titulo}".`,
+        contexto_en: `Topic used to generate AI mock exams about "${titulo}".`,
+        estiloEscrita: `Conteudo dinâmico associado ao tema "${titulo}".`,
+        estiloEscrita_en: `Dynamic content associated with the topic "${titulo}".`,
+        enredo: `Tema de estudo configurado pelo front-end: "${titulo}".`,
+        enredo_en: `Study topic configured by the front-end: "${titulo}".`,
+        verossimilhanca: 'Conteúdo complementar gerado sob demanda.',
+        verossimilhanca_en: 'Complementary content generated on demand.',
+        caracteristicasLiterarias: `Base de simulados e estudos para "${titulo}".`,
+        caracteristicasLiterarias_en: `Mock exam and study base for "${titulo}".`,
+        conclusao: `Tema preparado para geração de questões de vestibular.`,
+        conclusao_en: `Topic prepared for entrance exam question generation.`,
+    };
+};
+
+const obterOuCriarLivroPorTema = async (tema) => {
+    const dadosBaseDoTema = montarDadosBaseDoTema(tema);
+    const livroExistente = await LivroModel.buscarPorTitulo(dadosBaseDoTema.titulo);
+
+    if (livroExistente) {
+        return livroExistente;
+    }
+
+    const livro = new LivroModel(dadosBaseDoTema);
+    const criado = await livro.criar();
+
+    return new LivroModel(criado);
 };
 
 const embaralhar = (itens) => {
@@ -51,9 +91,11 @@ export const criar = async (req, res) => {
         } = req.body;
 
         if (!idLivro || !pergunta || !respostaCorreta || !Array.isArray(respostasErradas)) {
-            return res.status(400).json({
-                error: 'Os campos "idLivro", "pergunta", "respostaCorreta" e "respostasErradas" são obrigatórios!',
-            });
+            return res
+                .status(400)
+                .json({
+                    error: 'Os campos "idLivro", "pergunta", "respostaCorreta" e "respostasErradas" são obrigatórios!',
+                });
         }
 
         const simulado = new SimuladosModel({
@@ -240,23 +282,24 @@ export const gerarQuestoes = async (req, res) => {
             });
         }
 
-        const idLivroTema = gerarIdLivroParaTema(tema);
-        const forcarGeracao = req.query.force === 'true' || req.query.forcarGeracao === 'true';
-        const questoesExistentes = await SimuladosModel.buscarPorLivro(idLivroTema, {
-            geradoPorIA: true,
-        });
+        const livro = await obterOuCriarLivroPorTema(tema);
+        const questoesExistentes = await SimuladosModel.buscarPorLivro(livro.id, { geradoPorIA: true });
 
-        if (!forcarGeracao && questoesExistentes.length >= quantidade) {
+        if (questoesExistentes.length >= quantidade) {
             const questoesSalvas = embaralhar(questoesExistentes).slice(0, quantidade);
 
             return res.status(200).json({
                 message: 'Questões carregadas com sucesso.',
                 origem: 'cache',
-                tema,
+                tema: livro.titulo,
                 quantidade,
-                idLivro: idLivroTema,
+                livro: {
+                    id: livro.id,
+                    titulo: livro.titulo,
+                    autor: livro.autor,
+                },
                 objetoGerado: {
-                    tema,
+                    tema: livro.titulo,
                     quantidade,
                     questoes: questoesSalvas.map((questao) => ({
                         pergunta: questao.pergunta,
@@ -274,14 +317,18 @@ export const gerarQuestoes = async (req, res) => {
         }
 
         const objetoGerado = await gerarQuestoesPorTema(tema, quantidade);
-        const payloadParaSalvar = montarPayloadParaSalvar(objetoGerado.questoes, idLivroTema);
+        const payloadParaSalvar = montarPayloadParaSalvar(objetoGerado.questoes, livro.id);
 
         const resposta = {
             message: 'Questões geradas e salvas com sucesso.',
-            origem: 'ia',
+            origem: 'openai',
             tema: objetoGerado.tema,
             quantidade: objetoGerado.quantidade,
-            idLivro: idLivroTema,
+            livro: {
+                id: livro.id,
+                titulo: livro.titulo,
+                autor: livro.autor,
+            },
             objetoGerado,
         };
 
@@ -293,9 +340,9 @@ export const gerarQuestoes = async (req, res) => {
 
         return;
     } catch (error) {
-        console.error('Erro ao gerar questões com IA:', error);
+        console.error('Erro ao gerar questões com OpenAI:', error);
         return res.status(500).json({
-            error: 'Erro interno ao gerar questões com IA.',
+            error: 'Erro interno ao gerar questões com OpenAI.',
             details: error.message,
         });
     }
