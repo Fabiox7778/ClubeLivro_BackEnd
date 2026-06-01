@@ -236,7 +236,7 @@ async function main() {
             caracteristicasLiterarias_en:
                 'Social determinism, political critique, raw realism, abandonment of the rural mill space in favor of the city.',
             conclusao:
-                'Um livro fundamental para entender a transição da sociedade patriarcal dos engenhos para a modernidade conflituosa das cidades nordestinas.',
+                'Em nossa leitura do livro "Caminhos das Pedras" , interpretamos a obra não apenas como um registro da militância clandestina na Fortaleza de 1930, mas como um profundo testemunho da resiliência humana frente à derrota. O livro revela o conflito entre a fria teoria ideológica e a crueza da realidade, onde a desconfiança entre intelectuais e operários os gravata  e os tamanco  que expõe como as convicções políticas muitas vezes esbarram no sentimentalismo humano. A jornada de Noemi personifica o verdadeiro caminho de pedra : ela atravessa o estigma do adultério, a perda trágica do filho Guri e a dispersão de seus companheiros sob a repressão do Estado. Para o nosso grupo, o desfecho da obra não foca na vitória de uma causa, mas na resistência biológica e afetiva. Ao subir a ladeira do Gasômetro sozinha e grávida, Noemi transforma sua dor em uma caminhada persistente, ela ampara o ventre e chama o futuro filho de companheiro , simbolizando que, mesmo quando as instituições e os homens falham, a vida insiste em avançar sobre as asperezas do caminho.',
             conclusao_en:
                 'A fundamental book to understand the transition from the patriarchal society of the sugar mills to the conflicted modernity of Northeastern cities.',
         },
