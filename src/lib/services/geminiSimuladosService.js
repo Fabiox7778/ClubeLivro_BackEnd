@@ -41,4 +41,4 @@ export const gerarQuestoesPorTema = async (tema, quantidade = 5) => {
         quantidade: total,
         questoes,
     };
-};
+};;
