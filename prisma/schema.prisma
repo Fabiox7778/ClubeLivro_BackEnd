@@ -33,7 +33,7 @@ model Livro {
 
     personagens                  Personagem[]
     conteudos                    Conteudos[]
-    simulados                    Simulados[]
+    // 🌟 Relação estrita com simulados removida daqui para permitir IDs externos de outras APIs
 
     @@map("livro")
 }
@@ -71,11 +71,11 @@ model Equipe {
 }
 
 model Usuario {
-    id           Int     @id @default(autoincrement())
+    id           Int    @id @default(autoincrement())
     nome         String
     idade        Int
-    email        String  @unique
-    username     String  @unique
+    email        String @unique
+    username     String @unique
     senha        String
     descricao    String
     descricao_en String
@@ -118,8 +118,8 @@ model Conteudos {
 
 model Simulados {
     id                  Int      @id @default(autoincrement())
-    idLivro             Int
-    livro               Livro    @relation(fields: [idLivro], references: [id])
+    idLivro             String   // 🌟 Alterado para String para aceitar "api_machado" ou "42"
+    // 🌟 Linha do @relation removida para não obrigar o livro a existir na tabela local de Livros
     pergunta            String
     pergunta_en         String
     respostaCorreta     String

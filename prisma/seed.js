@@ -63,7 +63,7 @@ async function main() {
                 curso_en: 'Systems analysis and development.',
                 funcao: 'Developer Full Stack',
                 descricao:
-                    'Responsável pelo desenvolvimento do Back-end e organização do banco de dados.',
+                    'Responsável pelo desenvolvimento do Back-end and organização do banco de dados.',
                 descricao_en: 'Responsible for back-end development and database organization.',
                 foto: 'https://exemplo.com/foto-maria.jpg',
             },
@@ -95,8 +95,10 @@ async function main() {
                 curso: 'Eletro-eletrônica.',
                 curso_en: 'Electrical and electronic engineering.',
                 funcao: 'Leitor e Analista',
-                descricao:'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
-                descricao_en:'Responsible for reading the book and passing on the necessary knowledge and information.',
+                descricao:
+                    'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
+                descricao_en:
+                    'Responsible for reading the book and passing on the necessary knowledge and information.',
                 foto: 'https://exemplo.com/foto-maria.jpg',
             },
             {
@@ -105,8 +107,10 @@ async function main() {
                 curso: 'Mecânica.',
                 curso_en: 'Mechanics.',
                 funcao: 'Leitor e Analista',
-                descricao:'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
-                descricao_en:'Responsible for reading the book and passing on the necessary knowledge and information.',
+                descricao:
+                    'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
+                descricao_en:
+                    'Responsible for reading the book and passing on the necessary knowledge and information.',
                 foto: 'https://exemplo.com/foto-maria.jpg',
             },
             {
@@ -115,8 +119,10 @@ async function main() {
                 curso: 'Eletro-eletrônica.',
                 curso_en: 'Electrical and electronic engineering.',
                 funcao: 'Leitor e Analista',
-                descricao:'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
-                descricao_en:'Responsible for reading the book and passing on the necessary knowledge and information..',
+                descricao:
+                    'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
+                descricao_en:
+                    'Responsible for reading the book and passing on the necessary knowledge and information..',
                 foto: 'https://exemplo.com/foto-maria.jpg',
             },
             {
@@ -125,8 +131,10 @@ async function main() {
                 curso: 'Mecânica.',
                 curso_en: 'Mechanics.',
                 funcao: 'Leitor e Analista',
-                descricao:'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
-                descricao_en:'Responsible for reading the book and passing on the necessary knowledge and information..',
+                descricao:
+                    'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
+                descricao_en:
+                    'Responsible for reading the book and passing on the necessary knowledge and information..',
                 foto: 'https://exemplo.com/foto-maria.jpg',
             },
         ],
@@ -162,7 +170,6 @@ async function main() {
                 senha: 'senha_segura_hash_aqui',
                 descricao: 'Apaixonado por romances modernistas.',
                 descricao_en: 'Passionate about modernist novels.',
-
             },
         ],
     });
@@ -307,7 +314,8 @@ async function main() {
     await prisma.simulados.createMany({
         data: [
             {
-                idLivro: livro1.id,
+                // 🌟 Adaptado: convertendo o id numérico para string usando template string
+                idLivro: `${livro1.id}`,
                 pergunta:
                     'Diferente dos primeiros livros do "Ciclo da Cana-de-Açúcar", qual é o foco principal de "O Caminho das Pedras"?',
                 pergunta_en:
@@ -332,7 +340,8 @@ async function main() {
                     'In "The Path of Stones", José Lins do Rego temporarily abandons the sugar mills to depict the city, focusing on strikes and the political and working-class engagement (communism) of the 1930s.',
             },
             {
-                idLivro: livro1.id,
+                // 🌟 Adaptado: convertendo o id numérico para string usando template string
+                idLivro: `${livro1.id}`,
                 pergunta:
                     'Qual é a principal característica do estilo de escrita de José Lins do Rego em "O Caminho das Pedras"?',
                 pergunta_en:
