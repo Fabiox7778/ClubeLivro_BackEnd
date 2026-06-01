@@ -1,6 +1,6 @@
-import SimuladosModel from '../models/SimuladosModel.js';
-import LivroModel from '../models/LivroModel.js';
 import { gerarQuestoesPorTema } from '../lib/services/geminiSimuladosService.js';
+import LivroModel from '../models/LivroModel.js';
+import SimuladosModel from '../models/SimuladosModel.js';
 
 const montarDadosBaseDoTema = (tema) => {
     const titulo = tema.trim();
@@ -91,11 +91,9 @@ export const criar = async (req, res) => {
         } = req.body;
 
         if (!idLivro || !pergunta || !respostaCorreta || !Array.isArray(respostasErradas)) {
-            return res
-                .status(400)
-                .json({
-                    error: 'Os campos "idLivro", "pergunta", "respostaCorreta" e "respostasErradas" são obrigatórios!',
-                });
+            return res.status(400).json({
+                error: 'Os campos "idLivro", "pergunta", "respostaCorreta" e "respostasErradas" são obrigatórios!',
+            });
         }
 
         const simulado = new SimuladosModel({
@@ -283,7 +281,10 @@ export const gerarQuestoes = async (req, res) => {
         }
 
         const livro = await obterOuCriarLivroPorTema(tema);
-        const questoesExistentes = await SimuladosModel.buscarPorLivro(livro.id, { geradoPorIA: true });
+        const idLivroString = String(livro.id); // Converte para string conforme schema
+        const questoesExistentes = await SimuladosModel.buscarPorLivro(idLivroString, {
+            geradoPorIA: true,
+        });
 
         if (questoesExistentes.length >= quantidade) {
             const questoesSalvas = embaralhar(questoesExistentes).slice(0, quantidade);
@@ -317,7 +318,7 @@ export const gerarQuestoes = async (req, res) => {
         }
 
         const objetoGerado = await gerarQuestoesPorTema(tema, quantidade);
-        const payloadParaSalvar = montarPayloadParaSalvar(objetoGerado.questoes, livro.id);
+        const payloadParaSalvar = montarPayloadParaSalvar(objetoGerado.questoes, idLivroString);
 
         const resposta = {
             message: 'Questões geradas e salvas com sucesso.',
