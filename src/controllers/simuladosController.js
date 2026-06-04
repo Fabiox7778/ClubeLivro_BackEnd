@@ -1,49 +1,5 @@
 import { gerarQuestoesPorTema } from '../lib/services/geminiSimuladosService.js';
-import LivroModel from '../models/LivroModel.js';
 import SimuladosModel from '../models/SimuladosModel.js';
-
-const montarDadosBaseDoTema = (tema) => {
-    const titulo = tema.trim();
-
-    return {
-        titulo,
-        capa: 'https://placehold.co/600x900?text=Tema+Literario',
-        autor: 'Tema gerado por IA',
-        detalhesAutor: `Registro base criado automaticamente para o tema "${titulo}".`,
-        detalhesAutor_en: `Base record automatically created for the topic "${titulo}".`,
-        anoPublicacao: new Date().getFullYear(),
-        genero: 'Tema de vestibular',
-        genero_en: 'Entrance exam topic',
-        resumo: `Conteudo de apoio para o tema "${titulo}".`,
-        resumo_en: `Support content for the topic "${titulo}".`,
-        contexto: `Tema utilizado para gerar simulados com IA sobre "${titulo}".`,
-        contexto_en: `Topic used to generate AI mock exams about "${titulo}".`,
-        estiloEscrita: `Conteudo dinâmico associado ao tema "${titulo}".`,
-        estiloEscrita_en: `Dynamic content associated with the topic "${titulo}".`,
-        enredo: `Tema de estudo configurado pelo front-end: "${titulo}".`,
-        enredo_en: `Study topic configured by the front-end: "${titulo}".`,
-        verossimilhanca: 'Conteúdo complementar gerado sob demanda.',
-        verossimilhanca_en: 'Complementary content generated on demand.',
-        caracteristicasLiterarias: `Base de simulados e estudos para "${titulo}".`,
-        caracteristicasLiterarias_en: `Mock exam and study base for "${titulo}".`,
-        conclusao: `Tema preparado para geração de questões de vestibular.`,
-        conclusao_en: `Topic prepared for entrance exam question generation.`,
-    };
-};
-
-const obterOuCriarLivroPorTema = async (tema) => {
-    const dadosBaseDoTema = montarDadosBaseDoTema(tema);
-    const livroExistente = await LivroModel.buscarPorTitulo(dadosBaseDoTema.titulo);
-
-    if (livroExistente) {
-        return livroExistente;
-    }
-
-    const livro = new LivroModel(dadosBaseDoTema);
-    const criado = await livro.criar();
-
-    return new LivroModel(criado);
-};
 
 const embaralhar = (itens) => {
     const copia = [...itens];
@@ -280,8 +236,7 @@ export const gerarQuestoes = async (req, res) => {
             });
         }
 
-        const livro = await obterOuCriarLivroPorTema(tema);
-        const idLivroString = String(livro.id); // Converte para string conforme schema
+        const idLivroString = `tema_${tema.toLowerCase().replace(/\s+/g, '_')}`; // Converte para string conforme schema
         const questoesExistentes = await SimuladosModel.buscarPorLivro(idLivroString, {
             geradoPorIA: true,
         });
@@ -292,15 +247,15 @@ export const gerarQuestoes = async (req, res) => {
             return res.status(200).json({
                 message: 'Questões carregadas com sucesso.',
                 origem: 'cache',
-                tema: livro.titulo,
+                tema: tema,
                 quantidade,
                 livro: {
-                    id: livro.id,
-                    titulo: livro.titulo,
-                    autor: livro.autor,
+                    id: idLivroString,
+                    titulo: tema,
+                    autor: 'Tema gerado por IA',
                 },
                 objetoGerado: {
-                    tema: livro.titulo,
+                    tema: tema,
                     quantidade,
                     questoes: questoesSalvas.map((questao) => ({
                         pergunta: questao.pergunta,
@@ -326,9 +281,9 @@ export const gerarQuestoes = async (req, res) => {
             tema: objetoGerado.tema,
             quantidade: objetoGerado.quantidade,
             livro: {
-                id: livro.id,
-                titulo: livro.titulo,
-                autor: livro.autor,
+                id: idLivroString,
+                titulo: tema,
+                autor: 'Tema gerado por IA',
             },
             objetoGerado,
         };
