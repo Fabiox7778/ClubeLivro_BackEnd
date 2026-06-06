@@ -39,5 +39,6 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+    console.log(`🔥 Servidor rodando localmente em http://localhost:${PORT}`);
+    console.log(`👾 Servidor rodando online em https://devstones-backend.onrender.com`);
 });
