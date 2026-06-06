@@ -117,18 +117,17 @@ model Conteudos {
 }
 
 model Simulados {
-    id                  Int      @id @default(autoincrement())
-    idLivro             String   // 🌟 Alterado para String para aceitar "api_machado" ou "42"
-    // 🌟 Linha do @relation removida para não obrigar o livro a existir na tabela local de Livros
-    pergunta            String
-    pergunta_en         String
-    respostaCorreta     String
-    respostaCorreta_en  String
-    geradoPorIA         Boolean  @default(false)
-    respostasErradas    String[]
+    id                 Int      @id @default(autoincrement())
+    idLivro            Int
+    pergunta           String
+    pergunta_en        String
+    respostaCorreta    String
+    respostaCorreta_en String
+    geradoPorIA        Boolean  @default(false)
+    respostasErradas   String[]
     respostasErradas_en String[]
-    explicacao          String?  @db.Text
-    explicacao_en       String?  @db.Text
+    explicacao         String?  @db.Text
+    explicacao_en      String?  @db.Text
 
     @@map("simulados")
 }
