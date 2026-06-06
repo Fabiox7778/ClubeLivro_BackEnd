@@ -1,9 +1,12 @@
 import pg from 'pg';
 import 'dotenv/config';
-import pkg from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 
-const { PrismaClient } = pkg;
+if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL não está definida');
+}
+
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
@@ -27,67 +30,67 @@ async function main() {
             {
                 nome_equipe: 'Equipe DevStone',
                 nome: 'Danilo Jorge',
-                curso: 'Análise e desenvolvimento de sistemas.',
-                curso_en: 'Systems analysis and development.',
+                curso: 'Desenvolvimento de sistemas.',
+                curso_en: 'Systems development.',
                 funcao: 'Product Owner',
                 descricao: 'Responsável pelo desenvolvimento do projeto e documentação.',
                 descricao_en: 'Responsible for project development and documentation.',
-                foto: 'https://exemplo.com/foto-ana.jpg',
+                foto: 'https://ibb.co/yn4TkNyB',
             },
             {
                 nome_equipe: 'Equipe DevStone',
                 nome: 'Fabio Trevizolli',
-                curso: 'Análise e desenvolvimento de sistemas.',
-                curso_en: 'Systems analysis and development.',
+                curso: 'Desenvolvimento de sistemas.',
+                curso_en: 'Systems development.',
                 funcao: 'Scrum Master',
                 descricao:
                     'Garante a organização do time seguindo princípios e práticas do framework scrum.',
                 descricao_en:
                     'Ensures the team is organized by following the principles and practices of the Scrum framework.',
-                foto: 'https://exemplo.com/foto-carlos.jpg',
+                foto: 'https://ibb.co/fzZhHZtp',
             },
             {
                 nome_equipe: 'Equipe DevStone',
                 nome: 'Yasmin Oliveira',
-                curso: 'Análise e desenvolvimento de sistemas.',
-                curso_en: 'Systems analysis and development.',
+                curso: 'Desenvolvimento de sistemas.',
+                curso_en: 'Systems development.',
                 funcao: 'Developer',
                 descricao: 'Responsável pelo desenvolvimento do sistema Back-end',
                 descricao_en: 'Responsible for the development of back-end system.',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/chB3vvwz',
             },
             {
                 nome_equipe: 'Equipe DevStone',
                 nome: 'Murilo Brustolin',
-                curso: 'Análise e desenvolvimento de sistemas.',
-                curso_en: 'Systems analysis and development.',
+                curso: 'Desenvolvimento de sistemas.',
+                curso_en: 'Systems development.',
                 funcao: 'Developer Full Stack',
                 descricao:
                     'Responsável pelo desenvolvimento do Back-end and organização do banco de dados.',
                 descricao_en: 'Responsible for back-end development and database organization.',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/Vp5BdyPK',
             },
             {
                 nome_equipe: 'Equipe DevStone',
                 nome: 'Rebeca Alves',
-                curso: 'Análise e desenvolvimento de sistemas.',
-                curso_en: 'Systems analysis and development.',
+                curso: 'Desenvolvimento de sistemas.',
+                curso_en: 'Systems development.',
                 funcao: 'Developer',
                 descricao: 'Responsável pelo desenvolvimento do Front-end e prototipação do Figma.',
                 descricao_en: 'Responsible for front-end development and prototyping in Figma.',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/PvhmMRpK',
             },
             {
                 nome_equipe: 'Equipe DevStone',
                 nome: 'Luiz Felipe',
-                curso: 'Análise e desenvolvimento de sistemas.',
-                curso_en: 'Systems analysis and development.',
+                curso: 'Desenvolvimento de sistemas.',
+                curso_en: 'Systems development.',
                 funcao: 'Developer',
                 descricao:
                     'Responsável pela prototipação do Figma e organização do progresso do projeto no Trello.',
                 descricao_en:
                     'Responsible for Figma prototyping and organizing project progress in Trello.',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/RTmD1Xs0',
             },
             {
                 nome_equipe: 'Equipe DevStone',
@@ -99,7 +102,7 @@ async function main() {
                     'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
                 descricao_en:
                     'Responsible for reading the book and passing on the necessary knowledge and information.',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/cXwSBkhG',
             },
             {
                 nome_equipe: 'Equipe DevStone',
@@ -111,7 +114,7 @@ async function main() {
                     'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
                 descricao_en:
                     'Responsible for reading the book and passing on the necessary knowledge and information.',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/ZzhgTJRK',
             },
             {
                 nome_equipe: 'Equipe DevStone',
@@ -123,7 +126,7 @@ async function main() {
                     'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
                 descricao_en:
                     'Responsible for reading the book and passing on the necessary knowledge and information..',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/YBgjvWj4',
             },
             {
                 nome_equipe: 'Equipe DevStone',
@@ -135,7 +138,7 @@ async function main() {
                     'Responsável pela leitura do livro e por repassar seus conhecimentos e informações necessárias.',
                 descricao_en:
                     'Responsible for reading the book and passing on the necessary knowledge and information..',
-                foto: 'https://exemplo.com/foto-maria.jpg',
+                foto: 'https://ibb.co/gZsDVWCD',
             },
         ],
     });
@@ -293,7 +296,6 @@ async function main() {
                 descricaoDica_en:
                     'Understand how José Lins do Rego introduced the debate about communism and the working class in the Northeast.',
                 curtidasDica: 15,
-                material: 'https://exemplo.com/artigo-caminho-pedras.pdf',
             },
             {
                 idDoLivro: livro1.id,
@@ -306,7 +308,7 @@ async function main() {
                 descricaoDica_en:
                     'Explanatory video about the main characters and their psychological conflicts.',
                 curtidasDica: 8,
-                material: 'https://exemplo.com/video-personagens.mp4',
+
             },
         ],
     });
@@ -314,8 +316,7 @@ async function main() {
     await prisma.simulados.createMany({
         data: [
             {
-                // 🌟 Adaptado: convertendo o id numérico para string usando template string
-                idLivro: `${livro1.id}`,
+                idLivro: livro1.id,
                 pergunta:
                     'Diferente dos primeiros livros do "Ciclo da Cana-de-Açúcar", qual é o foco principal de "O Caminho de Pedras"?',
                 pergunta_en:
@@ -340,8 +341,7 @@ async function main() {
                     'In "The Path of Stones", José Lins do Rego temporarily abandons the sugar mills to depict the city, focusing on strikes and the political and working-class engagement (communism) of the 1930s.',
             },
             {
-                // 🌟 Adaptado: convertendo o id numérico para string usando template string
-                idLivro: `${livro1.id}`,
+                idLivro: livro1.id,
                 pergunta:
                     'Qual é a principal característica do estilo de escrita de José Lins do Rego em "O Caminho de Pedras"?',
                 pergunta_en:
@@ -378,4 +378,5 @@ main()
     })
     .finally(async () => {
         await prisma.$disconnect();
-    });;
+        await pool.end();
+    });
