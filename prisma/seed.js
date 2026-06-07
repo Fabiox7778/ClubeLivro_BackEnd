@@ -213,7 +213,7 @@ async function main() {
     const livro1 = await prisma.livro.create({
         data: {
             titulo: 'O Caminho de Pedras',
-            capa: 'https://ibb.co/NdL5Q2JW',
+            capa: 'https://m.media-amazon.com/images/I/718Cw8G6OmL.jpg',
             autor: 'Rachel de Queiroz',
             detalhesAutor:
                 'Rachel de Queiroz (1910-2003) foi uma grande escritora, jornalista, tradutora e dramaturga brasileira. Ganhou diversos prêmios, dentre eles o "Prêmio Camões" aos 81 anos, sendo portanto, a primeira mulher a recebê-lo. Além disso, foi a primeira mulher a ocupar uma cadeira na Academia Brasileira de Letras, em 1977. Foi militante política e afiliada ao Partido Comunista Brasileiro. Foi casada duas vezes, seu primeiro marido foi o poeta José Auto da Cruz Oliveira, e após a separação casou-se com o médico Oyama de Macedo.',
