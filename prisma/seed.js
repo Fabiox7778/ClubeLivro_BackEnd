@@ -129,6 +129,7 @@ async function main() {
         },
     ],
 });
+ 
 
     console.log('👥 Inserindo Usuários...');
 
@@ -517,6 +518,266 @@ async function main() {
                 'O titulo alude as dificuldades severas encontradas pelos idealistas na tentativa de mudar uma estrutura social rigida.',
             explicacao_en:
                 'The title alludes to the severe difficulties encountered by idealists in attempting to change a rigid social structure.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'A partir da leitura do trecho e da análise integral da obra, observa-se que o conflito central vivido por Roberto e Noemi estrutura-se em torno da:',
+            pergunta_en:
+                'Based on the excerpt and the full analysis of the work, the central conflict experienced by Roberto and Noemi is structured around:',
+            respostaCorreta:
+                'Impossibilidade de conciliar a pureza do sentimento amoroso com a crueza e as exigências da militância política clandestina.',
+            respostaCorreta_en:
+                'The impossibility of reconciling the purity of the loving feeling with the harshness and demands of clandestine political militancy.',
+            respostasErradas: [
+                'Subordinação total dos sentimentos individuais aos interesses econômicos da burguesia industrial cearense.',
+                'Busca por uma fuga mística e religiosa como única saída para a opressão policial da época.',
+                'Indiferença de ambos perante as injustiças sociais do Nordeste, priorizando o individualismo burguês.',
+            ],
+            respostasErradas_en: [
+                'Total subordination of individual feelings to the economic interests of the Ceará industrial bourgeoisie.',
+                'A search for mystical and religious escape as the only way out of the police oppression of the time.',
+                'Indifference of both to the social injustices of the Northeast, prioritizing bourgeois individualism.',
+            ],
+            explicacao:
+                'O romance vive no cabo de guerra entre a urgência da revolução social e as necessidades afetivas individuais; assim, a alternativa A é a correta.',
+            explicacao_en:
+                'The novel dwells in the tug-of-war between the urgency of social revolution and individual affective needs; therefore, option A is correct.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'A respeito da construção das personagens masculinas em Caminho de Pedras, é correto afirmar que Rachel de Queiroz:',
+            pergunta_en:
+                'Regarding the construction of male characters in Caminho de Pedras, it is correct to state that Rachel de Queiroz:',
+            respostaCorreta:
+                'Expõe o machismo e o convencionalismo que atravessam tanto o ambiente burguês tradicional quanto, muitas vezes, o próprio meio da militância de esquerda.',
+            respostaCorreta_en:
+                'Exposes the machismo and conventionalism that cross both the traditional bourgeois environment and, often, the milieu of leftist militancy itself.',
+            respostasErradas: [
+                'Idealiza a figura do militante político como um herói desprovido de falhas ou contradições morais.',
+                'Retrata João Jacques como um vilão cruel e violento, justificando o adultério de Noemi apenas por vias físicas.',
+                'Demonstra que a solidariedade de classe anula completamente os ciúmes e as disputas afetivas entre os personagens.',
+            ],
+            respostasErradas_en: [
+                'Idealizes the figure of the political militant as a hero without flaws or moral contradictions.',
+                'Portrays João Jacques as a cruel and violent villain, justifying Noemi s adultery solely on physical grounds.',
+                'Demonstrates that class solidarity completely nullifies jealousy and affective disputes among the characters.',
+            ],
+            explicacao:
+                'Rachel mostra que o machismo permeia tanto o ambiente burguês quanto setores da militância, tornando a alternativa C correta.',
+            explicacao_en:
+                'Rachel shows that machismo permeates both the bourgeois environment and sectors of the militancy, making option C correct.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'Ao abandonar o casamento com João Jacques para viver com Roberto, socialmente Noemi enfrenta:',
+            pergunta_en:
+                'By abandoning her marriage to João Jacques to live with Roberto, socially Noemi faces:',
+            respostaCorreta:
+                'Marginalização social, perda da guarda do filho e o julgamento moral de uma sociedade profundamente patriarcal.',
+            respostaCorreta_en:
+                'Social marginalization, loss of custody of her child, and moral judgment from a deeply patriarchal society.',
+            respostasErradas: [
+                'Ascensão econômica imediata devido ao apoio financeiro do partido político.',
+                'Reconhecimento público como heroína da emancipação feminina pelas elites locais.',
+                'Isolamento total em uma comunidade rural isolada, longe de qualquer contato urbano.',
+            ],
+            respostasErradas_en: [
+                'Immediate economic rise due to financial support from the political party.',
+                'Public recognition as a heroine of female emancipation by the local elites.',
+                'Total isolation in a rural community, far from any urban contact.',
+            ],
+            explicacao:
+                'Ao romper com convenções, Noemi sofre ostracismo e penalidades sociais; logo, a alternativa B é correta.',
+            explicacao_en:
+                'By breaking conventions, Noemi suffers ostracism and social penalties; therefore, option B is correct.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'O destino trágico das crianças na narrativa funciona como metáfora para:',
+            pergunta_en:
+                'The tragic fate of children in the narrative functions as a metaphor for:',
+            respostaCorreta:
+                'A crueza de uma realidade social em que os mais inocentes e vulneráveis pagam o preço mais alto pelo conflito e pela miséria.',
+            respostaCorreta_en:
+                'The harshness of a social reality in which the most innocent and vulnerable pay the highest price for conflict and misery.',
+            respostasErradas: [
+                'A fragilidade dos laços familiares no ambiente rural.',
+                'O castigo divino imputado às personagens por suas escolhas ideológicas e sexuais.',
+                'A necessidade de militarização da infância para a proteção do Estado.',
+            ],
+            respostasErradas_en: [
+                'The fragility of family ties in the rural environment.',
+                'Divine punishment attributed to the characters for their ideological and sexual choices.',
+                'The need for militarization of childhood for the protection of the State.',
+            ],
+            explicacao:
+                'A morte infantil é o ápice da denúncia social do romance, mostrando o preço pago pelos inocentes; alternativa C é correta.',
+            explicacao_en:
+                'Child death is the apex of the social denunciation of the novel, showing the price paid by the innocent; option C is correct.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'Considerando o contexto histórico (1937), o romance capta a atmosfera de um período marcado por:',
+            pergunta_en:
+                'Considering the historical context (1937), the novel captures the atmosphere of a period marked by:',
+            respostaCorreta:
+                'Polarização ideológica, avanço do autoritarismo (governo Vargas) e violenta repressão aos movimentos de esquerda.',
+            respostaCorreta_en:
+                'Ideological polarization, the advance of authoritarianism (Vargas government) and violent repression of leftist movements.',
+            respostasErradas: [
+                'Intensa efervescência democrática, com total liberdade de expressão e voto universal.',
+                'Estabilidade política absoluta e ausência de conflitos sociais ou greves operárias.',
+                'Descentralização do poder político, com fortalecimento das oligarquias cafeeiras paulistas.',
+            ],
+            respostasErradas_en: [
+                'Intense democratic effervescence, with total freedom of expression and universal suffrage.',
+                'Absolute political stability and absence of social conflicts or workers strikes.',
+                'Decentralization of political power, with strengthening of the São Paulo coffee oligarchies.',
+            ],
+            explicacao:
+                '1937 é o ano do golpe do Estado Novo; o romance reflete a polarização e repressão da época, portanto alternativa B é correta.',
+            explicacao_en:
+                '1937 is the year of the Estado Novo coup; the novel reflects the polarization and repression of the time, therefore option B is correct.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'No final do romance, o sentimento predominante diante das prisões, desilusões e perdas é de:',
+            pergunta_en:
+                'At the end of the novel, the predominant feeling in the face of arrests, disillusionments and losses is one of:',
+            respostaCorreta:
+                'Melancolia, dor e um sentimento de quase derrota, contrabalançado pela persistência silenciosa no "caminho de pedras".',
+            respostaCorreta_en:
+                'Melancholy, pain and a feeling of near defeat, counterbalanced by the silent persistence on the "path of stones".',
+            respostasErradas: [
+                'Triunfo político imediato e celebração da vitória sobre as forças opressoras.',
+                'Conversão coletiva das personagens ao modelo de vida burguês e capitalista.',
+                'Indiferença absoluta dos sobreviventes em relação ao destino de seus companheiros presos.',
+            ],
+            respostasErradas_en: [
+                'Immediate political triumph and celebration of victory over oppressive forces.',
+                'Collective conversion of the characters to the bourgeois and capitalist way of life.',
+                'Absolute indifference of the survivors regarding the fate of their imprisoned companions.',
+            ],
+            explicacao:
+                'O final privilegia a melancolia e o cansaço, com uma persistência resignada; alternativa B é correta.',
+            explicacao_en:
+                'The ending favors melancholy and exhaustion, with a resigned persistence; option B is correct.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'A presença da polícia e do aparato repressor do Estado em Caminho de Pedras evidencia:',
+            pergunta_en:
+                'The presence of the police and the State s repressive apparatus in Caminho de Pedras evidences:',
+            respostaCorreta:
+                'Uma crítica à violência institucionalizada e arbitrária que esmagava as liberdades individuais e os movimentos sociais.',
+            respostaCorreta_en:
+                'A critique of institutionalized and arbitrary violence that crushed individual liberties and social movements.',
+            respostasErradas: [
+                'Uma exaltação das forças de segurança como garantidoras da paz social e da justiça no Nordeste.',
+                'A total incompetência da polícia, que nunca conseguia localizar os panfletos ou os militantes.',
+                'O caráter pacífico e dialogal das autoridades da época frente às greves operárias.',
+            ],
+            respostasErradas_en: [
+                'An exaltation of the security forces as guarantors of social peace and justice in the Northeast.',
+                'The total incompetence of the police, which never managed to locate the leaflets or militants.',
+                'The peaceful and dialogic character of the authorities of the time in the face of workers strikes.',
+            ],
+            explicacao:
+                'O romance denuncia a violência institucional e as prisões arbitrárias como forma de calar a contestação social; alternativa A é correta.',
+            explicacao_en:
+                'The novel denounces institutional violence and arbitrary arrests as a way to silence social protest; option A is correct.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta: 'Quem é a autora de Caminho de Pedras?',
+            pergunta_en: 'Who is the author of Caminho de Pedras?',
+            respostaCorreta: 'Rachel de Queiroz',
+            respostaCorreta_en: 'Rachel de Queiroz',
+            respostasErradas: [
+                'Clarice Lispector',
+                'Cecília Meireles',
+                'Lygia Fagundes Telles',
+            ],
+            respostasErradas_en: [
+                'Clarice Lispector',
+                'Cecília Meireles',
+                'Lygia Fagundes Telles',
+            ],
+            explicacao: 'Rachel de Queiroz foi uma importante escritora brasileira do Modernismo e autora de Caminho de Pedras.',
+            explicacao_en: 'Rachel de Queiroz was an important Brazilian Modernist writer and the author of Caminho de Pedras.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta: 'Em que ano o livro foi publicado?',
+            pergunta_en: 'In what year was the book published?',
+            respostaCorreta: '1937',
+            respostaCorreta_en: '1937',
+            respostasErradas: ['1922', '1945', '1956'],
+            respostasErradas_en: ['1922', '1945', '1956'],
+            explicacao: 'O romance foi publicado em 1937, período marcado por tensões políticas e sociais no Brasil.',
+            explicacao_en: 'The novel was published in 1937, during a period of political and social tensions in Brazil.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta: 'Quem é a protagonista da história?',
+            pergunta_en: 'Who is the protagonist of the story?',
+            respostaCorreta: 'Noemi',
+            respostaCorreta_en: 'Noemi',
+            respostasErradas: ['Maria', 'Conceição', 'Joana'],
+            respostasErradas_en: ['Maria', 'Conceição', 'Joana'],
+            explicacao: 'Noemi é a personagem principal e sua trajetória é o foco central da narrativa.',
+            explicacao_en: 'Noemi is the main character, and her experiences drive the plot of the novel.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta: 'Qual tema é fortemente abordado na obra?',
+            pergunta_en: 'Which theme is strongly addressed in the book?',
+            respostaCorreta: 'Conflitos políticos e sociais',
+            respostaCorreta_en: 'Political and social conflicts',
+            respostasErradas: ['Fantasia e magia', 'Viagens espaciais', 'Mitologia grega'],
+            respostasErradas_en: ['Fantasy and magic', 'Space travel', 'Greek mythology'],
+            explicacao: 'O livro trata de questões políticas, desigualdades sociais e dos desafios enfrentados pelos personagens.',
+            explicacao_en: 'The novel explores political issues, social inequality, and the struggles faced by its characters.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta: 'Em qual período histórico se passa a narrativa?',
+            pergunta_en: 'During which historical period does the story take place?',
+            respostaCorreta: 'Década de 1930',
+            respostaCorreta_en: 'The 1930s',
+            respostasErradas: ['Ditadura Militar (1964-1985)', 'Brasil Colonial', 'Século XXI'],
+            respostasErradas_en: ['Brazilian Military Dictatorship (1964–1985)', 'Colonial Brazil', 'The 21st century'],
+            explicacao: 'A história ocorreu na década de 1930, época de grandes transformações políticas e sociais no Brasil.',
+            explicacao_en: 'The narrative takes place in the 1930s, a time of major political and social changes in Brazil.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta: 'O título Caminho de Pedras simboliza:',
+            pergunta_en: 'What does the title Caminho de Pedras ("Path of Stones") symbolize?',
+            respostaCorreta: 'Os obstáculos e dificuldades enfrentados pelos personagens.',
+            respostaCorreta_en: 'The obstacles and difficulties faced by the characters',
+            respostasErradas: ['Uma estrada construída de pedras.', 'A riqueza dos personagens.', 'Uma viagem turística.'],
+            respostasErradas_en: ['A road made of stones', "The characters' wealth", 'A tourist trip'],
+            explicacao: 'O título representa as dificuldades, desafios e conflitos encontrados pelos personagens ao longo de suas vidas.',
+            explicacao_en: 'The title symbolizes the hardships, challenges, and conflicts experienced by the characters.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta: 'Qual característica de Noemi é destacada no livro?',
+            pergunta_en: 'Which characteristic of Noemi is highlighted in the novel?',
+            respostaCorreta: 'Busca por liberdade e independência.',
+            respostaCorreta_en: 'Her search for freedom and independence',
+            respostasErradas: ['Desejo de ser rainha.', 'Interesse por aventuras sobrenaturais.', 'Vontade de morar em outro planeta.'],
+            respostasErradas_en: ['Her desire to become a queen', 'Her interest in supernatural adventures', 'Her wish to live on another planet'],
+            explicacao: 'Noemi é retratada como uma mulher que busca autonomia, liberdade e realização pessoal.',
+            explicacao_en: 'Noemi is portrayed as a woman seeking autonomy, freedom, and personal fulfillment.',
         },
     ],
 });
