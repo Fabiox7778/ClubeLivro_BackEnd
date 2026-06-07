@@ -18,7 +18,7 @@ export default class ComunidadeModel {
         this.autor = autor;
         this.categoria = categoria;
         this.curtidas = curtidas;
-        this.idUsuario = idUsuario;
+        this.idUsuario = idUsuario && !isNaN(Number(idUsuario)) ? Number(idUsuario) : null;
         this.criadoEm = criadoEm;
         this.atualizadoEm = atualizadoEm;
     }

@@ -27,6 +27,11 @@ export const criar = async (req, res) => {
         return res.status(201).json({ message: 'Publicacao criada com sucesso!', data });
     } catch (error) {
         console.error('Erro ao criar:', error);
+        if (error.code === 'P2003' || error.message?.includes('foreign key constraint') || error.message?.includes('violates foreign key')) {
+            return res.status(400).json({
+                error: 'Usuário não encontrado. Por favor, saia e faça login novamente.',
+            });
+        }
         return res.status(500).json({
             error: 'Erro interno ao salvar a publicacao.',
             details: error.message,
