@@ -779,6 +779,181 @@ async function main() {
             explicacao: 'Noemi é retratada como uma mulher que busca autonomia, liberdade e realização pessoal.',
             explicacao_en: 'Noemi is portrayed as a woman seeking autonomy, freedom, and personal fulfillment.',
         },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'Publicado em 1937, o romance Caminho de Pedras marca uma fase específica da produção de Rachel de Queiroz. Sobre a inserção da obra no panorama literário brasileiro, é correto afirmar que:',
+            pergunta_en:
+                'Published in 1937, the novel Caminho de Pedras marks a specific phase in Rachel de Queiroz’s production. Regarding the work’s placement in the Brazilian literary landscape, it is correct to state that:',
+            respostaCorreta:
+                'Trata-se de um exemplar do romance social da década de 30, integrando-se à vertente do verismo realista que explora dramas sociais e realidades nítidas.',
+            respostaCorreta_en:
+                'It is an example of the social novel of the 1930s, aligning with the realist verismo movement that explores social dramas and stark realities.',
+            respostasErradas: [
+                'O livro pertence à primeira fase do Modernismo, focando no experimentalismo linguístico e na ruptura com o passado colonial.',
+                'A obra foca exclusivamente no tema da seca e do retirante nordestino, repetindo a estrutura narrativa de sua obra de estreia, O Quinze.',
+                'É um romance de caráter romântico-idealista, onde a militância política serve apenas como pano de fundo para um amor impossível e heroico.',
+            ],
+            respostasErradas_en: [
+                'The book belongs to the first phase of Modernism, focusing on linguistic experimentalism and a break with the colonial past.',
+                'The work focuses exclusively on the themes of drought and the Northeastern migrant, repeating the narrative structure of her debut work, O Quinze.',
+                'It is a romantic-idealistic novel, where political activism serves merely as a backdrop for an impossible and heroic love.',
+            ],
+            explicacao:
+                'A obra se integra à vertente do verismo realista do romance de 30, com observação psicológica aguda e perspectiva social marcante.',
+            explicacao_en:
+                'The work integrates into the realist verismo strand of 1930s novels, with sharp psychological observation and a striking social perspective.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'No capítulo 2, durante a reunião clandestina, ocorre um embate entre Roberto e o operário Vinte-e-Um. Esse conflito revela uma das tensões centrais da obra, que é:',
+            pergunta_en:
+                'In Chapter 2, during the clandestine meeting, a clash occurs between Roberto and the worker Twenty-One. This conflict reveals one of the work s central tensions, which is:',
+            respostaCorreta:
+                'A desconfiança mútua entre os intelectuais (“de gravata”) e os proletários (“de tamanco”), onde o operário reivindica o direito de se guiar por si mesmo.',
+            respostaCorreta_en:
+                'The mutual distrust between the intellectuals (“in ties”) and the proletarians (“in clogs”), where the worker claims the right to guide himself.',
+            respostasErradas: [
+                'A submissão total dos operários aos intelectuais, vistos como os únicos capazes de liderar a revolução.',
+                'A união harmônica e imediata de todas as classes sociais em prol de um objetivo comum em Fortaleza.',
+                'A recusa dos intelectuais em participar de tarefas práticas, preferindo apenas a teoria acadêmica.',
+            ],
+            respostasErradas_en: [
+                'The total submission of the workers to the intellectuals, seen as the only ones capable of leading the revolution.',
+                'The harmonious and immediate union of all social classes in pursuit of a common goal in Fortaleza.',
+                'The refusal of intellectuals to participate in practical tasks, preferring only academic theory.',
+            ],
+            explicacao:
+                'O operário Vinte-e-Um questiona a classe de Roberto e afirma que o operário deve guiar o operário, revelando a divisão entre “gravatas” e “tamancos”.',
+            explicacao_en:
+                'The worker Twenty-One questions Roberto s class and states that the worker must guide the worker, revealing the division between “ties” and “clogs.”',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'A prosa de Rachel de Queiroz em Caminho de Pedras é frequentemente descrita como possuindo a “naturalidade do essencial”. Essa característica se manifesta no livro através de:',
+            pergunta_en:
+                'Rachel de Queiroz s prose in Caminho de Pedras is often described as possessing the “naturalness of the essential.” This characteristic manifests itself in the book through:',
+            respostaCorreta:
+                'Um estilo despojado e depurado, que evita ornamentos para focar na agudeza da observação psicológica e social.',
+            respostaCorreta_en:
+                'A stripped-down and refined style that avoids embellishments to focus on the sharpness of psychological and social observation.',
+            respostasErradas: [
+                'Um texto rebuscado, com uso excessivo de adjetivos e metáforas complexas.',
+                'Uma narrativa lenta e descritiva que prioriza a natureza em detrimento da figura humana.',
+                'O uso constante de gírias estrangeiras, refletindo a influência direta da literatura francesa do século XIX.',
+            ],
+            respostasErradas_en: [
+                'A flowery text, with excessive use of adjectives and complex metaphors.',
+                'A slow, descriptive narrative that prioritizes nature over the human figure.',
+                'The constant use of foreign slang, reflecting the direct influence of 19th-century French literature.',
+            ],
+            explicacao:
+                'A prosa de Rachel é reconhecida pelo estilo despojado e depurado, evitando ornamentos e gerando força dramática.',
+            explicacao_en:
+                'Rachel s prose is recognized for its stripped-down and refined style, avoiding embellishments and generating dramatic force.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'A morte do personagem Guri e a posterior gravidez de Noemi sugerem que:',
+            pergunta_en:
+                'The death of the character Guri and Noemi s subsequent pregnancy suggest that:',
+            respostaCorreta:
+                'A resistência humana e a continuidade da vida (maternidade) se sobrepõem à desolação da derrota política e da perda pessoal.',
+            respostaCorreta_en:
+                'Human resilience and the continuity of life (motherhood) overcome the desolation of political defeat and personal loss.',
+            respostasErradas: [
+                'Noemi desistiu de seus ideais políticos para se dedicar exclusivamente à dor do luto.',
+                'A tragédia pessoal de Noemi é um castigo moral por ter abandonado o seu casamento com João Jaques.',
+                'A vida clandestina é incompatível com a maternidade, levando Noemi a entregar seu novo filho para a mãe de um companheiro.',
+            ],
+            respostasErradas_en: [
+                'Noemi gave up her political ideals to devote herself exclusively to the pain of mourning.',
+                'Noemi s personal tragedy is a moral punishment for having abandoned her marriage to João Jaques.',
+                'Life in hiding is incompatible with motherhood, leading Noemi to give her new son to a comrade s mother.',
+            ],
+            explicacao:
+                'A cena final simboliza a fusão entre afeto materno e persistência política, mostrando resistência biológica diante da derrota.',
+            explicacao_en:
+                'The final scene symbolizes the fusion of maternal affection and political persistence, showing biological resistance in the face of defeat.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'O episódio do comício na Praça da Estação (Capítulo 12) descreve:',
+            pergunta_en:
+                'The episode of the rally at Praça da Estação (Chapter 12) describes:',
+            respostaCorreta:
+                'A manifestação é interrompida pela cavalaria policial, gerando pânico, prisões (incluindo a de Roberto) e a morte de um operário.',
+            respostaCorreta_en:
+                'The demonstration is interrupted by the police cavalry, causing panic, arrests (including Roberto s), and the death of a worker.',
+            respostasErradas: [
+                'O comício transcorre de forma pacífica, resultando em um acordo entre operários e patrões.',
+                'Apenas os intelectuais são presos, enquanto os operários são protegidos pela polícia.',
+                'O evento marca a vitória definitiva do movimento operário em Fortaleza, que consegue tomar o poder local.',
+            ],
+            respostasErradas_en: [
+                'The rally proceeds peacefully, resulting in an agreement between workers and employers.',
+                'Only the intellectuals are arrested, while the workers are protected by the police.',
+                'The event marks the definitive victory of the labor movement in Fortaleza, which manages to seize local power.',
+            ],
+            explicacao:
+                'A cavalaria dispersa a multidão e Roberto é preso, mostrando a repressão violenta à manifestação.',
+            explicacao_en:
+                'The cavalry disperses the crowd and Roberto is arrested, showing the violent repression of the demonstration.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'O que muitas vezes move os personagens para a revolução na visão apresentada pelo livro?',
+            pergunta_en:
+                'What often moves the characters toward revolution in the view presented by the book?',
+            respostaCorreta:
+                'Um impulso sentimental, o humano enternecimento e o desgosto, que a doutrina oficial às vezes despreza como "luxo de doido".',
+            respostaCorreta_en:
+                'A sentimental impulse, human tenderness, and sorrow, which official doctrine sometimes dismisses as a "madman s luxury."',
+            respostasErradas: [
+                'Apenas a fria lógica matemática e as equações econômicas iniludíveis.',
+                'O desejo de ascensão social e riqueza pessoal através da política.',
+                'O ódio puro e simples contra a cultura e os livros.',
+            ],
+            respostasErradas_en: [
+                'Only cold mathematical logic and inescapable economic equations.',
+                'The desire for social advancement and personal wealth through politics.',
+                'Pure and simple hatred of culture and books.',
+            ],
+            explicacao:
+                'Filipe admite que foi a ternura e o impulso sentimental, não a fria lógica, que o levaram a esses caminhos.',
+            explicacao_en:
+                'Filipe admits that it was tenderness and sentimental impulse, not cold logic, that led him down those paths.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'A fala de Filipe sobre estar nas "areias" e ter sido guindado a intelectual é fundamental porque:',
+            pergunta_en:
+                'Filipe s remark about being in the "sands" and having been elevated to an intellectual is fundamental because:',
+            respostaCorreta:
+                'Revela a autopercepção de Filipe como um intelectual que, apesar de sua origem pobre ("as areias"), encontra na militância um espaço de ascensão e reconhecimento.',
+            respostaCorreta_en:
+                'It reveals Filipe s self-perception as an intellectual who, despite his poor background ("the sands"), finds in militancy a space for advancement and recognition.',
+            respostasErradas: [
+                'Demonstra que todos os militantes tinham a mesma origem social e financeira, sem distinções entre eles.',
+                'Indica que Roberto era o único capaz de entender a teoria marxista de forma pura por vir de uma classe mais abastada.',
+                'Sugere que viver nas "areias" de Fortaleza era um privilégio buscado pelos intelectuais para fugir do barulho do Centro.',
+            ],
+            respostasErradas_en: [
+                'It demonstrates that all militants had the same social and financial origin, with no distinctions among them.',
+                'It indicates that Roberto was the only one capable of understanding Marxist theory in its purest form because he came from a more affluent class.',
+                'It suggests that living in Fortaleza s "sands" was a privilege sought by intellectuals to escape the noise of downtown.',
+            ],
+            explicacao:
+                'A frase mostra a ambivalência de classe de Filipe: pobre na origem, intelectual dentro do grupo operário.',
+            explicacao_en:
+                'The line shows Filipe s class ambivalence: poor by origin, intellectual within the workers group.',
+        },
     ],
 });
     console.log('✅ Seed concluído com sucesso!');
