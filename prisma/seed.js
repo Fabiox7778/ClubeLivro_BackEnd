@@ -291,61 +291,235 @@ async function main() {
         ],
     });
 
-    await prisma.simulados.createMany({
-        data: [
-            {
-                idLivro: livro1.id,
-                pergunta:
-                    'Diferente dos primeiros livros do "Ciclo da Cana-de-Açúcar", qual é o foco principal de "O Caminho de Pedras"?',
-                pergunta_en:
-                    'Unlike the first books in the "Sugarcane Cycle", what is the main focus of "The Path of Stones"?',
-                respostaCorreta:
-                    'O surgimento do movimento operário, do comunismo e as tensões políticas no ambiente urbano.',
-                respostaCorreta_en:
-                    'The emergence of the labor movement, communism, and political tensions in the urban environment.',
-                respostasErradas: [
-                    'A vida dos senhores de engenho e a decadência da aristocracia rural.',
-                    'A fuga de retirantes da seca nordestina em direção à Floresta Amazônica.',
-                    'O misticismo religioso e o cangaço como formas de salvação no sertão.',
-                ],
-                respostasErradas_en: [
-                    'The lives of the plantation owners and the decline of the rural aristocracy.',
-                    'The flight of migrants from the Northeastern drought towards the Amazon Rainforest.',
-                    'Religious mysticism and banditry (cangaço) as forms of salvation in the backlands.',
-                ],
-                explicacao:
-                    'Em "O Caminho de Pedras", José Lins do Rego abandona temporariamente os engenhos para retratar a cidade, focando nas greves e no engajamento político e operário (comunismo) da década de 1930.',
-                explicacao_en:
-                    'In "The Path of Stones", José Lins do Rego temporarily abandons the sugar mills to depict the city, focusing on strikes and the political and working-class engagement (communism) of the 1930s.',
-            },
-            {
-                idLivro: livro1.id,
-                pergunta:
-                    'Qual é a principal característica do estilo de escrita de José Lins do Rego em "O Caminho de Pedras"?',
-                pergunta_en:
-                    'What is the main characteristic of José Lins do Rego\'s writing style in "The Path of Stones"?',
-                respostaCorreta:
-                    'Prosa fluida e oralizada com forte traço neorrealista e engajamento social.',
-                respostaCorreta_en:
-                    'Fluid and oralized prose with strong neorealist traits and social engagement.',
-                respostasErradas: [
-                    'Escrita hermética e experimental com referências psicanalíticas.',
-                    'Estilo pomposo e barroco típico de romances históricos.',
-                    'Linguagem coloquial desorganizada sem estrutura narrativa clara.',
-                ],
-                respostasErradas_en: [
-                    'Hermetic and experimental writing with psychoanalytic references.',
-                    'Pompous and Baroque style typical of historical novels.',
-                    'Disorganized colloquial language without clear narrative structure.',
-                ],
-                explicacao:
-                    'José Lins do Rego utiliza uma linguagem próxima da oralidade, caracterizando-se pelo realismo cru e pelo compromisso com a representação das questões sociais, marcas do romance de 30.',
-                explicacao_en:
-                    'José Lins do Rego uses language close to orality, characterized by raw realism and commitment to representing social issues, marks of the 1930s novel.',
-            },
-        ],
-    });
-
+ await prisma.simulados.createMany({
+    data: [
+        {
+            idLivro: livro1.id.toString(), 
+            pergunta:
+                'Diferente dos primeiros livros do "Ciclo da Cana-de-Açúcar", qual é o foco principal de "O Caminho de Pedras"?',
+            pergunta_en:
+                'Unlike the first books in the "Sugarcane Cycle", what is the main focus of "The Path of Stones"?',
+            respostaCorreta:
+                'O surgimento do movimento operário, do comunismo e as tensões políticas no ambiente urbano.',
+            respostaCorreta_en:
+                'The emergence of the labor movement, communism, and political tensions in the urban environment.',
+            respostasErradas: [
+                'A vida dos senhores de engenho e a decadência da aristocracia rural.',
+                'A fuga de retirantes da seca nordestina em direção à Floresta Amazônica.',
+                'O misticismo religioso e o cangaço como formas de salvação no sertão.',
+            ],
+            respostasErradas_en: [
+                'The lives of the plantation owners and the decline of the rural aristocracy.',
+                'The flight of migrants from the Northeastern drought towards the Amazon Rainforest.',
+                'Religious mysticism and banditry (cangaço) as forms of salvation in the backlands.',
+            ],
+            explicacao:
+                'Em "O Caminho de Pedras", José Lins do Rego abandona temporariamente os engenhos para retratar a cidade, focando nas greves e no engajamento político e operário (comunismo) da década de 1930.',
+            explicacao_en:
+                'In "The Path of Stones", José Lins do Rego temporarily abandons the sugar mills to depict the city, focusing on strikes and the political and working-class engagement (communism) of the 1930s.',
+        },
+        {
+            idLivro: livro1.id.toString(), 
+            pergunta:
+                'Qual é a principal característica do estilo de escrita de José Lins do Rego em "O Caminho de Pedras"?',
+            pergunta_en:
+                'What is the main characteristic of José Lins do Rego\'s writing style in "The Path of Stones"?',
+            respostaCorreta:
+                'Prosa fluida e oralizada com forte traço neorrealista e engajamento social.',
+            respostaCorreta_en:
+                'Fluid and oralized prose with strong neorealist traits and social engagement.',
+            respostasErradas: [
+                'Escrita hermética e experimental com referências psicanalíticas.',
+                'Estilo pomposo e barroco típico de romances históricos.',
+                'Linguagem coloquial desorganizada sem estrutura narrativa clara.',
+            ],
+            respostasErradas_en: [
+                'Hermetic and experimental writing with psychoanalytic references.',
+                'Pompous and Baroque style typical of historical novels.',
+                'Disorganized colloquial language without clear narrative structure.',
+            ],
+            explicacao:
+                'José Lins do Rego utiliza uma linguagem próxima da oralidade, caracterizando-se pelo realismo cru e pelo compromisso com a representação das questões sociais, marcas do romance de 30.',
+            explicacao_en:
+                'José Lins do Rego uses language close to orality, characterized by raw realism and commitment to representing social issues, marks of the 1930s novel.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'Em qual cenário geográfico e político a narrativa principal de "O Caminho de Pedras" se desenvolve?',
+            pergunta_en:
+                'In which geographic and political setting does the main narrative of "O Caminho de Pedras" take place?',
+            respostaCorreta:
+                'Fortaleza, durante as agitações e a clandestinidade dos movimentos esquerdistas na década de 1930.',
+            respostaCorreta_en:
+                'Fortaleza, during the unrest and clandestinity of leftist movements in the 1930s.',
+            respostasErradas: [
+                'O sertão central do Ceará, focando exclusivamente na seca de 1915 e na migração.',
+                'Recife, detalhando as revoltas açucareiras e o fim do ciclo do café.',
+                'Rio de Janeiro, abordando a efervescência cultural e a Revolta da Vacina.',
+            ],
+            respostasErradas_en: [
+                'The central backlands of Ceará, focusing exclusively on the 1915 drought and migration.',
+                'Recife, detailing the sugar revolts and the end of the coffee cycle.',
+                'Rio de Janeiro, addressing cultural effervescence and the Vaccine Revolt.',
+            ],
+            explicacao:
+                'A obra retrata as reuniões e a militância de militantes de esquerda em Fortaleza no ano de 1935.',
+            explicacao_en:
+                'The work depicts meetings and activism of leftist militants in Fortaleza in 1935.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'Qual é a principal ruptura que a protagonista Noemi realiza na trama?',
+            pergunta_en:
+                'What is the main rupture that the protagonist Noemi makes in the plot?',
+            respostaCorreta:
+                'Ela abandona o marido burguês e o filho pequeno para viver um amor com o militante Roberto.',
+            respostaCorreta_en:
+                'She abandons her bourgeois husband and small child to live a love affair with the militant Roberto.',
+            respostasErradas: [
+                'Ela viaja para a Europa com o objetivo de estudar artes e se afastar da política.',
+                'Ela decide se tornar freira para fugir da perseguição política da polícia getulista.',
+                'Ela trai os segredos do partido comunista para salvar a vida de seu pai doente.',
+            ],
+            respostasErradas_en: [
+                'She travels to Europe to study arts and distance herself from politics.',
+                'She decides to become a nun to escape political persecution by the Getulist police.',
+                'She betrays the Communist Party secrets to save her sick father.',
+            ],
+            explicacao:
+                'A decisão de Noemi choca a sociedade moralista da época, unindo a busca pela emancipação feminina ao ideal político.',
+            explicacao_en:
+                'Noemi s decision shocks the moralistic society of the time, combining the search for female emancipation with a political ideal.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'Como se caracteriza a trajetória do personagem Roberto na história?',
+            pergunta_en:
+                'How is the trajectory of the character Roberto characterized in the story?',
+            respostaCorreta:
+                'Ele é um idealista convicto que acaba preso pela polícia política, sofrendo as consequências de seu engajamento.',
+            respostaCorreta_en:
+                'He is a convinced idealist who ends up arrested by the political police, suffering the consequences of his engagement.',
+            respostasErradas: [
+                'Ele foge para os Estados Unidos logo no início das investigações policiais, abandonando Noemi.',
+                'Ele enriquece ao se aliar aos grandes proprietários de terras locais, traindo o movimento operário.',
+                'Ele descobre ser filho biológico do governador do estado e assume um cargo público de prestígio.',
+            ],
+            respostasErradas_en: [
+                'He flees to the United States at the start of the police investigations, abandoning Noemi.',
+                'He becomes rich by allying with the large local landowners, betraying the workers movement.',
+                'He discovers he is the biological son of the state governor and assumes a prestigious public office.',
+            ],
+            explicacao:
+                'Roberto encarna o sacrifício e as duras provações impostas pela repressão aos que lutavam contra o regime vigente.',
+            explicacao_en:
+                'Roberto embodies sacrifice and the harsh trials imposed by repression on those who fought against the ruling regime.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'Quem representa o medo da denúncia e a fragilidade psicológica diante da perseguição política do regime varguista?',
+            pergunta_en:
+                'Who represents the fear of denunciation and psychological fragility in the face of political persecution by the Vargas regime?',
+            respostaCorreta:
+                'Geraldo, que, apesar de simpatizar com a causa operária, afasta-se do grupo por pavor de perder seu emprego público e ser fichado pela polícia.',
+            respostaCorreta_en:
+                'Geraldo, who despite sympathizing with the workers cause, distances himself from the group for fear of losing his public job and being recorded by the police.',
+            respostasErradas: [
+                'Almério, um tipógrafo idoso que se recusa a rodar os panfletos do partido por não acreditar mais na revolução.',
+                'Dona Rita, senhoria da pensão onde os jovens se reúnem, que os expulsa imediatamente ao descobrir panfletos subversivos embaixo do colchão.',
+                'Tenente Januário, um militar infiltrado nas reuniões clandestinas que finge ser operário para colher informações para a delegacia de ordem política.',
+            ],
+            respostasErradas_en: [
+                'Almerio, an elderly typesetter who refuses to run the party leaflets because he no longer believes in the revolution.',
+                'Dona Rita, the boarding house landlady who immediately expels them after finding subversive leaflets under the mattress.',
+                'Lieutenant Januario, a military man infiltrated in clandestine meetings pretending to be a worker to gather information for the political order police.',
+            ],
+            explicacao:
+                'O personagem Geraldo exemplifica o conflito da classe média ou de trabalhadores comuns da época: a simpatia velada pelos ideais de esquerda versus o pânico real da perda de subsistência e da violência estatal.',
+            explicacao_en:
+                'The character Geraldo exemplifies the conflict of the middle class or ordinary workers of the time: a veiled sympathy for leftist ideals versus the real panic of losing subsistence and facing state violence.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'Qual característica da Segunda Fase do Modernismo está fortemente presente em "Caminho de Pedras"?',
+            pergunta_en:
+                'Which characteristic of the Second Phase of Modernism is strongly present in "Caminho de Pedras"?',
+            respostaCorreta:
+                'O romance social de denúncia, que utiliza uma linguagem direta e coloquial para expor as injustiças e a realidade regional.',
+            respostaCorreta_en:
+                'The social denunciation novel, which uses a direct and colloquial language to expose injustices and regional reality.',
+            respostasErradas: [
+                'O nacionalismo ufanista, que exalta as belezas naturais e a perfeicao da sociedade brasileira de forma idealizada.',
+                'O experimentalismo radical da linguagem, com o uso de colagens, ausencia de pontuacao e versos livres na prosa.',
+                'O resgate de valores classicos e a fuga da realidade atraves do bucolismo e do arcadismo.',
+            ],
+            respostasErradas_en: [
+                'Jingoistic nationalism that exalts natural beauties and idealizes Brazilian society.',
+                'Radical experimentalism of language, with collages, absence of punctuation and free verse in prose.',
+                'The rescue of classical values and escape from reality through bucolism and arcadism.',
+            ],
+            explicacao:
+                'A geração de 30 focava no realismo, no determinismo social e na critica às estruturas politicas e economicas do pais.',
+            explicacao_en:
+                'The 1930s generation focused on realism, social determinism, and critique of the country s political and economic structures.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'Qual acontecimento sela o sofrimento de Noemi no terco final do livro?',
+            pergunta_en:
+                'Which event seals Noemi s suffering in the final third of the book?',
+            respostaCorreta:
+                'A morte de seu filho doente, enquanto ela se encontrava afastada e desprovida de apoio.',
+            respostaCorreta_en:
+                'The death of her sick son while she was away and without support.',
+            respostasErradas: [
+                'A descoberta de que Roberto mantinha outra familia em uma cidade vizinha.',
+                'O confisco de todos os seus bens e livros pelo governo federal.',
+                'Sua propria condenacao ao exilio perpetuo na Ilha de Fernando de Noronha.',
+            ],
+            respostasErradas_en: [
+                'The discovery that Roberto had another family in a nearby town.',
+                'The confiscation of all her assets and books by the federal government.',
+                'Her own condemnation to perpetual exile on Fernando de Noronha Island.',
+            ],
+            explicacao:
+                'A perda do filho eh o ponto culminante da dor de Noemi, intensificando o peso de suas escolhas e o preco cobrado pela sociedade.',
+            explicacao_en:
+                'The loss of her son is the culminating point of Noemi s pain, intensifying the weight of her choices and the price charged by society.',
+        },
+        {
+            idLivro: livro1.id.toString(),
+            pergunta:
+                'O que o titulo "Caminho de Pedras" simboliza dentro do contexto da obra?',
+            pergunta_en:
+                'What does the title "Caminho de Pedras" symbolize within the context of the work?',
+            respostaCorreta:
+                'A jornada ardua, cheia de obstaculos intransponiveis e sacrificios daqueles que optam pela contestacao social.',
+            respostaCorreta_en:
+                'The arduous journey, full of insurmountable obstacles and sacrifices of those who choose social contestation.',
+            respostasErradas: [
+                'A pavimentacao e o progresso industrial que Fortaleza experimentava na modernizacao de suas ruas.',
+                'A busca mineralogica por pedras preciosas no interior do Ceara por parte dos operarios.',
+                'A rigidez e a falta de sentimentos dos militantes, que agiam de forma fria como pedras.',
+            ],
+            respostasErradas_en: [
+                'The paving and industrial progress that Fortaleza experienced in modernizing its streets.',
+                'The mineralogical search for precious stones in the interior of Ceara by the workers.',
+                'The rigidity and lack of feelings of the militants, who acted coldly like stones.',
+            ],
+            explicacao:
+                'O titulo alude as dificuldades severas encontradas pelos idealistas na tentativa de mudar uma estrutura social rigida.',
+            explicacao_en:
+                'The title alludes to the severe difficulties encountered by idealists in attempting to change a rigid social structure.',
+        },
+    ],
+});
     console.log('✅ Seed concluído com sucesso!');
 }
 
