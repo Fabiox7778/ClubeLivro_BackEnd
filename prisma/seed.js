@@ -266,28 +266,25 @@ async function main() {
         data: [
             {
                 idDoLivro: livro1.id,
-                dicaTitulo: 'O Romance de 30 e a Política',
-                dicaTitulo_en: 'The 1930s Novel and Politics',
-                tipo: 'Artigo',
-                tipo_en: 'Article',
-                descricaoDica:
-                    'Entenda como José Lins do Rego introduziu o debate sobre o comunismo e o operariado no Nordeste.',
-                descricaoDica_en:
-                    'Understand how José Lins do Rego introduced the debate about communism and the working class in the Northeast.',
-                curtidasDica: 15,
+                dicaTitulo: 'Resumo por Arthur Napoli',
+                dicaTitulo_en: 'Summary by Arthur Napoli',
+                tipo: 'Vídeo',
+                tipo_en: 'Video',
+                descricaoDica: 'Vídeo explicativo e resumo do livro O Caminho de Pedras, apresentado em inglês por Arthur Napoli.',
+                descricaoDica_en: 'Explanatory video and summary of the book O Caminho de Pedras, presented in English by Arthur Napoli.',
+                curtidasDica: 0,
+                material: 'https://xjdxuxqhnhqilczirhlj.supabase.co/storage/v1/object/sign/arquivos/Caminho-de-pedras-napoli.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8yZmM4YzEwNC1iMjE3LTQ4ZDMtOWMyMi0zMzE4MTdjYzhkMjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhcnF1aXZvcy9DYW1pbmhvLWRlLXBlZHJhcy1uYXBvbGkubXA0IiwiaWF0IjoxNzgwODc4MzE0LCJleHAiOjE4MTI0MTQzMTR9.KocoAoMwWjZi_Dy-CztPblnhlmYs1ydGVG-fyfYdIJY',
             },
             {
                 idDoLivro: livro1.id,
-                dicaTitulo: 'Análise dos Personagens',
-                dicaTitulo_en: 'Character Analysis',
+                dicaTitulo: 'Resumo por Matheus Lima',
+                dicaTitulo_en: 'Summary by Matheus Lima',
                 tipo: 'Vídeo',
                 tipo_en: 'Video',
-                descricaoDica:
-                    'Vídeo explicativo sobre os principais personagens e seus conflitos psicológicos.',
-                descricaoDica_en:
-                    'Explanatory video about the main characters and their psychological conflicts.',
-                curtidasDica: 8,
-
+                descricaoDica: 'Vídeo explicativo e resumo do livro O Caminho de Pedras, apresentado em português por Matheus Lima.',
+                descricaoDica_en: 'Explanatory video and summary of the book O Caminho de Pedras, presented in Portuguese by Matheus Lima.',
+                curtidasDica: 0,
+                material: 'https://xjdxuxqhnhqilczirhlj.supabase.co/storage/v1/object/sign/arquivos/Caminho-de-pedras-matheus.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8yZmM4YzEwNC1iMjE3LTQ4ZDMtOWMyMi0zMzE4MTdjYzhkMjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhcnF1aXZvcy9DYW1pbmhvLWRlLXBlZHJhcy1tYXRoZXVzLm1wNCIsImlhdCI6MTc4MDg3ODUxMSwiZXhwIjoxODEyNDE0NTExfQ.Z9YLUuoSwdnX6AQxZIetmTbueDg5CmKOF44qdj5qmjQ',
             },
         ],
     });
