@@ -1,6 +1,6 @@
 import prisma from '../lib/services/prismaClient.js';
 
-// Importa do banco os atributos obrigatórios para a manipulação dos personagens.
+
 export default class PersonagemModel {
     constructor({
         id = null,
@@ -13,7 +13,7 @@ export default class PersonagemModel {
         resumo_en,
         aparencia_en,
         importancia_en,
-        idLivro, // CORRIGIDO: Agora o construtor aceita o idLivro
+        idLivro,
     } = {}) {
         this.id = id;
         this.nome = nome;
@@ -25,10 +25,10 @@ export default class PersonagemModel {
         this.descricao_en = descricao_en;
         this.resumo_en = resumo_en;
         this.importancia_en = importancia_en;
-        this.idLivro = idLivro; // CORRIGIDO: Salva o ID do livro na instância da classe
+        this.idLivro = idLivro;
     }
 
-    // Cria um novo personagem usando os atributos obrigatórios necessários.
+
     async criar() {
         return prisma.personagem.create({
             data: {
@@ -41,12 +41,12 @@ export default class PersonagemModel {
                 descricao_en: this.descricao_en,
                 resumo_en: this.resumo_en,
                 importancia_en: this.importancia_en,
-                idLivro: this.idLivro, // Passa o ID corretamente para o Prisma
+                idLivro: this.idLivro,
             },
         });
     }
 
-    // Atualiza um personagem específico por id.
+
     async atualizar() {
         return prisma.personagem.update({
             where: { id: this.id },
@@ -60,17 +60,16 @@ export default class PersonagemModel {
                 descricao_en: this.descricao_en,
                 resumo_en: this.resumo_en,
                 importancia_en: this.importancia_en,
-                idLivro: this.idLivro, // Atualiza também o vínculo do livro se necessário
+                idLivro: this.idLivro,
             },
         });
     }
 
-    // Deleta um personagem específico por id.
+
     async deletar() {
         return prisma.personagem.delete({ where: { id: this.id } });
     }
 
-    // Busca todos os personagens existentes.
     static async buscarTodos(filtros = {}) {
         const where = {};
 
@@ -110,7 +109,6 @@ export default class PersonagemModel {
         return prisma.personagem.findMany({ where });
     }
 
-    // Busca um personagem específico por id.
     static async buscarPorId(id) {
         const data = await prisma.personagem.findUnique({ where: { id } });
         if (!data) {

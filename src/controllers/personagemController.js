@@ -1,14 +1,12 @@
 import PersonagemModel from '../models/PersonagemModel.js';
-//Importa do model os atributos obrigatórios para a manipulação dos personagens.
 
-//Cria um novo personagem usando os atributos obrigatórios necessários.
 export const criar = async (req, res) => {
     try {
         if (!req.body) {
             return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
-        // 1. ADICIONADO: idLivro incluído na desestruturação
+
         const {
             nome,
             aparencia,
@@ -67,14 +65,14 @@ export const criar = async (req, res) => {
                 .json({ error: 'To create a character it must have "importancia_en" ' });
         }
 
-        // 2. ADICIONADO: Validação para garantir que o ID do livro foi enviado
+
         if (idLivro === undefined || idLivro === null) {
             return res
                 .status(400)
                 .json({ error: 'O campo "idLivro" é obrigatório para vincular ao personagem!' });
         }
 
-        // 3. ADICIONADO: Convertendo idLivro para número e injetando no Model
+
         const personagem = new PersonagemModel({
             nome,
             aparencia,
@@ -85,7 +83,7 @@ export const criar = async (req, res) => {
             descricao_en,
             resumo_en,
             importancia_en,
-            idLivro: Number(idLivro), // Garante o envio correto do ID
+            idLivro: Number(idLivro),
         });
 
         const data = await personagem.criar();
@@ -100,7 +98,7 @@ export const criar = async (req, res) => {
     }
 };
 
-//Busca todos os personagens existentes.
+
 export const buscarTodos = async (req, res) => {
     try {
         const registros = await PersonagemModel.buscarTodos(req.query);
@@ -119,7 +117,6 @@ export const buscarTodos = async (req, res) => {
     }
 };
 
-//Busca um personagem específico por id.
 export const buscarPorId = async (req, res) => {
     try {
         const { id } = req.params;
@@ -144,7 +141,6 @@ export const buscarPorId = async (req, res) => {
     }
 };
 
-//Atualiza um personagem específico por id.
 export const atualizar = async (req, res) => {
     try {
         const { id } = req.params;
@@ -200,7 +196,6 @@ export const atualizar = async (req, res) => {
     }
 };
 
-//Deleta um personagem específico por id.
 export const deletar = async (req, res) => {
     try {
         const { id } = req.params;

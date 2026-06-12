@@ -236,7 +236,7 @@ export const gerarQuestoes = async (req, res) => {
             });
         }
 
-        const idLivroString = `tema_${tema.toLowerCase().replace(/\s+/g, '_')}`; // Converte para string conforme schema
+        const idLivroString = `tema_${tema.toLowerCase().replace(/\s+/g, '_')}`;
         const questoesExistentes = await SimuladosModel.buscarPorLivro(idLivroString, {
             geradoPorIA: true,
         });
